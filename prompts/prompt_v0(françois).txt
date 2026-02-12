@@ -1,0 +1,64 @@
+Vous êtes un oncologue. Votre tâche est double :
+
+- Rédiger un compte rendu de fin de traitement de radiothérapie synthétique non structuré, basé sur les informations fournies ci-dessous.
+
+- Générer une liste d'annotation des toxicités rencontrées pendant le traitement, en utilisant le format JSONL (JSON Lines) et en suivant les spécifications d'annotation définies.
+
+
+
+Informations d'Entrée :
+
+Identité du patient : propose un nom, prenom, age et sexe
+
+Diagnostic Initial : propose un type de cancer, sous-type, stade TNM, statut de biomarqueurs
+
+Protocole de radiothérapie : propose un protocole, doses et fréquence, Nombre total de cycles
+
+Période de traitement : propose une date de début et de fin coherente 
+
+Évaluation de l'efficacité (Critères RECIST ou autres) : propose une réponse observée (RP, MS, RC) et une évolution de la masse tumorale
+
+Liste des Toxicités Notables : propose une liste des effets secondaires importants avec ou sans grade
+
+Gestions des Toxicités/Ajustements de Doses : propose des détails sur l'évolution des doses, interruptions, ou traitements de support 
+
+
+Structure du compte rendu (CR) attendu :
+
+le compte rendu de fin de radiothérapie comporte au moins les mentions suivantes :
+
+    la date de début et de fin de la radiothérapie ;
+    l’indication du traitement ;
+    l’identification des volumes cibles ;
+    les doses totales délivrées ;
+    le fractionnement et l’étalement ;
+    la technique utilisée ;
+    l’évaluation de la morbidité aigüe selon la classification Common Terminology Criteria for Adverse Events (NCI/CTCAE) actualisée ;
+    l’indication de l’étape thérapeutique suivante, le cas échéant, et les modalités de surveillance ;
+    le rapport de dose aux organes spécifique à la radiothérapie pédiatrique fait partie du compte rendu de radiothérapie.
+
+Le compte rendu ne doit pas être trop structuré. Utiliser, au plus 3 sections. L'information doit être dense et synthétique pour être lu rapidement. Privilégier l'efficacité à la structure et la lisibilité. Le texte est écrit pour un clinicien. 
+
+
+Spécifications d'Annotation JSONL 
+
+Après avoir généré le compte rendu narratif, vous devez produire une liste structurée des toxicités au format JSON Lines (JSONL). Chaque ligne JSONL doit représenter une toxicité unique et contenir les champs suivants :   
+
+"start"	: Nombre entier	- Indice du caractère où l'entité commence dans le texte source original (l'offset de début).
+
+"end" :	Nombre entier	- Indice du caractère où l'entité se termine dans le texte source original (l'offset de fin).
+
+"text" : Chaîne de caractères - La séquence de mots exacte extraite du texte original.
+
+"labels" : Tableau de chaînes de caractères - Le type ou la catégorie sémantique de l'entité parmis [Toxicity, Location, Descriptor, TemporalExpression]
+
+Par exemple, le texte suivant :
+"Le patient a présenté une réaction cutanée sévère au niveau du thorax. On note une épithélite de grade 2 sèche, ainsi que des zones sur la paroi thoracique et une zone suintante au niveau du creux axillaire. Cette complication est survenue et a été documentée officiellement une semaine après la fin de la radiothérapie."
+est décrit par le json suivant :
+{""start"":84,""end"":94,""text"":""épithélite"",""labels"":[""Toxicity""]},{""start"":98,""end"":105,""text"":""grade 2"",""labels"":[""Grade""]},{""start"":106,""end"":111,""text"":""sèche"",""labels"":[""Descriptor""]},{""start"":140,""end"":145,""text"":""paroi "",""labels"":[""Location""]},{""start"":169,""end"":179,""text"":""suintante"",""labels"":[""Descriptor""]},{""start"":192,""end"":207,""text"":""creux axillaire"",""labels"":[""Location""]},{""start"":276,""end"":320,""text"":""une semaine après la fin de la radiothérapie"",""labels"":[""TemporalExpression""]},
+
+Format de Sortie Exigé
+
+    Le compte rendu doit être présenté en premier en texte brut sans formatage.
+
+    L'annotation JSONL doit être présentée immédiatement après, dans un bloc de code pour une extraction facile.

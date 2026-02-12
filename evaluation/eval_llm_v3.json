@@ -1,0 +1,928 @@
+{
+  "metadata": {
+    "input_file": "/home/getalp/bouarabs/Data_Generation/datasets/mistral_5shot_v3.jsonl",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "num_samples": 30
+  },
+  "aggregated": {
+    "statistics": {
+      "completude_clinique": {
+        "mean": 5.0,
+        "std": 0.0,
+        "min": 5,
+        "max": 5
+      },
+      "exactitude_medicale": {
+        "mean": 5.0,
+        "std": 0.0,
+        "min": 5,
+        "max": 5
+      },
+      "conformite_conditionnement": {
+        "mean": 5.0,
+        "std": 0.0,
+        "min": 5,
+        "max": 5
+      },
+      "coherence_factuelle": {
+        "mean": 5.0,
+        "std": 0.0,
+        "min": 5,
+        "max": 5
+      },
+      "qualite_linguistique": {
+        "mean": 4.77,
+        "std": 0.42,
+        "min": 4,
+        "max": 5
+      },
+      "realisme_global": {
+        "mean": 5.0,
+        "std": 0.0,
+        "min": 5,
+        "max": 5
+      },
+      "score_total": {
+        "mean": 29.77,
+        "std": 0.42,
+        "min": 29,
+        "max": 30
+      },
+      "score_global_100": 99.2
+    },
+    "num_evaluated": 30,
+    "num_errors": 0
+  },
+  "individual": [
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont précises et cohérentes avec les connaissances actuelles en oncologie et radiothérapie."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1000,
+      "eval_time": 44.2
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut toutes les informations cliniques requises."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées et utilise les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et clair."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical."
+      },
+      "score_total": 30,
+      "seed": 1001,
+      "eval_time": 31.1
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont précises et cohérentes avec les connaissances actuelles en oncologie du sein."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1002,
+      "eval_time": 42.1
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut toutes les informations cliniques requises."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées et utilise les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et clair."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical."
+      },
+      "score_total": 30,
+      "seed": 1003,
+      "eval_time": 34.1
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut toutes les informations cliniques requises."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et clair."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical."
+      },
+      "score_total": 30,
+      "seed": 1004,
+      "eval_time": 33.0
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut toutes les informations cliniques requises."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées et utilise les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et clair."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical."
+      },
+      "score_total": 30,
+      "seed": 1005,
+      "eval_time": 35.2
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont précises et cohérentes avec les connaissances actuelles en oncologie du sein."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et l'enchaînement des faits est logique."
+      },
+      "qualite_linguistique": {
+        "score": 4,
+        "justification": "Le texte est grammaticalement correct et clair, mais pourrait être plus formel et précis dans certains termes médicaux."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 29,
+      "seed": 1006,
+      "eval_time": 43.7
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes, conformes aux connaissances actuelles en oncologie du sein."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, mentionnant précisément les champs utilisés et les paramètres techniques."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes, avec une logique claire dans l'organisation des informations."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1007,
+      "eval_time": 42.8
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut toutes les informations cliniques requises."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées et utilise les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et clair."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical."
+      },
+      "score_total": 30,
+      "seed": 1008,
+      "eval_time": 34.9
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes avec les connaissances actuelles en oncologie du sein."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1009,
+      "eval_time": 40.5
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire et stade TNM."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes avec les connaissances actuelles en oncologie."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et l'enchaînement des faits est logique."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1010,
+      "eval_time": 39.1
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut toutes les informations cliniques requises."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont précises et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le conditionnement des champs et les doses sont bien décrits."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Il n'y a aucune contradiction dans le compte rendu."
+      },
+      "qualite_linguistique": {
+        "score": 4,
+        "justification": "Le texte est grammaticalement correct et clair, mais pourrait être plus formel."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le compte rendu est crédible et conforme à un compte rendu médical réel."
+      },
+      "score_total": 29,
+      "seed": 1011,
+      "eval_time": 34.6
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes avec les connaissances actuelles en oncologie."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés utilisés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1012,
+      "eval_time": 43.6
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes avec les connaissances actuelles en oncologie du sein."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et l'enchaînement des faits est logique."
+      },
+      "qualite_linguistique": {
+        "score": 4,
+        "justification": "Le texte est grammaticalement correct et clair, mais pourrait être plus formel et précis dans certains termes médicaux."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 29,
+      "seed": 1013,
+      "eval_time": 42.0
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut toutes les informations cliniques requises."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées et utilise les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et clair."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et réaliste comme un véritable compte rendu médical."
+      },
+      "score_total": 30,
+      "seed": 1014,
+      "eval_time": 35.4
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes avec les connaissances actuelles en oncologie du sein."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1015,
+      "eval_time": 41.2
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire et stade TNM."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes entre elles."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées concernant les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 4,
+        "justification": "Le texte est grammaticalement correct et clair, mais pourrait être plus formel et précis dans certains termes médicaux."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 29,
+      "seed": 1016,
+      "eval_time": 40.2
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont précises et cohérentes avec les connaissances actuelles en oncologie du sein."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et l'enchaînement des faits est logique."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1017,
+      "eval_time": 41.8
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes avec les connaissances actuelles en oncologie du sein."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 4,
+        "justification": "Le texte est grammaticalement correct et clair, mais pourrait être plus formel et précis dans certains termes médicaux."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 29,
+      "seed": 1018,
+      "eval_time": 46.0
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut toutes les informations cliniques requises."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées et utilise les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et clair."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical."
+      },
+      "score_total": 30,
+      "seed": 1019,
+      "eval_time": 33.8
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut toutes les informations cliniques requises."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées et utilise les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et clair."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical."
+      },
+      "score_total": 30,
+      "seed": 1020,
+      "eval_time": 34.9
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont précises et conformes aux connaissances actuelles en oncologie et radiothérapie."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et l'enchaînement des faits est logique."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1021,
+      "eval_time": 45.3
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont précises et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées sans élément interdit."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Il n'y a aucune contradiction interne dans le compte rendu."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct et clair."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document semble crédible comme un véritable compte rendu médical."
+      },
+      "score_total": 30,
+      "seed": 1022,
+      "eval_time": 34.5
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes entre elles, conformes aux connaissances cliniques actuelles."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes, avec un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 4,
+        "justification": "Le texte est grammaticalement correct et clair, mais pourrait être plus formel et précis dans certains termes médicaux."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 29,
+      "seed": 1023,
+      "eval_time": 46.3
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes avec les connaissances actuelles en oncologie et radiothérapie."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 4,
+        "justification": "Le texte est grammaticalement correct et clair, mais pourrait être encore plus fluide et précis dans certaines formulations médicalisées."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 29,
+      "seed": 1024,
+      "eval_time": 46.0
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut toutes les informations cliniques requises."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont précises et cohérentes."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées et utilise les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et clair."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical."
+      },
+      "score_total": 30,
+      "seed": 1025,
+      "eval_time": 35.6
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes avec les connaissances actuelles en oncologie."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1026,
+      "eval_time": 41.8
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire et stade TNM."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont précises et cohérentes avec les connaissances actuelles en oncologie."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le compte rendu respecte les contraintes imposées, notamment les techniques de radiothérapie utilisées et les dosages spécifiés."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1027,
+      "eval_time": 42.2
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire et stade TNM."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes avec les connaissances actuelles en oncologie."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et suit un enchaînement logique des faits."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1028,
+      "eval_time": 43.1
+    },
+    {
+      "completude_clinique": {
+        "score": 5,
+        "justification": "Le compte rendu inclut tous les éléments requis : nom du patient, latéralité, sous-type moléculaire, stade TNM et contexte thérapeutique."
+      },
+      "exactitude_medicale": {
+        "score": 5,
+        "justification": "Les informations médicales sont correctes et cohérentes avec les connaissances actuelles en oncologie du sein."
+      },
+      "conformite_conditionnement": {
+        "score": 5,
+        "justification": "Le texte respecte les contraintes imposées, notamment les champs conditionnés et les formulations attendues."
+      },
+      "coherence_factuelle": {
+        "score": 5,
+        "justification": "Le compte rendu est exempt de contradictions internes et l'enchaînement des faits est logique."
+      },
+      "qualite_linguistique": {
+        "score": 5,
+        "justification": "Le texte est grammaticalement correct, fluide et rédigé dans un français médical approprié."
+      },
+      "realisme_global": {
+        "score": 5,
+        "justification": "Le document est crédible et ressemble à un véritable compte rendu médical rédigé par un professionnel de santé."
+      },
+      "score_total": 30,
+      "seed": 1029,
+      "eval_time": 44.6
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+Rédigez un compte rendu narratif de fin de radiothérapie pour un cancer du {side} chez {civilite} {patient_name}, de sous-type {subtype}, classé {stage}, dans un contexte {context}.
+
+Le compte rendu doit intégrer de manière fluide et naturelle l’ensemble des informations cliniques suivantes, sans structuration explicite ni titres visibles :
+– les destinataires, la référence et la date du courrier
+– l’identification du patient ({civilite} {patient_name}, {birth_date})
+– le diagnostic (type histologique, {side}, {subtype}, {stage}, biomarqueurs)
+– l’indication thérapeutique et la décision de RCP
+– la préparation du traitement (scanner dosimétrique, appareil, CTDI, PDL, technique de dosimétrie)
+– les caractéristiques complètes de la radiothérapie (dates, étalement, accélérateur, énergie des photons, volumes cibles, technique utilisée, doses totales et par fraction, doses moyenne et maximale)
+– les contraintes aux organes à risque (poumon, cœur) avec des valeurs dosimétriques plausibles
+– la tolérance au traitement, incluant les toxicités observées et leur grade CTCAE, ainsi que leur prise en charge
+– le bilan clinique de fin de traitement (score OMS, poids, toxicités résiduelles)
+– les suites thérapeutiques prévues (traitements systémiques et modalités de surveillance)
+– la signature électronique du médecin
+
+Le texte doit mentionner explicitement {civilite}, {patient_name}, {birth_date}, {side}, {subtype}, {stage} et {context}.
+Les informations médicales doivent être cohérentes et réalistes pour une radiothérapie mammaire.
+Le style doit être strictement clinique, sans explication, sans justification, et sans copier les exemples fournis.
+
+Inspirez-vous du style des exemples ci-dessous sans en reprendre les formulations exactes.
+
+Rédigez uniquement le texte final du compte rendu.
+
+EXEMPLES DE STYLE À IMITER :
+
+---
+EXEMPLE 1 :
+Adressé à Dr DUPONT Virginie, Dr LEGRAND Céline, Dr KABOUCHE Caroline et Dr PORTET Claire, ainsi qu'à la patiente.
+Réf : DT/KM.
+Le 03/12/2018.
+Compte rendu de radiothérapie concernant Madame ABELLA Myriam, née à Turin le 10 septembre 1972.
+Madame ABELLA a été prise en charge pour un carcinome infiltrant du quadrant supéro-externe du sein droit, classé pT1a pN0, exprimant les récepteurs hormonaux avec un index de prolifération élevé et une surexpression de Cerb2, associé à un carcinome lobulaire infiltrant pT1b pN0, également RH positif, sans surexpression de Cerb2. Les marges chirurgicales étaient saines après reprise. Le dossier a été discuté en réunion de concertation pluridisciplinaire, conduisant à la mise en place d'une chimiothérapie adjuvante par Taxol, associée à un traitement par Herceptine. Une consultation d'oncogénétique n'a pas retrouvé de mutation, ne justifiant pas de mastectomie complémentaire. Une radiothérapie externe du sein droit a été indiquée, suivie d'une hormonothérapie adjuvante par Nolvadex, la patiente n'étant pas ménopausée.
+La préparation du traitement a reposé sur un scanner dosimétrique réalisé sur un appareil TOSHIBA Aquilion LB, avec un CTDI mesuré à 24,6 mGy et un PDL de 622 mGy.cm. La dosimétrie a été réalisée en technique conformationnelle tridimensionnelle avec double calcul des unités moniteurs et contrôles par dosimétrie in vivo lors des premières séances.
+La radiothérapie a été délivrée du 12 octobre au 29 novembre 2018, soit un étalement de 39 jours, sur un accélérateur Varian Clinac. Le sein droit a été irradié à la dose de 50 Gy en 25 fractions, à l'aide de champs tangentiels internes et externes en photons de 6 MV avec et sans filtre. Un complément de dose sur le lit tumoral a été réalisé à la dose de 16 Gy en 8 fractions par des champs tangentiels réduits utilisant des photons de 23 et 6 MV. La dose maximale au volume cible mammaire droit était de 53 Gy pour une dose moyenne de 50,9 Gy, tandis que la dose maximale au volume boost atteignait 68 Gy pour une dose moyenne de 66,5 Gy. Pour les organes à risque, le poumon droit présentait un V20 de 17,8 % et un V30 de 15,8 %.
+En fin de traitement, l'état général était conservé avec un score OMS à 0 et un poids stable à 86 kg. La tolérance cutanée était satisfaisante, marquée par un érythème de grade I. Il a été décidé de poursuivre l'hormonothérapie adjuvante par Nolvadex pour une durée de cinq ans, ainsi que l'Herceptine adjuvante pour une durée totale d'un an. Une surveillance clinique alternée a été organisée.
+Compte rendu signé électroniquement par le Dr LAIB Nina.
+
+---
+EXEMPLE 2 :
+Adressé à Dr BERT Cristina, Dr PICTO Gérard et Dr DUBOIS Sylvain.
+Réf : RY/SR.
+Le 11/12/2018.
+Compte rendu de radiothérapie concernant Madame SANCHEZ Karima, née SETTLER le 4 mai 1944.
+Indication: Carcinome mammaire bilatéral traité par tumorectomie + ganglion sentinelle bilatérale. Sein droit pT1c N0 SBR III RH – Cerb2 +++ R0 IP 50% Sein gauche pT1c pN0 SBR I RH + Cerb2 0 IP 5% Décision RCP : Taxol Herceptin, radiothérapie externe mammaire bilatérale, hormonothérapie adjuvante par anti­aromatase.
+Préparation au traitement : Scanner dosimétrique TOSHIBA AQUILION LB CTDI 33,9 mGy PDL 1, 48 Gy.cm Double calcul des unités motrices. Dosimétrie in vivo lors de la première séance.
+Réalisation du traitement : Radiothérapie externe conformationnelle 3 D sur accélérateur CLINAC VARIAN du 6 novembre au 11 décembre 2018 Étalement de 36 jours Sein gauche: 50 Gy en 25 fractions par quatre tangentiels internes et quatre tangentiels externes aux photons de 6 et 23 MV avec et sans filtre Sein droit : 50 Gy en 25 fractions par trois tangentiels internes et trois tangentiels externes aux photons de 23 MV CTV sein gauche dose max 53,9 Gy dose moyenne 50,9 Gy CTV sein droit dose max 54,2 Gy dose moyenne 50,3 Gy OAR poumon droit et gauche V 20=9,7% V 30=8,2% OAR coeur dose moyenne 2,4 Gy.
+En fin de traitement : Lassitude OMS entre 0 et 1, poids stable à 108 kg, érythème grade1, épidermite exfoliative minime des sillons.
+Prévisions : Poursuite de l’Herceptin à visée adjuvante. Introduction du FEMARA un comprimé jour pendant 5 ans à partir de janvier 2019 Surveillances alternées.
+Compte rendu signé électroniquement par le Dr GARCIA Yousra.
+
+---
+EXEMPLE 3 :
+Adressé à Dr PASCAL Flora, Dr RICARDO Alexandra, ainsi qu'à la patiente.
+Réf : TD/PG.
+Le 17/12/2018.
+Compte rendu de radiothérapie concernant Madame ZHANG Wei, née SUYA le 6 janvier 1977 à Hong Kong.
+Indication : Patiente d'origine chinoise, présentant deux nodules du quadrant supéro­externe du sein gauche dans les biopsies sont positives.
+6 septembre 2018: tumorectomie et ganglion sentinelle. Présence d'un carcinome infiltrant de type non spécifique de 8 et 5 mm, SBR I, d'exérèse in sa no, sans embole, sans envahissement du ganglion sentinelle, récepteurs hormonaux positifs, Her2 négatif. Bilan d'extension avec un scanner thoraco­abdomino­pelvien montrant un nodule du lobe inférieur droit sous­pleural justifiant un nouveau scanner en février 2019, prescription faite Dossier présenté en réunion de concertation pluridisciplinaire proposant une radiothérapie et hormonothérapie. Elle n'a pas eu de temps d'accompagnement soignant.
+Préparation à la radiothérapie: Scanner dosimétrique TOSHIBA AQUILON LB (CTDI : 19,9 mGy; PDL : 440,8 mGy. Centimètre) Dosimétrie 3D conformationnelle Double calcul UM Dosimétrie in vivo réalisée le premier jour du premier temps et du deuxième temps.
+Traitement: Du 2 novembre 2018 au 18 décembre 2018 sur accélérateur clinac Varian avec un étalement de 47 jours. Sein gauche: par des champs tangentiels internes et externes aux photons de 6 et 23 MV avec et sans filtre et champs coupés: 50 Gy en 25 fractions Surdosage du lit chirurgical par des champs tangentiels réduits aux photons de 23 MV: 16 Gy en 8 fractions. Volumes cibles: Sein gauche en totalité: dose maximale de 53,9 Gy avec une dose moyenne de 50,9 Gy. Surdosage du lit chirurgical: dose maximale de 69 Gy avec une dose moyenne de 66,7 Gy. Organe à risque: Coeur: dose moyenne de 4,4 Gy, Poumon gauche: volume recevant 20 Gy de 19,7%, volume recevant 30 Gy de 17,5% avec une dose moyenne de 10,8 Gy.
+Tolérance: Bonne avec une simple épidermite de grade I en fin de traitement. Décision en fin de traitement: Mise en place de son hormonothérapie par Anastrozole: un comprimé par jour pendant 5 ans pouvant occasionner une asthénie, des douleurs ostéomusculaires et articulaires avec un risque de dyslipidémie. Mise sous vitamine D soit UVEDOSE une ampoule à boire tous les trois mois car présente une carence. Mise en place du suivi : Cette patiente sera en Chine de mars à octobre et verra sa gynécologue en Chine avec une mammographie. Je la reverrai dans un an avec une biologie.
+Compte rendu signé électroniquement par le Dr ABI Ikram.
+
+---
+EXEMPLE 4 :
+Adressé à Dr FERHI Lina, avec copie à Dr MARTIN Lorraine.
+Réf : VX/HJ.
+Le 19/12/2018.
+Compte rendu de radiothérapie concernant Madame MOREL Stéphanie, née LEROY le 14 octobre 1979.
+Indication: Radiothérapie adjuvante dans le cadre d'un carcinome bifocal de 9 et 4 mm, SBRII, micro SBRIII, RH+ , Her2 négatif, avec IP à 41%, sans embole, classé pT1b N0 (0/2) R0 des quadrants internes du sein droit associé à du CCIS de bas grade sans nécrose. Dépistage ODLC du 09 août 2018: augmentation d'un petit nodule à la jonction des quadrants internes du sein droit sans microcalcification IRM mammaire: nodule de 7 mm à l'union des quadrants inférieurs du sein droit et deuxième formation de 5 mm à 4 mm de cette première lésion. Tumorectomie avec technique du ganglion sentinelle le 11 septembre 2018 Schéma thérapeutique validé en RCP le 1er octobre 2018.
+Préparation du traitement : Scanner dosimétrique TOSHIBA AQUILION LB le 24 octobre 2018 CTDI 29,3 mGy PDL 680,3 mGy/cm Double calcul des UM. Dosimétrie in vivo lors de la première séance.
+Réalisation du traitement : Radiothérapie conformationnelle 3 D sur accélérateur CLIANC VARIAN du 8 novembre 2018 au 12 décembre 2018 inclus soit un étalement de 25 jours. Il a été délivré une dose totale de 50 Gy à raison de 2 Gy par fraction cinq séances par semaine en photons d'énergie X 6 MV et X 23 MV à l'aide de faisceaux tangentiels centrés sur l'ensemble du sein droit. CT V sein droit dose moyenne = 50,5 Gy PTV sein droit dose moyenne = 50,4 Gy Poumon droit V 20 = 9,9%, V 30 = 8,3% et dose moyenne = 6,8 Gy.
+Tolérance: La patiente a présenté une épithélite de grade 2 avec phlyctène du sillon sous­ mammaire traitée par Hydrotac. Epithélite de grade 1 de l'ensemble du sein traitée par Ialuset.
+Prévisions: La densitométrie osseuse retrouvait un T score à ­ 1,2 au niveau fémoral et ­ 0,1 au niveau lombaire et pourra être recontrôlé dans 3 ans. Le bilan biologique était sans particularité en dehors d'un déficit en vitamine D traité par Uvedose. Je reverrai la patiente en consultation en avril 2019avec un bilan biologique. Par la suite, la patiente sera revue en septembre par le Docteur EYRIEY avec un bilan sénologique. La patiente poursuivra les surveillances cliniques alternées tous les 6 mois. Les bilan biologique et sénologique seront contrôlés annuellement. La densitométrie osseuse sera donc recontrôlée dans 3 ans Le FEMARA est prescrit pour 5 ans.
+Compte rendu signé électroniquement par le Dr AYKUT Kenan.
+
+---
+EXEMPLE 5 :
+Adressé à Dr THOMAS Noor, Dr BARRALON Joseph, Dr AZIZ Lisa et Dr ALBORA Alya.
+Réf : FR/NBTS.
+Le 01/01/2018.
+Compte rendu de radiothérapie concernant Madame BULUT Pelin, née DENIZ le 3 avril 1962 à Istanbul.
+Madame BULUT a consulté suite à l'auto-palpation d'un nodule situé à l'union des quadrants externes du sein droit. Les explorations réalisées le 18 juin 2018 par mammographie et échographie mettaient en évidence un nodule de 8 mm, dont la biopsie confirmait un carcinome infiltrant de type non spécifique de grade SBR I, sans emboles ni composante in situ, exprimant fortement les récepteurs hormonaux, avec une absence d'expression de HER2 et un index de prolifération initial à 5 %. Une tumorectomie associée à une procédure de ganglion sentinelle a été réalisée le 14 août 2018 par le Dr AZEM Maissa. L'examen anatomopathologique confirmait un carcinome infiltrant de 8 mm, SBR I, sans emboles ni composante in situ, avec des récepteurs hormonaux fortement positifs, un index de prolifération à 12 %, une absence d'expression de HER2, aucun envahissement ganglionnaire et des marges chirurgicales saines. Le scanner thoraco-abdomino-pelvien réalisé le 28 juillet 2018 retrouvait un angiome hépatique en T3. Le dossier a été discuté en réunion de concertation pluridisciplinaire, concluant à l'indication d'une radiothérapie adjuvante associée à une hormonothérapie par anti-aromatase. La patiente a bénéficié d'un temps d'accompagnement soignant.
+La préparation à la radiothérapie a reposé sur un scanner dosimétrique TOSHIBA Aquilion LB, avec un CTDI mesuré à 21,9 mGy et un PDL de 550,2 mGy.cm. Une dosimétrie conformationnelle tridimensionnelle a été réalisée avec double calcul des unités moniteurs, et des contrôles de dosimétrie in vivo ont été effectués lors des premières séances.
+Le traitement a été délivré du 12 octobre au 29 novembre 2018 sur un accélérateur Clinac Varian, avec un étalement de 49 jours. Le sein droit a été irradié à la dose de 50 Gy en 25 fractions par des champs tangentiels internes et externes utilisant des photons de 6 MV avec et sans filtre, associés à des champs coupés. Un complément de dose sur le lit chirurgical a été administré à la dose de 16 Gy en 8 fractions par des champs tangentiels réduits utilisant des photons de 6 et 23 MV. La dose maximale au sein droit était de 54 Gy pour une dose moyenne de 50,8 Gy, tandis que la dose maximale au volume de surdosage atteignait 68,9 Gy pour une dose moyenne de 67,2 Gy. Le poumon droit recevait 20 Gy sur 14,3 % de son volume et 30 Gy sur 12,5 %, avec une dose moyenne de 8,8 Gy.
+La tolérance a été marquée par une épidermite de grade 2, nécessitant un traitement local par Diprosone et Ialuset. La patiente rapportait par ailleurs des douleurs du rachis lombaire ayant motivé la réalisation d'un scanner, révélant une arthrose avec pincement discal. En fin de traitement, il a été décidé de poursuivre les soins cutanés pendant un mois. Le bilan biologique retrouvait des LDH normales, et la densitométrie osseuse réalisée le 2 octobre montrait un T-score à –1,6 au rachis lombaire et –1,9 au col fémoral. Une hormonothérapie par Anastrozole a été instaurée à raison d'un comprimé par jour pour une durée prévue de cinq ans, avec information sur les effets indésirables possibles et la nécessité d'une surveillance attentive, notamment en raison d'antécédents cardiovasculaires et d'une ostéoporose. Le suivi prévoit une consultation avec mammographie à six mois avec le Dr AZEM Maissa, un suivi annuel avec le Dr BERN Moncef, ainsi qu'une consultation de contrôle à un an. Un bilan lipidique sera réalisé à six mois et une densitométrie osseuse de contrôle est programmée à deux ans.
+Compte rendu signé électroniquement par le Dr YELDURAN Serhat.
+
+---
+TÂCHE :
+Rédigez maintenant le compte rendu complet. Ne produisez que le texte final du compte rendu.

@@ -11,6 +11,7 @@ The pipeline combines:
 * controlled synthetic patient profiles,
 * structured prompting,
 * automatic validation,
+* Automatic evaluation,
 * expert medical assessment.
 
 The full methodology is described in: [Méthodologie(Data_Generation).pdf)](https://gricad-gitlab.univ-grenoble-alpes.fr/data-generation-team/data-generation/-/blob/main/M%C3%A9thodologie__Data_Generation_.pdf)

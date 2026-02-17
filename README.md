@@ -1,34 +1,19 @@
 ## Synthetic Radiotherapy Report Generation & Evaluation
 
-This project provides a pipeline for:
-* Generating synthetic end-of-treatment radiotherapy reports for breast cancer patients using Large Language Models.
-* Conditioning generation on structured clinical variables.
-* Automatically evaluating linguistic and medical quality of generated reports.
-* Producing structured datasets and analysis reports.
-* The system is designed for clinical NLP research, and controlled LLM generation experiments.
+📌 Overview
 
-## Project Structure
+This repository contains the pipeline used to generate, validate, and evaluate synthetic end-of-radiotherapy reports for breast cancer using Large Language Models (LLMs).
 
-Data_Generation/
-│
-├── prompts/
-│   ├── system_prompt.txt
-│   ├── user_prompt_v5.txt
-│   └── prompt_v0.txt
-│
-├── scripts/
-│   ├── generate_script_v5.py        # Synthetic report generation script
-│   ├── evaluate_automatic.py        # Automatic linguistic + medical evaluation
-│   ├── evaluate_llm_judge.py        # LLM-based qualitative evaluation
-│   └── conversion.py                # Format conversion utilities
-│
-├── outputs/
-│   ├── mistral_5shot_v5.jsonl       # Generated reports
-│   └── reports_for_review.xlsx      # Manual review export
-│
-├── evaluation/
-│   └── metrics_auto_v5.json         # Automatic evaluation results
+The objective is to study to what extent a language model can produce clinically coherent medical reports when conditioned on structured clinical variables.
 
+The pipeline combines:
+
+* controlled synthetic patient profiles,
+* structured prompting,
+* automatic validation,
+* expert medical assessment.
+
+The full methodology is described in: [Méthodologie(Data_Generation).pdf)](https://gricad-gitlab.univ-grenoble-alpes.fr/data-generation-team/data-generation/-/blob/main/M%C3%A9thodologie__Data_Generation_.pdf)
 
 
 ## Installation

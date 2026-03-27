@@ -1,939 +1,573 @@
 """
-=============================================================================
-AUTOMATIC EVALUATION OF RADIOTHERAPY REPORTS (v2)
-=============================================================================
+===================================================
+AUTOMATIC EVALUATION OF RADIOTHERAPY REPORTS
+===================================================
 
-This script computes the following metrics:
-- TTR (Type-Token Ratio): lexical richness
-- MSTTR (Mean Segmental TTR): robust lexical richness
-- Lexical entropy: vocabulary diversity
-- Perplexity (PPL): linguistic fluency (with CamemBERT model)
-- SLOR (Syntactic Log-Odds Ratio): normalized syntactic fluency
-- Self-BLEU: inter-text diversity
-- FRE (Flesch Reading Ease) adapted for French
-- Medical-specific metrics (terminology, structure, doses)
+Metrics computed:
+  Lexical richness  : TTR, MSTTR-100, Lexical Entropy, Hapax Ratio
+  Readability       : Flesch Reading Ease (French adaptation)
+  Fluency           : Pseudo-Perplexity (CamemBERT MLM only — no estimate fallback)
+                      SLOR (only if perplexity is available)
+  Diversity         : Self-BLEU-2, Self-BLEU-3, Self-BLEU-4
+  Text statistics   : word_count, char_count, sentence_count,
+                      avg_sentence_length, long_word_ratio
+
+NOTE: Perplexity and SLOR require --use_gpu_ppl and a working GPU.
+      If CamemBERT cannot be loaded, these two metrics are simply absent
+      from the output (no estimation fallback).
 
 Usage:
-    python ~/Data_Generation/scripts/evaluate_automatic.py \
-  --input ~/Data_Generation/datasets/mistral_5shot_v5.jsonl \
-  --output ~/Data_Generation/evaluation/metrics_auto_v5.json \
-  --detailed
-
+    python scripts/evaluate_automatic.py \
+  --input outputs/test_mistral7b_gen.jsonl \
+  --output evaluation/test_mistral7b_gen_metrics.json
 
 Dependencies:
     pip install numpy torch transformers
 """
 
-from __future__ import annotations    # not that useful, just to avoid import issues
+from __future__ import annotations
 
 import argparse
 import json
 import math
-import re     # for tokenizing phrases, doses
+import re
 from collections import Counter
 from pathlib import Path
-from typing import List, Dict, Any, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 
-# Flag to check if transformers is available
+# ── Optional heavy deps ───────────────────────────────────────────────────────
 TRANSFORMERS_AVAILABLE = False
 try:
     import torch
-    from transformers import AutoTokenizer, AutoModelForCausalLM, CamembertForMaskedLM, CamembertTokenizer
+    from transformers import CamembertForMaskedLM, CamembertTokenizer
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
-    print("[WARN] transformers/torch not available. Perplexity will be estimated.")
-
-# If OK --> TRANSFORMERS_AVAILABLE=True --> we can calculate the perplexity using CamemBERT
-# Otherwise --> display a warning and use an entropy-based PPL estimate (see below)
+    print("[WARN] torch/transformers not available — perplexity and SLOR will be skipped.")
 
 
+# =============================================================================
+# 1. TOKENISATION
+# =============================================================================
 
-# 1. TOKENIZATION
 def tokenize_french(text: str) -> List[str]:
-    """
-    Simple tokenization for French.
-    Preserves words with accents and French special characters.
-    """
-    text = text.lower()
-    # Regular expression for French words (with accents)
-    tokens = re.findall(r"\b[a-zàâäéèêëïîôùûüÿçœæ]+\b", text)  #ignore numbers, punctuation, units “Gy”, ... (note: this has an impact on dose metrics if we tokenize via this, but for doses we use another regex below).
-    return tokens
+    """Lowercase French tokeniser — keeps accented characters, strips digits/units."""
+    return re.findall(r"\b[a-zàâäéèêëïîôùûüÿçœæ]+\b", text.lower())
 
 
 def count_syllables_french(word: str) -> int:
-    """
-    Approximate syllable count for French.
-    """
+    """Approximate syllable count for French words."""
     word = word.lower()
     vowels = "aeiouyàâäéèêëïîôùûüÿœæ"
-    count = 0
-    prev_is_vowel = False
-    
-    for char in word:
-        is_vowel = char in vowels
-        if is_vowel and not prev_is_vowel:
+    count, prev_vowel = 0, False
+    for ch in word:
+        is_v = ch in vowels
+        if is_v and not prev_vowel:
             count += 1
-        prev_is_vowel = is_vowel
-    
-    # Improved French rules
-    # 1. Silent final 'e'
-    if word.endswith('e') and count > 1:
+        prev_vowel = is_v
+    if word.endswith("e") and count > 1:
         count -= 1
-    
-    # 2. Silent final '-es', '-ent'
-    if word.endswith(('es', 'ent')) and count > 1:
+    if word.endswith(("es", "ent")) and count > 1:
         count -= 1
-    
     return max(1, count)
 
 
+def split_sentences(text: str) -> List[str]:
+    """Sentence boundary detection for clinical French text.
 
-# 2. LEXICAL RICHNESS METRICS
+    Splits at sentence-ending punctuation followed by whitespace + uppercase letter,
+    or at paragraph breaks (double newline).  Filters fragments shorter than 5 tokens
+    to exclude header lines (date, reference code, recipient list) that would otherwise
+    inflate sentence count and deflate average sentence length.
+    """
+    parts = re.split(r'(?<=[.!?])\s+(?=[A-ZÀÂÄÉÈÊËÎÏÔÙÛÜŒÆ])|(?:\n\n+)', text)
+    return [s.strip() for s in parts if s.strip() and len(s.split()) >= 5]
 
-# 2.1. TTR
+
+# =============================================================================
+# 2. LEXICAL RICHNESS
+# =============================================================================
+
 def compute_ttr(text: str) -> float:
-    """
-    Type-Token Ratio (TTR): measure of lexical richness
-    TTR = number of unique words / total number of words
-    
-    Interpretation:
-    - > 0.5: Excellent (very rich vocabulary)
-    - 0.4-0.5: Good
-    - 0.3-0.4: Acceptable
-    - < 0.3: Poor (repetitive vocabulary)
-    """
+    """Type-Token Ratio.  >0.5 excellent | 0.4–0.5 good | <0.3 poor."""
     tokens = tokenize_french(text)
-    if len(tokens) == 0:
+    if not tokens:
         return 0.0
-    types = set(tokens)
-    return len(types) / len(tokens)
+    return len(set(tokens)) / len(tokens)
 
-# 2.2. MSTTR
-def compute_msttr(text: str, window_size: int = 100) -> float:
-    """
-    Mean Segmental TTR (MSTTR): TTR averaged over windows
-    More robust than simple TTR for long texts as simple TTR
-    naturally decreases with text length.
-    
-    Args:
-        text: Text to analyze
-        window_size: Window size (default: 100 words)
-    """
+
+def compute_msttr(text: str, window: int = 100) -> float:
+    """Mean Segmental TTR (non-overlapping windows of `window` tokens).
+    More robust than TTR for long texts.  >0.6 good."""
     tokens = tokenize_french(text)
-    if len(tokens) < window_size:
-        return compute_ttr(text)        # if text < 100 words --> MSTTR = classic TTR (not long enough to segment)
-   
-   # Otherwise, we divide the window into non-overlapping windows of 100 tokens:
-       # calculate TTR on each window
-       # then we do : MSTTR = average of the TTRs across all windows
-
-   # Formula: MSTTR = mean_k ( |unique(window_k)| / |window_k| )
-
-    ttrs = []
-    for i in range(0, len(tokens) - window_size + 1, window_size):
-        window = tokens[i:i + window_size]
-        ttrs.append(len(set(window)) / len(window))
-    
-    return np.mean(ttrs) if ttrs else 0.0
+    if len(tokens) < window:
+        return compute_ttr(text)
+    ttrs = [
+        len(set(tokens[i : i + window])) / window
+        for i in range(0, len(tokens) - window + 1, window)
+    ]
+    return float(np.mean(ttrs)) if ttrs else 0.0
 
 
-# 2.3. Entropie Lexicale    : Shannon's entropy on words distribution
 def compute_lexical_entropy(text: str) -> float:
-    """
-    Lexical entropy: measure of vocabulary unpredictability.
-    
-    H = -Σ p(w) * log2(p(w))   where : p(w) = frequency(w) / total_words   ; w : word
-    
-    Interpretation:
-    - Higher = more varied/unpredictable vocabulary
-    - Typically between 5 and 10 for well-written texts
-    """
+    """Shannon entropy H = -Σ p(w) log₂ p(w).  Typical range 5–10."""
     tokens = tokenize_french(text)
-    if len(tokens) == 0:
+    if not tokens:
         return 0.0
-    
-    freq = Counter(tokens)
     total = len(tokens)
-    
-    entropy = 0.0
-    for count in freq.values():
-        p = count / total
-        if p > 0:
-            entropy -= p * math.log2(p)
-    
-    return entropy
-
-# 2.4. Hapax ratio  = 
-def compute_hapax_ratio(text: str) -> float:
-    """
-    Ratio of hapax legomena (words appearing only once)  :  (# unique tokens that appear only once) / (N tokens total).
-    
-    Additional indicator of lexical richness.
-    A high ratio indicates diversified vocabulary.
-    """
-    tokens = tokenize_french(text)
-    if len(tokens) == 0:
-        return 0.0
-    
     freq = Counter(tokens)
-    hapax = sum(1 for count in freq.values() if count == 1)
-    return hapax / len(tokens)
+    return -sum((c / total) * math.log2(c / total) for c in freq.values())
 
 
+def compute_hapax_ratio(text: str) -> float:
+    """Proportion of words appearing exactly once (hapax legomena)."""
+    tokens = tokenize_french(text)
+    if not tokens:
+        return 0.0
+    freq = Counter(tokens)
+    return sum(1 for c in freq.values() if c == 1) / len(tokens)
 
-# 3. READABILITY SCORE (Flesch Reading Ease adapted for French)
+
+# =============================================================================
+# 3. READABILITY
+# =============================================================================
 
 def compute_flesch_reading_ease_fr(text: str) -> float:
-    """
-    Flesch readability score adapted for French.
-    Adapted formula: 207 - 1.015 * (words/sentences) - 73.6 * (syllables/words)
-    
-    Interpretation:
-    - 90-100: Very easy
-    - 60-90: Easy
-    - 30-60: Difficult
-    - 0-30: Very difficult (technical/academic text)
-    
-    Note: Medical texts are generally in the 20-40 range.
-    """
-    # Split into sentences
-    sentences = re.split(r'[.!?]+', text)   # approximatively, we can improve this with more complex regex if needed
-    sentences = [s.strip() for s in sentences if s.strip()]
-    
-    if len(sentences) == 0:
-        return 0.0
-    
-    # Tokenize
+    """Flesch Reading Ease adapted for French (Kandel-Moles 1958).
+    Formula: 207 − 1.015 × (words/sentence) − 73.6 × (syllables/word)
+    Medical reports: target < 40 (complex).  Easy text ≈ 60–90."""
+    sentences = split_sentences(text)
     tokens = tokenize_french(text)
-    if len(tokens) == 0:
+    if not sentences or not tokens:
         return 0.0
-    
-    # Count syllables
-    total_syllables = sum(count_syllables_french(w) for w in tokens)
-    
-    # Calculate ratios
-    words_per_sentence = len(tokens) / len(sentences)
-    syllables_per_word = total_syllables / len(tokens)
-    
-    # Flesch formula adapted for French
-    fre = 207 - (1.015 * words_per_sentence) - (73.6 * syllables_per_word)
-    
-    return max(0, min(100, fre))  # Bound between 0 and 100
+    syllables = sum(count_syllables_french(w) for w in tokens)
+    wps = len(tokens) / len(sentences)
+    spw = syllables / len(tokens)
+    return float(max(0.0, min(100.0, 207.0 - 1.015 * wps - 73.6 * spw)))
 
 
+# =============================================================================
+# 4. SELF-BLEU (inter-text diversity)
+# =============================================================================
 
-# 4. SELF-BLEU (Inter-text diversity)
+def _ngrams(tokens: List[str], n: int) -> List[tuple]:
+    return [tuple(tokens[i : i + n]) for i in range(len(tokens) - n + 1)]
 
-# 4.1. N-grams
-def get_ngrams(tokens: List[str], n: int) -> List[tuple]:
-    """Extract n-grams from a token list."""
-    return [tuple(tokens[i:i+n]) for i in range(len(tokens) - n + 1)]
 
-# 4.2. BLEU
-def compute_bleu_single(reference: List[str], hypothesis: List[str], max_n: int = 4) -> float:
-    """
-    Simplified BLEU calculation between two texts.
-    """
-    if len(hypothesis) == 0:
+def _bleu_pair(reference: List[str], hypothesis: List[str], max_n: int) -> float:
+    if not hypothesis:
         return 0.0
-    
     precisions = []
     for n in range(1, max_n + 1):
-        ref_ngrams = Counter(get_ngrams(reference, n))
-        hyp_ngrams = Counter(get_ngrams(hypothesis, n))
-        
-        if len(hyp_ngrams) == 0:
+        ref_ng = Counter(_ngrams(reference, n))
+        hyp_ng = Counter(_ngrams(hypothesis, n))
+        if not hyp_ng:
             precisions.append(0.0)
             continue
-        
-        matches = sum(min(hyp_ngrams[ng], ref_ngrams[ng]) for ng in hyp_ngrams)
-        total = sum(hyp_ngrams.values())
-        precisions.append(matches / total if total > 0 else 0.0)
-    
-    # Geometric mean of precisions
+        matches = sum(min(hyp_ng[ng], ref_ng[ng]) for ng in hyp_ng)
+        total = sum(hyp_ng.values())
+        precisions.append(matches / total if total else 0.0)
     if all(p > 0 for p in precisions):
-        log_avg = sum(math.log(p) for p in precisions) / len(precisions)
-        bleu = math.exp(log_avg)
+        bleu = math.exp(sum(math.log(p) for p in precisions) / len(precisions))
     else:
         bleu = 0.0
-    
-    # Brevity penalty
-    if len(hypothesis) > 0:
-        bp = min(1.0, math.exp(1 - len(reference) / len(hypothesis)))
-    else:
-        bp = 0.0
-    
+    bp = min(1.0, math.exp(1 - len(reference) / len(hypothesis))) if hypothesis else 0.0
     return bleu * bp
 
-# 4.3. Self-BLEU
-def compute_self_bleu(texts: List[str], max_n: int = 4) -> float:
-    """
-    Self-BLEU: measure of diversity between generated texts.
-    For each text, calculates BLEU with all other texts.
-    
-    Interpretation:
-    - < 0.3: Excellent diversity
-    - 0.3-0.5: Good diversity
-    - 0.5-0.7: Moderate diversity
-    - > 0.7: Low diversity (very similar texts)
-    
-    Note: For standardized medical documents, a score of 0.4-0.5
-    is acceptable as they must follow a common structure.
-    """
-#the idea is : for each text :
-    # It becomes a hypothesis
-    # All others are references
-    # Average BLUE vs. all others
-    # Self-BLUE = average across all hypotheses
 
+def compute_self_bleu(texts: List[str], max_n: int = 4) -> float:
+    """Self-BLEU: each text as hypothesis, all others as references.
+    Lower = more diverse.  <0.3 excellent | 0.3–0.5 good | >0.7 low diversity."""
     if len(texts) < 2:
         return 0.0
-    
     tokenized = [tokenize_french(t) for t in texts]
-    bleu_scores = []
-    
+    scores = []
     for i, hyp in enumerate(tokenized):
-        # References = all other texts
         refs = [tokenized[j] for j in range(len(tokenized)) if j != i]
-        
-        # Average BLEU with each reference
-        scores = [compute_bleu_single(ref, hyp, max_n) for ref in refs]
-        if scores:
-            bleu_scores.append(np.mean(scores))
-    
-    return np.mean(bleu_scores) if bleu_scores else 0.0
+        scores.append(float(np.mean([_bleu_pair(r, hyp, max_n) for r in refs])))
+    return float(np.mean(scores)) if scores else 0.0
 
 
+# =============================================================================
+# 5. PERPLEXITY (CamemBERT MLM) — no estimate fallback
+# =============================================================================
 
-# 5. PERPLEXITY (PPL) AND SLOR (Syntactic Log-Odds Ratio)
-
-  # 5.1. Classe PerplexityCalculator
 class PerplexityCalculator:
+    """Pseudo-perplexity via masked language modelling (CamemBERT).
+
+    For each token position i:
+        mask xᵢ, forward-pass, take − log p(xᵢ | x\i)
+    PPL = exp( mean of all NLLs )
+
+    Requires GPU for reasonable speed.  Returns None if model not loaded.
     """
-    Perplexity calculator using CamemBERT (French model).
-    """
-    # on prépare l'objet puis on charge le model CamemBERT MLM
+
     def __init__(self, model_name: str = "camembert-base"):
+        self.model_name = model_name
         self.model = None
         self.tokenizer = None
-        self.model_name = model_name
         self.device = None
-        
-    def load_model(self):
-        """Load CamemBERT model."""
+
+    def load(self) -> bool:
         if not TRANSFORMERS_AVAILABLE:
-            print("[WARN] transformers not available, perplexity will be estimated.")
+            print("[WARN] torch/transformers not available — perplexity skipped.")
             return False
-        
         try:
-            print(f"[...] Loading model {self.model_name}...")
+            print(f"[...] Loading {self.model_name} …")
             self.tokenizer = CamembertTokenizer.from_pretrained(self.model_name)
             self.model = CamembertForMaskedLM.from_pretrained(self.model_name)
-            
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             self.model.to(self.device)
             self.model.eval()
-            
-            print(f"[OK] Model loaded on {self.device}")
+            print(f"[OK]  CamemBERT loaded on {self.device}")
             return True
-        except Exception as e:
-            print(f"[WARN] Cannot load {self.model_name}: {e}")
+        except Exception as exc:
+            print(f"[WARN] Cannot load {self.model_name}: {exc} — perplexity skipped.")
             return False
-    
 
-    # 5.2. Pseudo-perplexity MLM
-    def compute_pseudo_perplexity(self, text: str, batch_size: int = 32) -> float:
-        """
-        CamemBERT is a masked language model (not a causal model). Therefore, we don't calculate "true perplexity" directly, we calculate instead pseudo-perplexity using pseudo-log-likelihood:
-        1. Tokenize the text (max 512 tokens)
-        2. For each position i (except special tokens), we mask the token xi
-        3. The model predicts a distribution p(.|x\i)
-        4. We take the probability of the true token xi
-        5. We accumulate the NLLs: - log p(xi)
-        6. ppl = exp(mean(NLL))
-
-        basically the idea is : each token is masked in turn and we measure the probability of predicting it correctly.
-        """
+    def compute(self, text: str, batch_size: int = 32) -> Optional[float]:
+        """Return pseudo-perplexity, or None if model not available."""
         if self.model is None:
-            return self._estimate_perplexity(text)
-        
+            return None
         try:
-            encodings = self.tokenizer(
-                text, 
-                return_tensors="pt", 
-                truncation=True, 
-                max_length=512
+            enc = self.tokenizer(
+                text, return_tensors="pt", truncation=True, max_length=512
             )
-            input_ids = encodings.input_ids.to(self.device)
+            input_ids = enc.input_ids.to(self.device)
             seq_len = input_ids.size(1)
-            
-            if seq_len <= 2:  # Just [CLS] and [SEP]
-                return float('inf')
-            
-            nlls = []
-            
-            # Batch positions to mask (optimization)
+            if seq_len <= 2:
+                return None
+
+            nlls: List[float] = []
             for start in range(1, seq_len - 1, batch_size):
                 end = min(start + batch_size, seq_len - 1)
-                batch_size_actual = end - start
-                
-                # Create batch of masked inputs
-                masked_batch = input_ids.repeat(batch_size_actual, 1)
+                n = end - start
+                batch = input_ids.repeat(n, 1)
                 targets = []
-                
-                for i, pos in enumerate(range(start, end)):
-                    masked_batch[i, pos] = self.tokenizer.mask_token_id
+                for k, pos in enumerate(range(start, end)):
+                    batch[k, pos] = self.tokenizer.mask_token_id
                     targets.append(input_ids[0, pos].item())
-                
-                # Single forward pass on entire batch
                 with torch.no_grad():
-                    outputs = self.model(masked_batch)
-                    logits = outputs.logits
-                
-                # Extract NLL for each position
-                for i, pos in enumerate(range(start, end)):
-                    log_probs = torch.log_softmax(logits[i, pos], dim=-1)
-                    nll = -log_probs[targets[i]].item()
-                    nlls.append(nll)
-            
-            # Perplexity = exp(mean of NLLs)
-            ppl = math.exp(np.mean(nlls)) if nlls else float('inf')
-            return ppl
-            
-        except Exception as e:
-            print(f"[WARN] Error computing PPL: {e}")
-            return self._estimate_perplexity(text)
-    
-    # Estimation fallback PPL (if no medel) "to not stop the code"
-    def _estimate_perplexity(self, text: str) -> float:
-        """
-        Perplexity estimation based on token entropy (PPL = 2^H) , it's not a linguistic perplexity, it is just an approximation based on lexical diversity
-        Used when model is not available.
-        """
-        tokens = tokenize_french(text)
-        if len(tokens) == 0:
-            return float('inf')
-        
-        freq = Counter(tokens)
-        total = len(tokens)
-        entropy = -sum((c/total) * math.log2(c/total) for c in freq.values() if c > 0)
-        
-        # Approximate conversion entropy -> perplexity
-        return 2 ** entropy
+                    logits = self.model(batch).logits
+                for k, pos in enumerate(range(start, end)):
+                    log_probs = torch.log_softmax(logits[k, pos], dim=-1)
+                    nlls.append(-log_probs[targets[k]].item())
 
-# 5.3. SLOR (Syntactic Log-Odds Ratio)
+            return float(math.exp(np.mean(nlls))) if nlls else None
+        except Exception as exc:
+            print(f"[WARN] PPL error: {exc}")
+            return None
+
+
+# =============================================================================
+# 6. SLOR
+# =============================================================================
+
 def compute_slor(text: str, ppl: float, unigram_ppl: float = 50.0) -> float:
-    """
-    Measures fluency by normalizing by length and unigram frequency
-    
-    SLOR = (log P(S) - log P_unigram(S)) / |S|
-    
-    Interpretation:
-    - Higher = better syntactic fluency
-    - Typical values: -2 to 0 for well-formed texts
-    """
+    """Syntactic Log-Odds Ratio — normalises log P(S) by length and unigram baseline.
+    SLOR = (log P(S) − log P_unigram(S)) / |S|.  Higher = more fluent."""
     tokens = tokenize_french(text)
-    length = len(tokens)
-    
-    if length == 0 or ppl <= 0 or ppl == float('inf'):
+    n = len(tokens)
+    if n == 0 or ppl <= 0:
         return 0.0
-    
-    log_prob = -math.log(ppl) * length  # Approximation
-    log_unigram = -math.log(unigram_ppl) * length
-    
-    slor = (log_prob - log_unigram) / length
-    return slor
+    log_ps = -math.log(ppl) * n
+    log_pu = -math.log(unigram_ppl) * n
+    return (log_ps - log_pu) / n
 
 
+# =============================================================================
+# 7. TEXT STATISTICS
+# =============================================================================
 
-# 6. Complemantary Fluency Metrics
-
-def compute_fluency_metrics(text: str) -> Dict[str, float]:
-    """
-    based bon style/structure features:
-    - Average sentence length
-    - Lexical complexity (long words)
-    - Logical connectives (cohesion)
-    """
+def compute_text_statistics(text: str) -> Dict[str, Any]:
+    """word_count, char_count, sentence_count, avg_sentence_length, long_word_ratio."""
     tokens = tokenize_french(text)
-    
-    # Average sentence length
-    sentences = re.split(r'[.!?]+', text)
-    sentences = [s.strip() for s in sentences if s.strip()]
-    avg_sent_len = np.mean([len(tokenize_french(s)) for s in sentences]) if sentences else 0
-    
-    # Ratio of long words (>6 characters) - complexity indicator
+    sentences = split_sentences(text)
     long_words = [t for t in tokens if len(t) > 6]
-    long_word_ratio = len(long_words) / len(tokens) if tokens else 0
-    
-    # Logical connectors (narrative structure indicator)
-    connectors = [
-        "donc", "ainsi", "cependant", "toutefois", "néanmoins",
-        "puis", "ensuite", "enfin", "également", "notamment",
-        "ailleurs", "effet", "plus", "outre", "conséquent"
-    ]
-    connector_count = sum(1 for t in tokens if t in connectors)
-    
     return {
-        "avg_sentence_length": round(avg_sent_len, 2),
-        "long_word_ratio": round(long_word_ratio, 4),
-        "connector_count": connector_count,
-        "total_tokens": len(tokens),
-        "total_sentences": len(sentences),
+        "word_count":          len(tokens),
+        "char_count":          len(text),
+        "sentence_count":      len(sentences),
+        "avg_sentence_length": round(len(tokens) / len(sentences), 2) if sentences else 0.0,
+        "long_word_ratio":     round(len(long_words) / len(tokens), 4) if tokens else 0.0,
     }
 
 
-
-# 7. Medical specific metrics
-
-
-   # 7.1. Medical terminology density and diversity
-def compute_medical_terminology_density(text: str) -> Dict[str, float]:
-    """
-    Measure medical terminology density
-    
-    Returns:
-    - ratio_medical_terms: proportion of medical terms
-    - unique_medical_terms: number of unique medical terms
-    - medical_diversity: diversity of medical vocabulary
-    """
-    text_lower = text.lower()
-    
-    # Medical terms related to radiotherapy/oncology
-    medical_terms = [
-        # Anatomy
-        "sein", "breast", "thorax", "ganglion", "node", "axillaire", "axillary", "chaîne", "chain", "mammaire", "mammary",
-        "sternum", "clavicule", "clavicle", "sus-claviculaire", "supraclavicular", "pariétal", "parietal",
-        
-        # Pathology
-        "carcinome", "carcinoma", "adénocarcinome", "adenocarcinoma", "tumeur", "tumor", "néoplasie", "neoplasia", "lésion", "lesion",
-        "infiltrant", "infiltrating", "invasif", "invasive", "métastase", "metastasis", "récidive", "recurrence", "rechute",
-        
-        # Biology
-        "récepteur", "receptor", "hormonal", "her2", "ki67", "triple",
-        "positif", "positive", "négatif", "negative", "luminal", "basal",
-        
-        # Stages
-        "tnm", "stade", "stage", "grade", "classification",
-        
-        # Treatments
-        "radiothérapie", "radiotherapy", "chimiothérapie", "chemotherapy", "hormonothérapie",
-        "chirurgie", "surgery", "mastectomie", "mastectomy", "tumorectomie", "lumpectomy", "curage",
-        "adjuvant", "néoadjuvant", "neoadjuvant", "palliatif", "palliative",
-        
-        # RT techniques
-        "photon", "electron", "irradiation", "dose", "fraction",
-        "séance", "session", "gray", "gy", "centigray", "cgy",
-        "conformationnelle", "conformal", "imrt", "arcthérapie", "vmat",
-        "volume", "cible", "target", "ptv", "ctv", "gtv",
-        "organe", "organ", "risque", "risk", "oar", "contrainte", "constraint",
-        
-        # Tolerance
-        "toxicité", "toxicity", "effet", "effect", "secondaire", "secondary", "tolérance", "tolerance",
-        "érythème", "erythema", "épidermite", "asthénie", "fatigue",
-        
-        # Follow-up
-        "surveillance", "follow-up", "consultation", "contrôle", "control", "imagerie", "imaging",
-        "mammographie", "mammography", "échographie", "ultrasound", "irm", "mri", "scanner", "ct",
-    ]
-    
-    # Tokenize
-    tokens = re.findall(r"\b[a-zàâäéèêëïîôùûüÿçœæ]+\b", text_lower)
-    
-    # Count medical terms
-    medical_found = [t for t in tokens if any(mt in t for mt in medical_terms)]
-    unique_medical = set(medical_found)
-    
-    ratio = len(medical_found) / len(tokens) if tokens else 0
-    diversity = len(unique_medical) / len(medical_found) if medical_found else 0
-    
-    return {
-        "medical_term_ratio": round(ratio, 4),
-        "unique_medical_terms": len(unique_medical),
-        "medical_diversity": round(diversity, 4),
-    }
-
-
-   # 7.2. Structure completeness   
-def compute_structure_completeness(text: str) -> Dict[str, any]:
-    """
-    Evaluate presence of expected sections in RT report.
-    
-    Expected sections:
-    1. Patient identity
-    2. Indication/Diagnosis
-    3. Technical modalities
-    4. Course of treatment
-    5. Tolerance
-    6. Conclusion
-
-    Score structure = (#sections détectées) / 6.
-    """
-    text_lower = text.lower()
-    
-    # Section markers
-    section_markers = {
-        "identity": ["patient", "madame", "monsieur", "né", "date de naissance"],
-        "indication": ["indication", "diagnostic", "carcinome", "cancer", "tumeur"],
-        "technique": [
-            "technique", "modalité", "dose", "fraction", "séance", "session",
-            "photon", "electron", "volume", "cible"
-        ],
-        "course": [
-            "déroulement", "réalisation", "deliveré", "réalisé", "effectué",
-            "séance", "session", "fraction", "traitement"
-        ],
-        "tolerance": [
-            "tolérance", "toxicité", "effet", "secondaire",
-            "érythème", "épidermite", "asthénie", "fatigue"
-        ],
-        "conclusion": [
-            "conclusion", "synthèse", "bilan", "surveillance", "fin de traimenet",
-            "suivi", "contrôle", "control"
-        ],
-    }
-    
-    # Check presence of each section
-    section_scores = {}
-    for section, markers in section_markers.items():
-        score = any(marker in text_lower for marker in markers)
-        section_scores[f"has_{section}"] = bool(score)
-    
-    # Overall structural completeness score
-    completeness = sum(section_scores.values()) / len(section_scores)
-    section_scores["structure_completeness"] = round(completeness, 4)
-    
-    return section_scores
-
-
-# 7.3. Dose mention accuracy and consistency   (en utilisant regex)
-def compute_dose_mention_accuracy(text: str) -> Dict[str, any]:
-    """
-    Check presence and consistency of dose mentions
-    
-    Searches for:
-    - Total doses (ex: 50 Gy, 45 gray)
-    - Dose per fraction (ex: 2 Gy/fr, 1.8 gray par fraction)
-    - Number of fractions (ex: 25 fractions, 30 sessions, ...)
-    """
-    # Patterns for doses
-    pattern_dose_total = r'(\d+(?:[.,]\d+)?)\s*(?:gy|gray|centigray|cgy)'
-    pattern_dose_fraction = r'(\d+(?:[.,]\d+)?)\s*(?:gy|gray)(?:/fr|/fraction|par fraction|per fraction|par séance|per session)?'
-    pattern_nb_fractions = r'(\d+)\s*(?:fraction|fractions|séance|séances|session|sessions)'
-    
-    text_lower = text.lower()
-    
-    # Extraction
-    doses_total = re.findall(pattern_dose_total, text_lower, re.IGNORECASE)
-    doses_fraction = re.findall(pattern_dose_fraction, text_lower, re.IGNORECASE)
-    nb_fractions = re.findall(pattern_nb_fractions, text_lower, re.IGNORECASE)
-    
-    # Convert to floats
-    doses_total_float = [float(d.replace(',', '.')) for d in doses_total if d]
-    nb_fractions_int = [int(n) for n in nb_fractions if n]
-    
-    # Consistency check (total dose ≈ dose/fraction × nb fractions)
-    coherent = False
-    if doses_total_float and doses_fraction and nb_fractions_int:
-        total = doses_total_float[0]
-        per_frac = float(doses_fraction[0].replace(',', '.'))
-        n_frac = nb_fractions_int[0]
-        
-        calculated_total = per_frac * n_frac
-        # 10% tolerance
-        if abs(calculated_total - total) / total < 0.10:
-            coherent = True
-    
-    # Vérifie si total ≈ dose/fraction × nb fractions à 10% près
-    return {
-        "has_dose_total": bool(doses_total),
-        "has_dose_per_fraction": bool(doses_fraction),
-        "has_nb_fractions": bool(nb_fractions),
-        "dose_coherence": coherent,
-        "dose_total_value": doses_total_float[0] if doses_total_float else None,
-        "nb_fractions_value": nb_fractions_int[0] if nb_fractions_int else None,
-    }
-
-#7.4. Overall medical quality score (combining all medical-specific metrics)
-def evaluate_medical_quality(text: str) -> Dict[str, any]:
-    """
-    Combining all medical-specific metrics
-    """
-    results = {}
-    
-    # Medical terminology
-    results.update(compute_medical_terminology_density(text))
-    
-    # Structure
-    results.update(compute_structure_completeness(text))
-    
-    # Doses
-    results.update(compute_dose_mention_accuracy(text))
-    
-    # Overall medical quality score
-    quality_components = [
-        results.get("medical_term_ratio", 0) > 0.15,  # At least 15% medical terms
-        results.get("structure_completeness", 0) > 0.67,  # At least 4/6 sections
-        results.get("has_dose_total", False),  # Total dose mentioned
-        results.get("has_nb_fractions", False),  # Number of fractions mentioned
-    ]
-    
-    medical_quality_score = sum(quality_components) / len(quality_components)
-    results["medical_quality_score"] = round(medical_quality_score, 4)
-    
-    return results
-
-
-
-# 8. Complete Evaluation Pipeline
+# =============================================================================
+# 8. PER-TEXT EVALUATION
+# =============================================================================
 
 def evaluate_single_text(
-    text: str, 
-    ppl_calculator: Optional[PerplexityCalculator] = None
+    text: str,
+    ppl_calc: Optional[PerplexityCalculator] = None,
 ) -> Dict[str, Any]:
-    """
-    Evaluate a single text with all metrics
-    """
-    results = {}
-    
+    """Evaluate one text.  Perplexity/SLOR absent if ppl_calc not loaded."""
+    results: Dict[str, Any] = {}
+
     # Lexical richness
-    results["ttr"] = round(compute_ttr(text), 4)
-    results["msttr_100"] = round(compute_msttr(text, 100), 4)
+    results["ttr"]             = round(compute_ttr(text), 4)
+    results["msttr_100"]       = round(compute_msttr(text, 100), 4)
     results["lexical_entropy"] = round(compute_lexical_entropy(text), 4)
-    results["hapax_ratio"] = round(compute_hapax_ratio(text), 4)
-    
+    results["hapax_ratio"]     = round(compute_hapax_ratio(text), 4)
+
     # Readability
     results["flesch_reading_ease_fr"] = round(compute_flesch_reading_ease_fr(text), 2)
-    
-    # Perplexity
-    if ppl_calculator and ppl_calculator.model is not None:
-        results["perplexity"] = round(ppl_calculator.compute_pseudo_perplexity(text), 2)
-    else:
-        results["perplexity_estimate"] = round(
-            PerplexityCalculator()._estimate_perplexity(text), 2
-        )
-    
-    # SLOR
-    ppl_value = results.get("perplexity", results.get("perplexity_estimate", 100))
-    results["slor"] = round(compute_slor(text, ppl_value), 4)
-    
-    # Fluency
-    fluency = compute_fluency_metrics(text)
-    results.update({f"fluency_{k}": v for k, v in fluency.items()})
-    
-    # Medical metrics
-    medical = evaluate_medical_quality(text)
-    results.update({f"medical_{k}": v for k, v in medical.items()})
-    
-    # Length
-    results["char_count"] = len(text)
-    results["word_count"] = len(tokenize_french(text))
-    
+
+
+    # Perplexity + SLOR (only real CamemBERT, no estimate)
+    ppl = ppl_calc.compute(text) if (ppl_calc and ppl_calc.model is not None) else None
+    if ppl is not None:
+        results["perplexity"] = round(ppl, 2)
+        results["slor"]       = round(compute_slor(text, ppl), 4)
+
+    # Text statistics
+    results.update(compute_text_statistics(text))
+
     return results
 
 
+# =============================================================================
+# 9. CORPUS EVALUATION
+# =============================================================================
+
 def evaluate_corpus(
-    texts: List[str], 
-    records: List[Dict] = None,
-    use_gpu_ppl: bool = False
+    texts: List[str],
+    records: Optional[List[Dict]] = None,
+    use_gpu_ppl: bool = False,
 ) -> Dict[str, Any]:
-    """
-    Evaluate a complete corpus of texts
-    
-    Args:
-        texts: List of texts to evaluate
-        records: Original records (for mention_rate)
-        use_gpu_ppl: Use CamemBERT for perplexity (slower but accurate)
-    """
-    # Initialize perplexity calculator if requested
-    ppl_calculator = None
-    if use_gpu_ppl and TRANSFORMERS_AVAILABLE:
-        ppl_calculator = PerplexityCalculator()
-        ppl_calculator.load_model()
-    
-    # Individual metrics
-    print("[...] Computing individual metrics...")
-    individual_metrics = []
+    """Evaluate all texts and aggregate results."""
+
+    # Perplexity calculator
+    ppl_calc: Optional[PerplexityCalculator] = None
+    if use_gpu_ppl:
+        ppl_calc = PerplexityCalculator()
+        if not ppl_calc.load():
+            ppl_calc = None
+
+    # Per-text metrics
+    print("[...] Computing per-text metrics …")
+    individual: List[Dict] = []
     for i, text in enumerate(texts):
-        metrics = evaluate_single_text(text, ppl_calculator)
-        individual_metrics.append(metrics)
-        if (i + 1) % 10 == 0:
-            print(f"      {i+1}/{len(texts)} texts processed")
-    
-    # Aggregation
-    print("[...] Aggregating metrics...")
-    aggregated = {}
-    for key in individual_metrics[0].keys():
-        # Skip None values and non-numeric values
-        values = [m[key] for m in individual_metrics if m[key] is not None and isinstance(m[key], (int, float, bool))]
-        if values:
-            # Convert bool to int for calculations
-            if isinstance(values[0], bool):
-                values = [int(v) for v in values]
-            
-            aggregated[f"{key}_mean"] = round(float(np.mean(values)), 4)
-            aggregated[f"{key}_std"] = round(float(np.std(values)), 4)
-            aggregated[f"{key}_min"] = round(float(np.min(values)), 4)
-            aggregated[f"{key}_max"] = round(float(np.max(values)), 4)
-    
-    # Self-BLEU (corpus diversity)
-    print("[...] Computing Self-BLEU...")
-    aggregated["self_bleu_4"] = round(float(compute_self_bleu(texts, max_n=4)), 4)
-    aggregated["self_bleu_3"] = round(float(compute_self_bleu(texts, max_n=3)), 4)
-    aggregated["self_bleu_2"] = round(float(compute_self_bleu(texts, max_n=2)), 4)
-    
-    # Mention rate if available
+        individual.append(evaluate_single_text(text, ppl_calc))
+        if (i + 1) % 10 == 0 or (i + 1) == len(texts):
+            print(f"      {i+1}/{len(texts)} done")
+
+    # Aggregation — collect all keys that actually appear
+    all_keys: set = set()
+    for m in individual:
+        all_keys.update(m.keys())
+
+    aggregated: Dict[str, Any] = {}
+    for key in sorted(all_keys):
+        values = [
+            m[key] for m in individual
+            if key in m and m[key] is not None and isinstance(m[key], (int, float))
+        ]
+        if not values:
+            continue
+        aggregated[f"{key}_mean"] = round(float(np.mean(values)), 4)
+        aggregated[f"{key}_std"]  = round(float(np.std(values)),  4)
+        aggregated[f"{key}_min"]  = round(float(np.min(values)),  4)
+        aggregated[f"{key}_max"]  = round(float(np.max(values)),  4)
+
+    # Self-BLEU
+    print("[...] Computing Self-BLEU …")
+    aggregated["self_bleu_4"] = round(float(compute_self_bleu(texts, 4)), 4)
+    aggregated["self_bleu_3"] = round(float(compute_self_bleu(texts, 3)), 4)
+    aggregated["self_bleu_2"] = round(float(compute_self_bleu(texts, 2)), 4)
+
+    # Core clinical rate (from JSONL records if available)
     if records:
-        mention_rates = [r.get("mention_rate", r.get("core_clinical_rate", 0)) for r in records]
-        aggregated["mention_rate_mean"] = round(float(np.mean(mention_rates)), 4)
-        aggregated["mention_rate_std"] = round(float(np.std(mention_rates)), 4)
-    
+        ccr = [r.get("core_clinical_rate", 0) for r in records]
+        aggregated["core_clinical_rate_mean"] = round(float(np.mean(ccr)), 4)
+        aggregated["core_clinical_rate_std"]  = round(float(np.std(ccr)),  4)
+
+    # Clinical rule violations (from JSONL records — filled by check_clinical_coherence)
+    _violation_keys = [
+        "v_hormono_rh_neg",
+        "v_ct_notation_post_chir",
+        "v_n_plus_no_ganglion",
+        "v_m1_not_palliatif",
+        "v_recidive_no_history",
+        "v_etalement_incoherent",
+    ]
+    if records and any(vk in r for r in records for vk in _violation_keys):
+        print("[...] Aggregating clinical rule violations …")
+        for vk in _violation_keys:
+            vals = [int(bool(r.get(vk, False))) for r in records]
+            aggregated[f"{vk}_rate"] = round(float(np.mean(vals)), 4)
+
+        n_viol = [r.get("n_violations", 0) for r in records]
+        aggregated["n_violations_mean"] = round(float(np.mean(n_viol)), 4)
+        aggregated["n_violations_std"]  = round(float(np.std(n_viol)),  4)
+
+        coh_scores = [r.get("coherence_score", 1.0) for r in records]
+        aggregated["coherence_score_mean"] = round(float(np.mean(coh_scores)), 4)
+        aggregated["coherence_score_std"]  = round(float(np.std(coh_scores)),  4)
+
+        any_viol = [int(r.get("n_violations", 0) > 0) for r in records]
+        aggregated["any_violation_rate"] = round(float(np.mean(any_viol)), 4)
+
     return {
-        "individual": individual_metrics,
-        "aggregated": aggregated,
-        "corpus_size": len(texts),
+        "individual":   individual,
+        "aggregated":   aggregated,
+        "corpus_size":  len(texts),
     }
 
 
-# 9. MAIN
+# =============================================================================
+# 10. MAIN
+# =============================================================================
 
 def main():
     ap = argparse.ArgumentParser(
-        description="Automatic evaluation of radiotherapy reports - Improved Version 2.0",
+        description="Automatic evaluation of radiotherapy reports (v3)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Usage :
-  python ~/Data_Generation/scripts/evaluate_automatic_v2.py \
-  --input ~/Data_Generation/datasets/mistral_5shot_v5.jsonl \
-  --output ~/Data_Generation/evaluation/metrics_auto_v5.json \
-  --detailed
-
-        """
     )
-    ap.add_argument("--input", required=True, help="JSONL file of generations")
-    ap.add_argument("--output", required=True, help="JSON file for results")
-    ap.add_argument("--text_field", default="cr_text", help="Field containing text")
-    ap.add_argument("--detailed", action="store_true", help="Include individual metrics")
-    ap.add_argument("--use_gpu_ppl", action="store_true", 
-                    help="Use CamemBERT for perplexity (requires GPU)")
-    
+    ap.add_argument("--input",       required=True,          help="Input JSONL file")
+    ap.add_argument("--output",      required=True,          help="Output JSON file")
+    ap.add_argument("--text_field",  default="cr_text",      help="Field containing report text")
+    ap.add_argument("--detailed",    action="store_true",    help="Include per-text metrics in output")
+    ap.add_argument("--use_gpu_ppl", action="store_true",
+                    help="Load CamemBERT for real pseudo-perplexity (requires GPU)")
     args = ap.parse_args()
-    
-    # Load data
-    input_path = Path(args.input)
-    records = []
-    with input_path.open("r", encoding="utf-8") as f:
+
+    if not args.use_gpu_ppl:
+        print("[INFO] --use_gpu_ppl not set: perplexity and SLOR will be absent from results.")
+
+    # Load records
+    in_path = Path(args.input)
+    records: List[Dict] = []
+    with in_path.open("r", encoding="utf-8") as f:
         for line in f:
-            if line.strip():
+            line = line.strip()
+            if line:
                 records.append(json.loads(line))
-    
-    print(f"[OK] Loaded {len(records)} records from {input_path}")
-    
-    # Extract texts
+    print(f"[OK] {len(records)} records loaded from {in_path}")
+
     texts = [r[args.text_field] for r in records if args.text_field in r]
     print(f"[OK] {len(texts)} texts to evaluate")
-    
-    # Evaluation
+
+    # Evaluate
     results = evaluate_corpus(texts, records, use_gpu_ppl=args.use_gpu_ppl)
-    
-    # Add metadata
+
+    # Metadata
     results["metadata"] = {
-        "input_file": str(input_path),
-        "text_field": args.text_field,
-        "num_texts": len(texts),
-        "used_gpu_ppl": args.use_gpu_ppl,
-        "version": "2.0",
+        "input_file":    str(in_path),
+        "text_field":    args.text_field,
+        "num_texts":     len(texts),
+        "used_gpu_ppl":  args.use_gpu_ppl,
+        "version":       "3.0",
     }
-    
-    # Remove individual metrics if not requested
+
     if not args.detailed:
-        del results["individual"]
-    
-    # Convert numpy types to native Python types
-    def convert_numpy(obj):
-        if isinstance(obj, (np.integer, np.int64, np.int32)):
-            return int(obj)
-        elif isinstance(obj, (np.floating, np.float64, np.float32)):
-            return float(obj)
-        elif isinstance(obj, np.ndarray):
-            return obj.tolist()
-        elif isinstance(obj, dict):
-            return {k: convert_numpy(v) for k, v in obj.items()}
-        elif isinstance(obj, list):
-            return [convert_numpy(i) for i in obj]
+        results.pop("individual", None)
+
+    # Convert numpy types
+    def _cvt(obj):
+        if isinstance(obj, (np.integer,)):   return int(obj)
+        if isinstance(obj, (np.floating,)):  return float(obj)
+        if isinstance(obj, np.ndarray):      return obj.tolist()
+        if isinstance(obj, dict):            return {k: _cvt(v) for k, v in obj.items()}
+        if isinstance(obj, list):            return [_cvt(v) for v in obj]
         return obj
-    
-    results = convert_numpy(results)
-    
+    results = _cvt(results)
+
     # Save
-    output_path = Path(args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    
-    with output_path.open("w", encoding="utf-8") as f:
+    out_path = Path(args.output)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with out_path.open("w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
-    
-    print(f"\n[OK] Results saved to {output_path}")
-    
-    # Display summary
-    print("\n" + "=" * 70)
-    print("                    METRICS SUMMARY")
-    print("=" * 70)
-    
+    print(f"\n[OK] Results saved → {out_path}")
+
+    # ── Display ───────────────────────────────────────────────────────────────
     agg = results["aggregated"]
-    
-    print(f"\n LEXICAL RICHNESS:")
-    print(f"   Mean TTR:               {agg['ttr_mean']:.4f} (±{agg['ttr_std']:.4f})")
-    print(f"   Mean MSTTR-100:         {agg['msttr_100_mean']:.4f} (±{agg['msttr_100_std']:.4f})")
-    print(f"   Lexical entropy:        {agg['lexical_entropy_mean']:.4f} (±{agg['lexical_entropy_std']:.4f})")
-    print(f"   Hapax ratio:            {agg['hapax_ratio_mean']:.4f} (±{agg['hapax_ratio_std']:.4f})")
-    
-    print(f"\n READABILITY:")
-    print(f"   Flesch RE (French):     {agg['flesch_reading_ease_fr_mean']:.2f} (±{agg['flesch_reading_ease_fr_std']:.2f})")
-    
-    print(f"\n FLUENCY:")
-    ppl_key = "perplexity_mean" if "perplexity_mean" in agg else "perplexity_estimate_mean"
-    if ppl_key in agg:
-        print(f"   Perplexity:             {agg[ppl_key]:.2f} (±{agg[ppl_key.replace('_mean', '_std')]:.2f})")
-    print(f"   SLOR:                   {agg['slor_mean']:.4f} (±{agg['slor_std']:.4f})")
-    
-    print(f"\n DIVERSITY (Self-BLEU, lower = more diverse):")
-    print(f"   Self-BLEU-2:            {agg['self_bleu_2']:.4f}")
-    print(f"   Self-BLEU-3:            {agg['self_bleu_3']:.4f}")
-    print(f"   Self-BLEU-4:            {agg['self_bleu_4']:.4f}")
-    
-    print(f"\n MEDICAL QUALITY (NEW):")
-    print(f"   Medical term density:   {agg['medical_medical_term_ratio_mean']:.2%} (±{agg['medical_medical_term_ratio_std']:.2%})")
-    print(f"   Structure completeness: {agg['medical_structure_completeness_mean']:.2%} (±{agg['medical_structure_completeness_std']:.2%})")
-    print(f"   Total dose mention:     {agg['medical_has_dose_total_mean']:.2%}")
-    print(f"   Dose coherence:         {agg['medical_dose_coherence_mean']:.2%}")
-    print(f"   Overall quality score:  {agg['medical_medical_quality_score_mean']:.2%} (±{agg['medical_medical_quality_score_std']:.2%})")
-    
-    if "mention_rate_mean" in agg:
-        print(f"\n CONFORMITY:")
-        print(f"   Mention rate:           {agg['mention_rate_mean']:.2%} (±{agg['mention_rate_std']:.2%})")
-    
-    print(f"\n LENGTH:")
-    print(f"   Words/text:             {agg['word_count_mean']:.0f} (±{agg['word_count_std']:.0f})")
-    print(f"   Characters/text:        {agg['char_count_mean']:.0f} (±{agg['char_count_std']:.0f})")
-    print(f"   Sentences/text:         {agg['fluency_total_sentences_mean']:.1f} (±{agg['fluency_total_sentences_std']:.1f})")
-    
-    print("\n" + "=" * 70)
-    print("                    INTERPRETATION GRID")
-    print("=" * 70)
+
+    def _p(label, key_mean, key_std=None, fmt=".4f"):
+        v = agg.get(key_mean)
+        if v is None:
+            return
+        s = f"  {label:<32} {v:{fmt}}"
+        if key_std and agg.get(key_std) is not None:
+            s += f"  (±{agg[key_std]:{fmt}})"
+        print(s)
+
+    print("\n" + "=" * 65)
+    print("                   METRICS SUMMARY")
+    print("=" * 65)
+
+    print("\n LEXICAL RICHNESS:")
+    _p("TTR",              "ttr_mean",             "ttr_std")
+    _p("MSTTR-100",        "msttr_100_mean",        "msttr_100_std")
+    _p("Lexical entropy",  "lexical_entropy_mean",  "lexical_entropy_std")
+    _p("Hapax ratio",      "hapax_ratio_mean",      "hapax_ratio_std")
+
+    print("\n READABILITY:")
+    _p("Flesch RE (French)","flesch_reading_ease_fr_mean","flesch_reading_ease_fr_std", ".2f")
+
+
+    if "perplexity_mean" in agg:
+        print("\n FLUENCY:")
+        _p("Perplexity (CamemBERT)", "perplexity_mean", "perplexity_std", ".2f")
+        _p("SLOR",                   "slor_mean",        "slor_std")
+    else:
+        print("\n FLUENCY:  [skipped — run with --use_gpu_ppl to compute]")
+
+    print("\n DIVERSITY (Self-BLEU, lower = more diverse):")
+    for n in (4, 3, 2):
+        k = f"self_bleu_{n}"
+        if k in agg:
+            print(f"  {'Self-BLEU-' + str(n):<32} {agg[k]:.4f}")
+
+    if "core_clinical_rate_mean" in agg:
+        print("\n CONFORMITY:")
+        _p("Core clinical rate", "core_clinical_rate_mean", "core_clinical_rate_std")
+
+    if "any_violation_rate" in agg:
+        print("\n CLINICAL RULE VIOLATIONS (post-generation validator):")
+        _viol_labels = [
+            ("v_hormono_rh_neg_rate",          "Hormono. sur RH−"),
+            ("v_ct_notation_post_chir_rate",   "cT notation après chirurgie"),
+            ("v_n_plus_no_ganglion_rate",       "N+ sans irrad. ganglionnaire"),
+            ("v_m1_not_palliatif_rate",         "M1 sans contexte palliatif"),
+            ("v_recidive_no_history_rate",      "Récidive sans antécédents"),
+            ("v_etalement_incoherent_rate",     "Étalement incohérent"),
+            ("any_violation_rate",              "≥ 1 violation (taux global)"),
+        ]
+        for key, label in _viol_labels:
+            v = agg.get(key)
+            if v is not None:
+                flag = " ✓" if v == 0.0 else (" !" if v <= 0.1 else " ✗")
+                print(f"  {label:<38} {v:.1%}{flag}")
+        _p("Score cohérence (moy)", "coherence_score_mean", "coherence_score_std")
+        _p("Nb violations (moy)",   "n_violations_mean",    "n_violations_std", ".2f")
+
+    print("\n TEXT STATISTICS:")
+    _p("Words / text",            "word_count_mean",          "word_count_std",          ".1f")
+    _p("Characters / text",       "char_count_mean",          "char_count_std",          ".1f")
+    _p("Sentences / text",        "sentence_count_mean",      "sentence_count_std",      ".1f")
+    _p("Avg sentence length",     "avg_sentence_length_mean", "avg_sentence_length_std", ".2f")
+    _p("Long-word ratio (>6 ch)", "long_word_ratio_mean",     "long_word_ratio_std")
+
+    print("\n" + "=" * 65)
     print("""
-    | Metric                 | Excellent | Good      | Acceptable | Poor      |
-    |------------------------|-----------|-----------|------------|-----------|
-    | TTR                    | > 0.5     | 0.4-0.5   | 0.3-0.4    | < 0.3     |
-    | Self-BLEU              | < 0.3     | 0.3-0.5   | 0.5-0.7    | > 0.7     |
-    | Mention Rate           | > 90%     | 70-90%    | 50-70%     | < 50%     |
-    | Flesch RE              | > 60      | 40-60     | 20-40      | < 20      |
-    | Medical Density        | > 20%     | 15-20%    | 10-15%     | < 10%     |
-    | Structure Complete     | > 85%     | 70-85%    | 50-70%     | < 50%     |
-    | Medical Quality        | > 85%     | 70-85%    | 50-70%     | < 50%     |
-    """)
-    print("=" * 70)
+  INTERPRETATION REFERENCE
+  ┌──────────────────────────┬────────────┬──────────┬────────────┐
+  │ Metric                   │ Excellent  │ Good     │ Poor       │
+  ├──────────────────────────┼────────────┼──────────┼────────────┤
+  │ TTR                      │ > 0.50     │ 0.40–0.5 │ < 0.30     │
+  │ MSTTR-100                │ > 0.65     │ 0.55–0.65│ < 0.50     │
+  │ Self-BLEU-4              │ < 0.30     │ 0.30–0.50│ > 0.70     │
+  │ Flesch RE (medical)      │ < 40       │ 40–60    │ > 60       │
+  │ Perplexity (CamemBERT)   │ < 30       │ 30–50    │ > 50       │
+  │ SLOR                     │ > -5       │ -5 to -10│ < -10      │
+  │ Core clinical rate       │ > 90 %     │ 70–90 %  │ < 50 %     │
+  │ Any violation rate       │ 0 %        │ ≤ 10 %   │ > 20 %     │
+  │ Coherence score          │ = 1.0      │ ≥ 0.80   │ < 0.60     │
+  └──────────────────────────┴────────────┴──────────┴────────────┘
+""")
+    print("=" * 65)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,122 @@
+Rédigez un compte rendu narratif de fin de radiothérapie pour un cancer du {side} chez {civilite} {patient_name}, de sous-type {subtype}, classé {stage}, dans un contexte {context}.
+
+CONDITIONNEMENT CLINIQUE PRÉCIS :
+– Sous-type moléculaire : {subtype} | Récepteurs hormonaux : {rh_status} | Score HER2 : {her2_score}
+– Irradiation ganglionnaire : {irradiation_ganglionnaire}
+– Traitement antérieur (si applicable) : {prior_treatment}
+
+RÈGLE ABSOLUE À RESPECTER :
+{hormono_rule}
+
+Le compte rendu doit intégrer de manière fluide et naturelle l'ensemble des informations cliniques suivantes, sans structuration explicite ni titres visibles :
+– les destinataires, la référence et la date du courrier
+– l'identification du patient ({civilite} {patient_name}, {birth_date})
+– le diagnostic (type histologique, {side}, {subtype}, {stage}, biomarqueurs, score HER2 : {her2_score}, récepteurs hormonaux {rh_status})
+– l'indication thérapeutique, le traitement antérieur si applicable ({prior_treatment}), et la décision de RCP
+– la préparation du traitement (scanner dosimétrique, appareil, CTDI, PDL, technique de dosimétrie)
+– les caractéristiques complètes de la radiothérapie (dates, étalement, accélérateur, énergie des photons, volumes cibles, technique utilisée, doses totales et par fraction, doses moyenne et maximale)
+– les contraintes aux organes à risque (poumon, cœur) avec les seuils de tolérance entre parenthèses
+– l'irradiation ganglionnaire : {irradiation_ganglionnaire}
+– la tolérance au traitement, incluant les toxicités observées et leur grade CTCAE cohérent, ainsi que leur prise en charge
+– le bilan clinique de fin de traitement (score OMS, poids, toxicités résiduelles)
+– les suites thérapeutiques prévues (traitements systémiques selon la règle : {hormono_rule}, et modalités de surveillance)
+– la signature électronique du médecin
+
+Le texte doit mentionner explicitement {civilite}, {patient_name}, {birth_date}, {side}, {subtype}, {stage} et {context}.
+Les informations médicales doivent être cohérentes et réalistes pour une radiothérapie mammaire.
+Le style doit être strictement clinique, sans explication, sans justification, et sans copier les exemples fournis.
+
+Inspirez-vous du style des exemples ci-dessous sans en reprendre les formulations exactes.
+
+Rédigez uniquement le texte final du compte rendu.
+
+EXEMPLES DE STYLE À IMITER :
+
+---
+EXEMPLE 1 :
+Adressé à Dr BONNET Hélène, Dr MARCHAND Pierre, ainsi qu'à la patiente.
+Réf : SL/CB.
+Le 25/03/2019.
+Compte rendu de radiothérapie concernant Madame LECLERC Sophie, née le 12 mars 1965 à Lyon.
+
+Madame LECLERC a été prise en charge pour un carcinome infiltrant du quadrant supéro-externe du sein gauche, classé pT2 pN0 (0/2), SBR II, récepteurs hormonaux positifs, HER2 négatif (score 0), index de prolifération à 22 %. Une tumorectomie avec procédure de ganglion sentinelle a été réalisée le 10 janvier 2019, avec des marges d'exérèse saines. Le dossier a été présenté en réunion de concertation pluridisciplinaire le 28 janvier 2019, concluant à l'indication d'une radiothérapie externe adjuvante du sein gauche selon un schéma hypofractionnée, suivie d'une hormonothérapie par inhibiteur d'aromatase, la patiente étant ménopausée.
+
+La préparation au traitement a reposé sur un scanner dosimétrique TOSHIBA Aquilion LB le 14 février 2019, avec un CTDI mesuré à 18,4 mGy et un PDL de 410,6 mGy.cm. La dosimétrie a été réalisée en technique conformationnelle tridimensionnelle avec double calcul des unités moniteurs et contrôle par dosimétrie in vivo lors de la première séance.
+
+La radiothérapie a été délivrée du 4 mars au 22 mars 2019, soit un étalement de 19 jours, sur un accélérateur Varian Clinac iX. Le sein gauche a été irradié à la dose de 40,05 Gy en 15 fractions de 2,67 Gy par champs tangentiels internes et externes en photons de 6 et 23 MV avec et sans filtre. La dose maximale au volume cible mammaire gauche était de 42,8 Gy pour une dose moyenne de 40,4 Gy. Pour les organes à risque, le poumon gauche présentait un V20 de 12,3 % et un V30 de 10,1 %, avec une dose moyenne de 7,2 Gy. La dose moyenne au cœur était de 3,1 Gy.
+
+En fin de traitement, l'état général était conservé avec un score OMS à 0 et un poids stable à 67 kg. La tolérance cutanée était bonne, avec un érythème de grade I limité aux sillons. Une hormonothérapie par Létrozole un comprimé par jour pour une durée prévue de cinq ans a été instaurée, avec information sur les effets secondaires et surveillance de la densité osseuse prévue. Une mammographie de contrôle est programmée à six mois, avec suivi alternant gynécologue et oncologue tous les six mois.
+
+Compte rendu signé électroniquement par le Dr AUMONT Céline.
+
+---
+EXEMPLE 2 :
+Adressé à Dr RENARD Isabelle, Dr COLLET Henri, Dr SIMON Véronique, ainsi qu'à la patiente.
+Réf : KB/TR.
+Le 25/07/2019.
+Compte rendu de radiothérapie concernant Madame BERNARD Fatima, née HADJALI le 7 juin 1978 à Casablanca.
+
+Madame BERNARD a été prise en charge pour un carcinome infiltrant triple négatif du quadrant inféro-interne du sein droit, initialement classé cT2 cN1, SBR III, récepteurs hormonaux négatifs, HER2 non surexprimé (score 0), index de prolifération élevé à 78 %. Le dossier a été présenté en réunion de concertation pluridisciplinaire le 3 janvier 2019, concluant à l'indication d'une chimiothérapie néoadjuvante par anthracyclines-cyclophosphamide (quatre cycles) suivie de Taxol (quatre cycles), de janvier à mai 2019. La réponse clinique était partielle. Une tumorectomie avec curage axillaire a été réalisée le 15 mai 2019, confirmant un résidu tumoral classé ypT1c ypN1mi (1/14), avec des marges saines. En raison du sous-type triple négatif et de l'atteinte ganglionnaire résiduelle, une irradiation du sein droit et des aires ganglionnaires axillaire et sus-claviculaire a été décidée. Aucune hormonothérapie n'est indiquée compte tenu de l'absence de récepteurs hormonaux.
+
+La préparation au traitement a reposé sur un scanner dosimétrique TOSHIBA Aquilion LB le 27 mai 2019, avec un CTDI de 26,1 mGy et un PDL de 580,4 mGy.cm. La dosimétrie a été réalisée en technique conformationnelle tridimensionnelle avec double calcul des unités moniteurs et contrôle par dosimétrie in vivo lors des premières séances.
+
+La radiothérapie a été délivrée du 10 juin au 24 juillet 2019, soit un étalement de 45 jours, sur un accélérateur Varian TrueBeam. Le sein droit et les aires ganglionnaires axillaire et sus-claviculaire ont été irradiés à la dose de 50 Gy en 25 fractions de 2 Gy par jour. Le volume mammaire droit a été traité par champs tangentiels internes et externes en photons de 6 et 23 MV, complétés par un champ antérieur pour les aires ganglionnaires. Un surdosage sur le lit tumoral de 16 Gy en 8 fractions a été délivré par champs réduits en photons de 6 MV. La dose maximale au volume cible mammaire était de 53,6 Gy pour une dose moyenne de 50,8 Gy, et la dose maximale aux aires ganglionnaires de 53,1 Gy pour une dose moyenne de 50,2 Gy. Le poumon droit présentait un V20 de 21,4 % et un V30 de 17,2 %. La dose moyenne au cœur était de 2,8 Gy.
+
+La tolérance au traitement a été marquée par une épidermite de grade 2 dans le sillon sous-mammaire, traitée par Ialuset, et une asthénie de grade 1 en fin de parcours. En fin de traitement, le score OMS était à 1, avec un poids stable à 74 kg. Aucun traitement systémique complémentaire par hormonothérapie n'est indiqué. Un suivi clinique rapproché est organisé, avec une mammographie à six mois. La patiente sera revue en consultation dans deux mois.
+
+Compte rendu signé électroniquement par le Dr NGUYEN Marie.
+
+---
+EXEMPLE 3 :
+Adressé à Dr PERROT Cécile, Dr MAGNIN Jean-Paul, ainsi qu'à la patiente.
+Réf : NP/CM.
+Le 02/12/2019.
+Compte rendu de radiothérapie concernant Madame KLEIN Nathalie, née SCHMITT le 3 octobre 1958 à Strasbourg.
+
+Madame KLEIN est suivie depuis 2011 pour un carcinome infiltrant du sein gauche, de sous-type RH+/HER2+ (score HER2 3+), initialement traité par mastectomie totale avec curage axillaire, chimiothérapie adjuvante, trastuzumab pour une durée d'un an, puis hormonothérapie par Tamoxifène pendant cinq ans. En septembre 2019, une récidive locale sur la paroi thoracique gauche a été identifiée, confirmée par biopsie : carcinome infiltrant pT1a, sans atteinte ganglionnaire (pN0), conservant le profil moléculaire initial RH+/HER2+. Le dossier a été présenté en réunion de concertation pluridisciplinaire le 14 octobre 2019, concluant à l'exérèse chirurgicale du nodule de récidive suivie d'une irradiation de la paroi thoracique gauche, avec reprise d'une hormonothérapie par anti-aromatase et réintroduction d'un traitement anti-HER2.
+
+La préparation au traitement a reposé sur un scanner dosimétrique TOSHIBA Aquilion LB le 21 octobre 2019, avec un CTDI mesuré à 22,7 mGy et un PDL de 498,3 mGy.cm. La dosimétrie a été réalisée en technique conformationnelle tridimensionnelle avec double calcul des unités moniteurs et contrôle in vivo lors de la première séance.
+
+La radiothérapie a été délivrée du 28 octobre au 29 novembre 2019, soit un étalement de 33 jours, sur un accélérateur Varian Clinac. La paroi thoracique gauche a été irradiée à la dose de 50 Gy en 25 fractions de 2 Gy par technique mixte tangentielle et directe en photons de 6 MV. La dose maximale au volume cible de la paroi était de 53,4 Gy pour une dose moyenne de 50,6 Gy. Le poumon gauche présentait un V20 de 15,8 % et un V30 de 13,2 %, avec une dose moyenne de 9,4 Gy. La dose moyenne au cœur était de 4,7 Gy avec un V25 de 9,1 %.
+
+La tolérance cutanée était acceptable, avec une épidermite de grade 1 diffuse et un érythème de grade 2 localisé sur la zone de récidive, traité par Biafine et Ialuset. En fin de traitement, le score OMS était à 0, avec un poids stable à 62 kg. Il a été décidé d'instaurer une hormonothérapie par Anastrozole un comprimé par jour en association avec la reprise du trastuzumab pour une durée prévue d'un an. Une surveillance rapprochée est organisée avec consultation tous les trois mois la première année, et TEP-TDM de contrôle à six mois.
+
+Compte rendu signé électroniquement par le Dr LEFORT Bruno.
+
+---
+EXEMPLE 4 :
+Adressé à Dr AUBERT Laure, Dr PRUVOT François, ainsi qu'au patient.
+Réf : DP/AL.
+Le 05/09/2019.
+Compte rendu de radiothérapie concernant Monsieur DUPUIS Pierre, né le 18 mai 1957 à Bordeaux.
+
+Monsieur DUPUIS a consulté suite à la découverte fortuite d'un nodule du sein gauche lors d'un bilan de médecine générale. La biopsie confirmait un carcinome infiltrant de type non spécifique, SBR II. Une tumorectomie avec procédure de ganglion sentinelle a été réalisée le 12 juin 2019, concluant à un carcinome infiltrant de 18 mm, classé pT1c pN0 (0/3), récepteurs hormonaux fortement positifs, HER2 négatif (score 0), index de prolifération à 18 %, marges saines. Le dossier a été présenté en réunion de concertation pluridisciplinaire le 1er juillet 2019, concluant à l'indication d'une radiothérapie externe adjuvante du sein gauche selon un schéma hypofractionnée, suivie d'une hormonothérapie par Tamoxifène, le Tamoxifène représentant le traitement hormonal de référence dans ce contexte.
+
+La préparation au traitement a reposé sur un scanner dosimétrique TOSHIBA Aquilion LB le 18 juillet 2019, avec un CTDI mesuré à 17,9 mGy et un PDL de 388,2 mGy.cm. La dosimétrie a été réalisée en technique conformationnelle tridimensionnelle avec double calcul des unités moniteurs et contrôle par dosimétrie in vivo lors de la première séance.
+
+La radiothérapie a été délivrée du 12 août au 30 août 2019, soit un étalement de 19 jours, sur un accélérateur Varian Clinac. Le sein gauche a été irradié à la dose de 40,05 Gy en 15 fractions de 2,67 Gy par champs tangentiels internes et externes en photons de 6 et 23 MV avec et sans filtre. La dose maximale au volume cible mammaire gauche était de 42,6 Gy pour une dose moyenne de 40,3 Gy. Le poumon gauche présentait un V20 de 10,6 % et un V30 de 8,9 %, avec une dose moyenne de 6,4 Gy. La dose moyenne au cœur était de 4,2 Gy.
+
+La tolérance au traitement était bonne, sans toxicité cutanée au-delà d'un érythème de grade I en fin de parcours. En fin de traitement, le score OMS était à 0, avec un poids stable à 79 kg. Une hormonothérapie par Tamoxifène 20 mg par jour a été instaurée pour une durée prévue de cinq ans, avec information sur les risques thromboemboliques et la nécessité d'un suivi ophtalmologique annuel. Le patient sera revu en consultation dans trois mois avec bilan biologique, et en alternance avec le chirurgien tous les six mois.
+
+Compte rendu signé électroniquement par le Dr ROUX Sandrine.
+
+---
+EXEMPLE 5 :
+Adressé à Dr MARCHETTI Éric, Dr VIDAL Sandrine, Dr HAMIDI Nora.
+Réf : GR/EV.
+Le 17/04/2020.
+Compte rendu de radiothérapie concernant Madame GARCIA Rosa, née le 22 novembre 1953 à Barcelone.
+
+Madame GARCIA est suivie pour un carcinome mammaire du sein droit, de sous-type RH-/HER2+ (score 3+), classé cT4 cN2 M1, avec des métastases osseuses multiples rachidiennes et pelviennes confirmées au TEP-TDM. Le dossier a été présenté en réunion de concertation pluridisciplinaire le 20 mars 2020, décidant d'une radiothérapie à visée palliative sur la paroi thoracique droite et les aires ganglionnaires axillaires et sus-claviculaires droites, en association avec la poursuite du traitement systémique par trastuzumab et pertuzumab. Aucune hormonothérapie n'est indiquée en l'absence de récepteurs hormonaux.
+
+La préparation au traitement a reposé sur un scanner dosimétrique TOSHIBA Aquilion LB le 30 mars 2020, avec un CTDI mesuré à 31,2 mGy et un PDL de 720,5 mGy.cm. La dosimétrie a été réalisée en technique conformationnelle tridimensionnelle avec double calcul des unités moniteurs et contrôle par dosimétrie in vivo lors de la première séance.
+
+La radiothérapie palliative a été délivrée du 6 au 17 avril 2020, soit un étalement de 12 jours, sur un accélérateur Varian TrueBeam. La paroi thoracique droite et les aires ganglionnaires axillaires et sus-claviculaires ont été irradiées à la dose de 30 Gy en 10 fractions de 3 Gy par jour, par champs tangentiels internes et externes en photons de 6 et 23 MV complétés par un champ antérieur ganglionnaire. La dose maximale au volume cible de la paroi était de 32,4 Gy pour une dose moyenne de 30,6 Gy, et la dose maximale aux aires ganglionnaires de 31,8 Gy pour une dose moyenne de 30,1 Gy. Le poumon droit présentait un V20 de 18,7 % et un V30 de 14,3 %. La dose moyenne au cœur était de 3,6 Gy.
+
+La tolérance était satisfaisante dans ce contexte palliatif, avec un érythème de grade 1 et une asthénie de grade 2 préexistante en rapport avec la charge métastatique. En fin de traitement, le score OMS était à 2, avec un poids à 58 kg, en perte de 3 kg depuis le début de la prise en charge. La poursuite du traitement systémique par trastuzumab et pertuzumab est organisée, avec réévaluation radiologique à deux mois. Un soutien par soins de support et une consultation de la douleur ont été proposés. La patiente est orientée vers l'équipe de soins palliatifs pour un accompagnement global.
+
+Compte rendu signé électroniquement par le Dr BERTRAND Karine.
+
+---
+TÂCHE :
+Rédigez maintenant le compte rendu complet. Ne produisez que le texte final du compte rendu.

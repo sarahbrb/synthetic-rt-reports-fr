@@ -1,0 +1,45 @@
+Rédigez un compte rendu narratif de fin de traitement de radiothérapie pour un cancer du sein pour le patient avec les informations ci-dessous:
+
+Profil clinique du patient (données réelles) :
+– Identité : {patient_name}, né(e) le {birth_date}
+– Âge au diagnostic : {age_diagnostic} ans
+– Sein concerné : {lateralite}
+– Type histologique : {type_histologique} ({code_oncotree})
+– Sous-type histologique : {sous_type_histologique}
+– Grade SBR : {grade_sbr}
+– Sous-type moléculaire (PAM50) : {sous_type_pam50}
+– Récepteurs œstrogènes (ER) : {statut_er}
+– Récepteurs progestérone (PR) : {statut_pr}
+– Statut HER2 : {statut_her2}
+– Taille tumorale : {taille_tumorale_mm} mm
+– Stade tumoral : {stade_tumoral}
+– Ganglions positifs : {ganglions_positifs}
+– Indice pronostique de Nottingham : {indice_nottingham}
+– Type de chirurgie : {type_chirurgie}
+– État ménopausique : {etat_menopausique}
+– Chimiothérapie : {chimiotherapie}
+– Hormonothérapie : {hormonotherapie}
+
+Tâche :
+Rédigez un compte rendu narratif de fin de traitement de radiothérapie pour ce patient en intégrant fidèlement l'ensemble des informations du profil ci-dessus, sans structuration explicite ni titres visibles.
+
+
+Le compte rendu doit intégrer de manière fluide et naturelle :
+– les destinataires, la référence et la date du courrier
+– l'identification du patient ({patient_name}, né(e) le {birth_date}), âgé(e) de {age_diagnostic} ans
+– le diagnostic : {diagnostic_text}
+– le contexte thérapeutique : {contexte_text}
+– la préparation du traitement (scanner dosimétrique, CTDI, PDL, technique de dosimétrie)
+– les caractéristiques de la radiothérapie (dates, étalement, accélérateur, énergie, volumes cibles, technique, doses totales et par fraction, doses moyenne et maximale)
+– les contraintes aux organes à risque (poumon, cœur) avec les seuils de tolérance entre parenthèses
+– la tolérance au traitement (toxicités observées avec grade CTCAE et prise en charge)
+– le bilan de fin de traitement (score OMS, poids, toxicités résiduelles)
+– les suites thérapeutiques prévues et les modalités de surveillance
+– la signature électronique du médecin
+
+Le texte doit mentionner explicitement : {patient_name}, {birth_date}, {age_diagnostic} ans, {mentions_explicites}.
+Si un champ du profil ci-dessus est marqué "non renseigné", ne pas l'évoquer ni l'inventer : rédiger uniquement à partir des informations présentes.
+Les champs binaires chimiothérapie ({chimiotherapie}) et hormonothérapie ({hormonotherapie}) ne doivent jamais apparaître sous forme de 'oui' ou 'non' dans le texte. Si oui : nommer une molécule réelle cohérente avec l'état ménopausique ({etat_menopausique}) pour l'hormonothérapie et avec le statut HER2 ({statut_her2}) pour une éventuelle thérapie anti-HER2. Si non : ne pas l'écrire comme une absence brute, mais l'omettre naturellement ou la relier implicitement au profil (récepteurs, stade, grade).
+Les informations médicales doivent être cohérentes et réalistes pour une radiothérapie mammaire. Le style doit être strictement clinique, sans explication, sans justification.
+
+Rédigez uniquement le texte final du compte rendu.

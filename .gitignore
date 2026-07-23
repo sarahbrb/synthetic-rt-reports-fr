@@ -1,0 +1,29 @@
+# Generated outputs (uploaded to Hugging Face separately)
+outputs/
+
+# Patient data - never publish
+data/
+Analyse datasets/
+
+# OAR cluster logs and generated job scripts
+logs/
+
+# Clinical guidelines PDFs - copyright
+référentiels/
+
+# LaTeX papers - not ready
+paper/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+
+# Old / draft files
+prompts/prompt_v0*
+scripts/rerun_5shot_only.py
+scripts/launch_campaign.py
+scripts/run_one_model.py
+scripts/generate_combinations_*.py
+scripts/analyse_datasets.py

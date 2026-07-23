@@ -1,0 +1,36 @@
+Rédigez un compte rendu narratif de fin de traitement de radiothérapie pour un cancer du sein pour le patient avec les informations ci-dessous:
+
+Profil clinique du patient (données réelles) :
+– Identité : {patient_name}, né(e) le {birth_date}
+– Âge : {age} ans
+– Stade T : {stade_t}
+– Stade N : {stade_n}
+– Stade global : {stade_global}
+– Grade SBR : {grade}
+– Taille tumorale : {taille_tumorale_mm} mm
+– Récepteurs œstrogènes (ER) : {statut_er}
+– Récepteurs progestérone (PR) : {statut_pr}
+– Ganglions examinés : {ganglions_examines}
+– Ganglions positifs : {ganglions_positifs}
+
+Tâche :
+Rédigez un compte rendu narratif de fin de traitement de radiothérapie pour ce patient en intégrant fidèlement l'ensemble des informations du profil ci-dessus, sans structuration explicite ni titres visibles.
+
+
+Le compte rendu doit intégrer de manière fluide et naturelle :
+– les destinataires, la référence et la date du courrier
+– l'identification du patient ({patient_name}, né(e) le {birth_date}), âgé(e) de {age} ans
+– le diagnostic : stade {stade_t}{stade_n}M0 ({stade_global}), grade SBR {grade}, taille tumorale {taille_tumorale_mm} mm, récepteurs ER {statut_er}, PR {statut_pr}, {ganglions_positifs} ganglion(s) positif(s) sur {ganglions_examines} examiné(s)
+– le contexte thérapeutique : chirurgie (à adapter selon stade {stade_t}{stade_n}M0), traitements systémiques cohérents avec les récepteurs ER {statut_er} et PR {statut_pr}, décision de réunion de concertation pluridisciplinaire
+– la préparation du traitement (scanner dosimétrique, CTDI, PDL, technique de dosimétrie)
+– les caractéristiques de la radiothérapie (dates, étalement, accélérateur, énergie, volumes cibles, technique, doses totales et par fraction, doses moyenne et maximale)
+– les contraintes aux organes à risque (poumon, cœur) avec les seuils de tolérance entre parenthèses
+– la tolérance au traitement (toxicités observées avec grade CTCAE et prise en charge)
+– le bilan de fin de traitement (score OMS, poids, toxicités résiduelles)
+– les suites thérapeutiques prévues et les modalités de surveillance
+– la signature électronique du médecin
+
+Le texte doit mentionner explicitement : {patient_name}, {birth_date}, {age} ans, stade {stade_t}{stade_n}M0 ({stade_global}), grade SBR {grade}, {taille_tumorale_mm} mm, ER {statut_er}, PR {statut_pr}, {ganglions_positifs} ganglion(s) positif(s) sur {ganglions_examines} examiné(s).
+Les informations médicales doivent être cohérentes et réalistes pour une radiothérapie mammaire. Le style doit être strictement clinique, sans explication, sans justification.
+
+Rédigez uniquement le texte final du compte rendu.

@@ -1,0 +1,103 @@
+Rédigez un compte rendu narratif de fin de traitement de radiothérapie pour un cancer du sein pour le patient avec les informations ci-dessous:
+
+Profil clinique du patient (données réelles) :
+– Identité : {patient_name}, né(e) le {birth_date}
+– Âge : {age} ans
+– Stade T : {stade_t}
+– Stade N : {stade_n}
+– Stade global : {stade_global}
+– Grade SBR : {grade}
+– Taille tumorale : {taille_tumorale_mm} mm
+– Récepteurs œstrogènes (ER) : {statut_er}
+– Récepteurs progestérone (PR) : {statut_pr}
+– Ganglions examinés : {ganglions_examines}
+– Ganglions positifs : {ganglions_positifs}
+
+Tâche :
+Rédigez un compte rendu narratif de fin de traitement de radiothérapie pour ce patient en intégrant fidèlement l'ensemble des informations du profil ci-dessus, sans structuration explicite ni titres visibles.
+
+
+Le compte rendu doit intégrer de manière fluide et naturelle :
+– les destinataires, la référence et la date du courrier
+– l'identification du patient ({patient_name}, né(e) le {birth_date}), âgé(e) de {age} ans
+– le diagnostic : stade {stade_t}{stade_n}M0 ({stade_global}), grade SBR {grade}, taille tumorale {taille_tumorale_mm} mm, récepteurs ER {statut_er}, PR {statut_pr}, {ganglions_positifs} ganglion(s) positif(s) sur {ganglions_examines} examiné(s)
+– le contexte thérapeutique : chirurgie (à adapter selon stade {stade_t}{stade_n}M0), traitements systémiques cohérents avec les récepteurs ER {statut_er} et PR {statut_pr}, décision de réunion de concertation pluridisciplinaire
+– la préparation du traitement (scanner dosimétrique, CTDI, PDL, technique de dosimétrie)
+– les caractéristiques de la radiothérapie (dates, étalement, accélérateur, énergie, volumes cibles, technique, doses totales et par fraction, doses moyenne et maximale)
+– les contraintes aux organes à risque (poumon, cœur) avec les seuils de tolérance entre parenthèses
+– la tolérance au traitement (toxicités observées avec grade CTCAE et prise en charge)
+– le bilan de fin de traitement (score OMS, poids, toxicités résiduelles)
+– les suites thérapeutiques prévues et les modalités de surveillance
+– la signature électronique du médecin
+
+Le texte doit mentionner explicitement : {patient_name}, {birth_date}, {age} ans, stade {stade_t}{stade_n}M0 ({stade_global}), grade SBR {grade}, {taille_tumorale_mm} mm, ER {statut_er}, PR {statut_pr}, {ganglions_positifs} ganglion(s) positif(s) sur {ganglions_examines} examiné(s).
+Les informations médicales doivent être cohérentes et réalistes pour une radiothérapie mammaire. Le style doit être strictement clinique, sans explication, sans justification.
+
+Rédigez uniquement le texte final du compte rendu.
+
+Inspirez-vous du style des exemples ci-dessous sans en reprendre les formulations exactes.
+Le style doit être strictement clinique, sans explication, sans justification, et sans copier les exemples fournis.
+
+Exemples de style à imiter :
+
+---
+Exemple 1 :
+Adressé à Dr BONNET Hélène, Dr MARCHAND Pierre, ainsi qu'à la patiente.
+Réf : SL/CB.
+Le 03/12/2018.
+COMPTE RENDU DE RADIOTHERAPIE CONCERNANT Madame LECLERC Sophie, née le 10/09/1972 à Lyon.
+Indication: Carcinome infiltrant du quadrant supéro-externe du sein droit pT1 A pN0, RH +, IP 100%, CR B2 hyper exprimé accompagnée d'un carcinome lobulaire infiltrant pT1 b pN0 RH +, IP 10%, CR B2 0, R0 après recoupe. Décision de RCP 12 Taxol et 18 Herceptine. Consultation oncogénétique : pas de mutation donc pas de mastectomie complémentaire. Radiothérapie externe du sein droit puis hormonothérapie adjuvante par Nolvadex car la patiente n'étant pas ménopausée.
+Préparation au traitement : Scanner dosimétrique TOSHIBA AQUILION LB : CTDI : 24,6 mGy, PDL : 622 mGy.cm Double calcul des unités motrices. Dosimétrie in vivo lors de la première et deuxième séquence d'irradiation. Réalisation du traitement : Radiothérapie externe conformationnelle 3D sur accélérateur Varian clinac du 12 octobre au 29 novembre 2018 Étalement 39 jours Sein droit: 50 Gy en 25 fractions par trois tangentiels internes et trois tangentiels externes aux photons de 6 MV avec et sans filtre Site tumoral initial: 16 Gy en 8 fractions par deux champs tangentiels internes et externes réduits aux photons de 23 et 6 MV CTV sein droit : dose max 53 Gy, dose moyenne 50,9 Gy CTV boost : dose max 68 Gy, dose moyenne 66,5 Gy OAR poumon droit : V20 = 17,8% (normal < 30%), V30 = 15,8% (normal < 20%) En fin de traitement : OMS zéro, poids à 86 kg, érythème de grade I.
+Prévisions : Hormonothérapie adjuvante par Nolvadex pendant cinq ans. Herceptine adjuvante pendant un an au total. Surveillances alternées.
+Signé électroniquement par le Dr AUMONT Céline.
+
+---
+Exemple 2 :
+Adressé à Dr RENARD Isabelle, Dr COLLET Henri, Dr SIMON Véronique, ainsi qu'à la patiente.
+Réf : KB/TR.
+Le 11/12/2016.
+COMPTE RENDU DE RADIOTHERAPIE CONCERNANT Madame BERNARD Fatima, née HADJALI le 04/05/1944 à Casablanca.
+Indication: Carcinome mammaire bilatéral traité par tumorectomie + ganglion sentinelle bilatérale. Sein droit pT1c N0 SBR III RH – Cerb2 +++ R0 IP 50% Sein gauche pT1c pN0 SBR I RH + Cerb2 0 IP 5%. Décision RCP : Taxol Herceptin, radiothérapie externe mammaire bilatérale, hormonothérapie adjuvante par anti-aromatase.
+Préparation au traitement : Scanner dosimétrique TOSHIBA AQUILION LB CTDI 33,9 mGy PDL 1,48 Gy.cm Double calcul des unités motrices. Dosimétrie in vivo lors de la première séance. Réalisation du traitement : Radiothérapie externe conformationnelle 3D sur accélérateur CLINAC VARIAN du 6 novembre au 11 décembre 2016 Étalement de 36 jours Sein gauche: 50 Gy en 25 fractions par quatre tangentiels internes et quatre tangentiels externes aux photons de 6 et 23 MV avec et sans filtre Sein droit : 50 Gy en 25 fractions par trois tangentiels internes et trois tangentiels externes aux photons de 23 MV CTV sein gauche dose max 53,9 Gy dose moyenne 50,9 Gy CTV sein droit dose max 54,2 Gy dose moyenne 50,3 Gy OAR poumon droit et gauche V20 = 9,7% (normal < 30%) V30 = 8,2% (normal < 20%) OAR cœur dose moyenne 2,4 Gy (contrainte < 4 Gy côté gauche) En fin de traitement : Lassitude OMS entre 0 et 1, poids stable à 108 kg, érythème grade 1, épidermite exfoliative minime des sillons.
+Prévisions : Poursuite de l'Herceptin à visée adjuvante. Introduction du Fémara un comprimé par jour pendant 5 ans à partir de janvier 2017. Surveillances alternées.
+Signé électroniquement par le Dr NGUYEN Marie.
+
+---
+Exemple 3 :
+Adressé à Dr PERROT Cécile, Dr MAGNIN Jean-Paul, ainsi qu'à la patiente.
+Réf : NP/CM.
+Le 19/12/2020.
+COMPTE RENDU DE RADIOTHERAPIE CONCERNANT Madame KLEIN Nathalie, née SCHMITT le 26/02/1946.
+Indication: Radiothérapie adjuvante dans le cadre d'un carcinome bifocal de 9 et 4 mm, SBR II, micro SBR III, RH+, Her2 négatif, avec IP à 41%, sans embole, classé pT1b N0 (0/2) R0 des quadrants internes du sein gauche associé à du CCIS de bas grade sans nécrose. Tumorectomie avec technique du ganglion sentinelle le 11 septembre 2020. Schéma thérapeutique validé en réunion de concertation pluridisciplinaire le 1er octobre 2020.
+Préparation du traitement : Scanner dosimétrique TOSHIBA AQUILION LB le 24 octobre 2020 CTDI 29,3 mGy PDL 680,3 mGy/cm Double calcul des UM. Dosimétrie in vivo lors de la première séance. Réalisation du traitement : Radiothérapie conformationnelle 3D sur accélérateur CLINAC VARIAN du 8 novembre 2020 au 12 décembre 2020 inclus soit un étalement de 25 jours. Il a été délivré une dose totale de 50 Gy à raison de 2 Gy par fraction cinq séances par semaine en photons d'énergie X 6 MV et X 23 MV à l'aide de faisceaux tangentiels centrés sur l'ensemble du sein gauche. CTV sein gauche dose moyenne = 50,5 Gy PTV sein gauche dose moyenne = 50,4 Gy Poumon gauche V20 = 9,9% (normal < 30%), V30 = 8,3% (normal < 20%), dose moyenne = 6,8 Gy. OAR cœur dose moyenne 3,2 Gy (contrainte < 4 Gy côté gauche).
+Tolérance: La patiente a présenté une épidermite de grade 2 avec phlyctène du sillon sous-mammaire traitée par Hydrotac. Épidermite de grade 1 de l'ensemble du sein traitée par Ialuset.
+Prévisions: Densitométrie osseuse avec T score à -1,2 au niveau fémoral et -0,1 au niveau lombaire, à recontrôler dans 3 ans. Bilan biologique sans particularité en dehors d'un déficit en vitamine D traité par Uvedose. Surveillance clinique alternée tous les 6 mois. Le Fémara est prescrit pour 5 ans.
+Signé électroniquement par le Dr LEFORT Bruno.
+
+---
+Exemple 4 :
+Adressé à Dr AUBERT Laure, Dr PRUVOT François, ainsi qu'à la patiente.
+Réf : DP/AL.
+Le 29/11/2017.
+COMPTE RENDU DE RADIOTHERAPIE CONCERNANT Madame GARCIA Rosa, née le 04/03/1963 à Barcelone.
+Indication: Auto-palpation d'un nodule à l'union des quadrants externes du sein droit. Mammographie et échographie : nodule de 8 mm. Biopsie : carcinome infiltrant de type non spécifique, SBR I, sans embole ou composante in situ, RE 100%, RP 90%, HER2 négatif, index de prolifération à 5%. Tumorectomie et ganglion sentinelle. Carcinome infiltrant de type non spécifique de 8 mm, SBR I, pT1a pN0, RE 100%, RP 30%, index de prolifération à 12%, Her2 négatif, exérèse in sano. Réunion de concertation pluridisciplinaire : radiothérapie et hormonothérapie par anti-aromatase.
+Préparation à la radiothérapie : Scanner dosimétrique TOSHIBA AQUILION LB (CTDI : 21,9 mGy ; PDL : 550,2 mGy.cm). Dosimétrie 3D conformationnelle. Double calcul UM. Dosimétrie in vivo réalisée le premier jour. Traitement : Du 12 octobre au 29 novembre 2017 sur accélérateur Clinac Varian, étalement de 49 jours. Sein droit : par des champs tangentiels interne et externe aux photons de 6 MV avec et sans filtre : 50 Gy en 25 fractions. Surdosage du lit chirurgical par des champs tangentiels réduits aux photons de 6 et 23 MV : 16 Gy en 8 fractions. Volumes cibles : Sein droit : dose maximale de 54 Gy, dose moyenne de 50,8 Gy. Surdosage du lit chirurgical : dose maximale de 68,9 Gy, dose moyenne de 67,2 Gy. Organes à risque : Poumon droit : V20 = 14,3% (normal < 30%), V30 = 12,5% (normal < 20%), dose moyenne de 8,8 Gy.
+Tolérance: Épidermite de grade 2 justifiant Diprosone et Ialuset. Douleurs du rachis lombaire justifiant un scanner révélant de l'arthrose avec pincement discal.
+Décision en fin de traitement : Instauration du traitement par Anastrozole, un comprimé par jour pendant 5 ans. Sera revue par le médecin référent dans six mois avec une mammographie.
+Signé électroniquement par le Dr ROUX Sandrine.
+
+---
+Exemple 5 :
+Adressé à Dr MARCHETTI Éric, Dr VIDAL Sandrine, Dr HAMIDI Nora.
+Réf : GR/EV.
+Le 21/12/2021.
+COMPTE RENDU DE RADIOTHERAPIE CONCERNANT Madame KRACHNI Amel, née ABI le 10/02/1976.
+Indication: Carcinome infiltrant multifocal du sein droit. Mastectomie avec curage axillaire. Stade pT2 plurifocale SBR II, RE 100%, RP 3%, IP 15%, HER2 négatif, présence d'emboles, exérèse in sano, pN+ avec quatre ganglions atteints sur neuf sans rupture capsulaire. Décision de réunion de concertation pluridisciplinaire : chimiothérapie adjuvante 3 FEC100 et 9 Taxol, radiothérapie externe locorégionale, hormonothérapie adjuvante par Tamoxifène après avis hématologique du fait d'une mutation du facteur de Leiden.
+Préparation au traitement : Scanner dosimétrique TOSHIBA AQUILION LB CTDI : 24,6 mGy, PDL : 605,4 mGy.cm. Double calcul des unités motrices. Dosimétrie in vivo lors de la première séance. Réalisation du traitement : Radiothérapie externe conformationnelle 3D sur accélérateur Varian Clinac du 19 novembre au 20 décembre 2021, étalement 32 jours. Creux sus-claviculaire : 46 Gy en 23 fractions par trois champs aux photons de 6 et 23 MV. Paroi droite : 46 Gy en 23 fractions par quatre tangentiels internes et trois tangentiels externes aux photons de 6 et 23 MV avec et sans filtre. Chaîne mammaire interne : 46 Gy en 23 fractions pris dans les tangentiels internes. CTV CMI droite : dose max 48,6 Gy, dose moyenne 45,1 Gy. CTV paroi droite : dose max 50 Gy, dose moyenne 46 Gy. CTV sus-claviculaire droite : dose max 49 Gy, dose moyenne 47 Gy. OAR poumon droit : V20 = 40% (normal < 30%), V30 = 34% (normal < 20%). OAR cœur : dose moyenne 0,9 Gy (contrainte cardiaque respectée).
+En fin de traitement : OMS entre 0 et 1, poids stable à 68 kg, érythème cutané de grade II avec début d'épidermite exfoliative.
+Prévisions : Avis pour prescription du Tamoxifène. À revoir en avril avec un scanner thoracique à la recherche d'une éventuelle pneumopathie radique. Surveillances alternées au décours.
+Signé électroniquement par le Dr LAMEL Christina.
+
+---
+
+Rédigez maintenant le compte rendu complet.

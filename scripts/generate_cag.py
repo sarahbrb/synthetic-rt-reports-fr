@@ -47,7 +47,7 @@ OUTPUT_DIR = BASE_DIR / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 DATASETS = {
-    "metabric": DATA_DIR / "metabric_step3_filtered.csv",
+    "metabric": DATA_DIR / "metabric_preprocessed.csv",
     "seer": DATA_DIR / "seer_step2_filtered.csv",
 }
 PROMPTS = {

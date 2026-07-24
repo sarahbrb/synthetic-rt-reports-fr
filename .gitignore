@@ -2,7 +2,8 @@
 outputs/
 
 # Patient data - never publish
-data/
+data/*.csv
+data/*.tsv
 Analyse datasets/
 
 # OAR cluster logs and generated job scripts

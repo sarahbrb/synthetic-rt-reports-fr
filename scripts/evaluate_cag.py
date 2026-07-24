@@ -8,7 +8,7 @@ Metrics computed per report:
   gunning_fog_fr  readability (Gunning Fog index; higher = more complex text)
   perplexite      surface fluency via a French causal LM (asi/gpt-fr-cased-base)
   bertscore_max   max BERTScore F1 against the 5 real reports embedded in the
-                  5-shot prompt — high score signals possible leakage / verbatim copy
+                  5-shot prompt
 
 Metrics aggregated per group (dataset × prompt_type × model × sampling config):
   mean and std of all per-report metrics above

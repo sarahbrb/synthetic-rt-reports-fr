@@ -2,18 +2,18 @@
 
 Pipeline for generating synthetic French breast cancer radiotherapy follow-up reports by conditioning open-weight LLMs on de-identified patient profiles from METABRIC and SEER.
 
-Published at **FDIA 2026** (Symposium on Future Directions in Information Access, Bucharest).
+Published at ...
 
 ---
 
 ## Overview
 
-Training NLP models for French clinical text is hindered by a privacy constraint: patient data lives at the hospital (GHM Grenoble) while compute lives at the lab (LIG). CAG bypasses this by generating *synthetic* reports — fictitious but clinically realistic — using publicly available patient profiles validated against oncology guidelines.
+Training NLP models for French clinical text is hindered by a privacy constraint: patient data lives at the hospital (GHM Grenoble) while compute lives at the lab (LIG). CAG bypasses this by generating *synthetic* reports (fictitious but clinically realistic) using publicly available patient profiles validated against oncology guidelines.
 
 **Pipeline steps:**
-1. **Filtering** — 32 expert-validated coherence rules reduce METABRIC (1 173 → 702) and SEER (4 024 → 3 832) to clinically consistent profiles
-2. **Generation** — each profile is formatted into a structured French clinical context and fed to an LLM
-3. **Evaluation** — clinical field coverage, perplexity, lexical diversity (MSTTR-100), corpus diversity (Self-BLEU-4), anti-leakage (BERTScore)
+1. **Filtering** : 32 expert-validated coherence rules reduce METABRIC (1 173 → 702) and SEER (4 024 → 3 832) to clinically consistent profiles
+2. **Generation** : each profile is formatted into a structured French clinical context and fed to an LLM
+3. **Evaluation** : clinical field coverage, perplexity, lexical diversity (MSTTR-100), corpus diversity (Self-BLEU-4), anti-leakage (BERTScore) , + new metrics
 
 ---
 
@@ -80,16 +80,15 @@ Evaluation jobs are chained automatically via OAR dependencies (`-a <job_id>`).
 | mistral24b   | mistralai/Mistral-Small-24B-Instruct-2501   | 24B     |
 | apertus8b    | swiss-ai/Apertus-8B-Instruct-2509           | 8B      |
 | apertus70b   | swiss-ai/Apertus-70B-Instruct-2509          | 70B     |
-| llama70b     | meta-llama/Llama-3.3-70B-Instruct           | 70B     |
 
 ---
 
 ## OAR cluster notes
 
 - Frontend: `aker.imag.fr`
-- Pascal GPUs (lig-gpu1 to lig-gpu5, sm_61) are excluded — incompatible with bf16 kernels
-- 7B/8B models: gpu6 or gpu7 | 12B: gpu7 or gpu8 | 24B/32B: gpu8 | 70B: gpu9 (apertus) / gpu10 (llama, H100)
-- Batch walltime limit: 100h — apertus70b is split into two jobs per combination (400 + 300 CRs)
+- Pascal GPUs (lig-gpu1 to lig-gpu5, sm_61) are excluded : incompatible with bf16 kernels
+- 7B/8B models: gpu6 or gpu7 | 12B: gpu7 or gpu8 | 24B/32B: gpu8 | 70B: gpu9 (apertus)
+- Batch walltime limit: 100h, apertus70b is split into two jobs per combination (400 + 300 CRs)
 
 ---
 

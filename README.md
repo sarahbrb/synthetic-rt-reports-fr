@@ -1,4 +1,4 @@
-# CAG — Context-Augmented Generation of Synthetic Radiotherapy Reports
+# CAG : Context-Augmented Generation of Synthetic Radiotherapy Reports
 
 Pipeline for generating synthetic French breast cancer radiotherapy follow-up reports by conditioning open-weight LLMs on de-identified patient profiles from METABRIC and SEER.
 

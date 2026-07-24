@@ -1,0 +1,472 @@
+sous_type_pam50,statut_er,statut_pr,statut_her2,hormonotherapie,chimiotherapie,type_chirurgie,grade_sbr,stade_tumoral,ganglions_positifs,indice_nottingham,rules_violated
+claudin-low,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,10.0,6.044,SG4
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.02,G3
+LumA,Positive,Positive,Positive,YES,NO,MASTECTOMY,3.0,2.0,24.0,6.072,G3 | SG4
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,1.0,,4.034,G3
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,1.0,2.0,1.0,3.024,H1
+Her2,Negative,Negative,Negative,NO,YES,MASTECTOMY,3.0,2.0,4.0,6.08,R4
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,3.0,5.06,G3
+LumB,Positive,Positive,Negative,YES,YES,MASTECTOMY,2.0,2.0,16.0,5.08,SG4
+LumA,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,3.0,14.0,6.3,G3
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,3.0,2.0,3.0,5.034,R5/R12 | R14
+Normal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,2.0,2.0,1.0,4.026,R5/R12 | R7
+LumA,Positive,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,0.0,4.078,G3
+LumA,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,2.0,5.044,G3
+LumA,Positive,Negative,Positive,YES,YES,MASTECTOMY,3.0,3.0,22.0,6.104,G3
+LumA,Positive,Positive,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,3.0,5.048,G3
+LumA,Positive,Negative,Negative,YES,NO,MASTECTOMY,1.0,2.0,1.0,3.052,H1
+LumA,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,7.0,6.072,G3
+Her2,Negative,Negative,Negative,NO,YES,MASTECTOMY,2.0,2.0,2.0,4.09,R4
+LumB,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,21.0,6.056,SG4
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,1.0,5.038,G3
+Basal,Negative,Negative,Negative,NO,NO,MASTECTOMY,3.0,2.0,0.0,4.076,H1
+LumA,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,1.0,5.06,G3
+LumA,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,1.0,5.05,G3
+claudin-low,Negative,Negative,Negative,NO,YES,MASTECTOMY,3.0,2.0,2.0,5.07,H1
+claudin-low,Negative,Negative,Negative,YES,NO,MASTECTOMY,2.0,3.0,,5.01,R5/R12 | R7 | R11
+LumA,Positive,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,12.0,6.04,G3 | SG4
+LumA,Positive,Positive,Positive,YES,YES,MASTECTOMY,3.0,2.0,0.0,4.054,G3
+LumA,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,0.0,4.042,G3
+Her2,Negative,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.022,R4 | C3
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.022,G3
+claudin-low,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,2.0,2.0,1.0,4.042,R5/R12 | R7 | R11
+claudin-low,Negative,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,0.0,4.04,R5/R12 | R7 | R11
+Normal,Negative,Negative,Negative,YES,YES,MASTECTOMY,2.0,2.0,0.0,3.028,R5/R12 | R7
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,2.0,5.046,G3
+LumA,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,5.0,6.058,G3
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,2.0,5.07,G3
+LumB,Positive,Negative,Negative,YES,NO,MASTECTOMY,2.0,2.0,10.0,5.064,SG4
+LumA,Positive,Positive,Negative,YES,YES,,3.0,2.0,6.0,6.064,G3
+Basal,Negative,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,3.0,5.032,R5/R12 | R7 | R8
+claudin-low,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,1.0,0.0,4.026,R5/R12 | R7 | R11
+LumA,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,2.0,5.052,G3
+LumA,Positive,Positive,Negative,NO,NO,,2.0,2.0,0.0,3.044,R6
+LumB,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,10.0,6.062,SG4
+LumB,Positive,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,16.0,6.094,SG4
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,1.0,0.0,4.036,R5/R12 | R7 | R8
+Normal,Positive,Positive,Negative,NO,NO,MASTECTOMY,3.0,2.0,1.0,5.046,R6
+LumB,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,13.0,6.086,SG4
+LumB,Positive,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,11.0,6.062,SG4
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,3.0,8.0,6.03,G3
+Her2,Negative,Negative,Positive,NO,NO,MASTECTOMY,3.0,2.0,2.0,5.1,C3
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,1.0,1.0,0.0,2.022,H1
+Her2,Negative,Negative,Negative,NO,YES,MASTECTOMY,3.0,3.0,11.0,6.09,R4
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,1.0,5.03,G3
+LumA,Positive,Positive,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,5.0,6.094,G3
+Her2,Positive,Positive,Negative,YES,NO,MASTECTOMY,2.0,2.0,1.0,4.08,R4 | C3
+Her2,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,1.0,5.062,R4 | C3
+claudin-low,Negative,Negative,Negative,NO,YES,MASTECTOMY,3.0,3.0,22.0,6.12,H1
+LumA,Positive,Negative,Negative,YES,NO,MASTECTOMY,2.0,2.0,15.0,5.042,SG4
+LumA,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,4.0,6.04,G3
+Her2,Negative,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.026,R4 | C3
+LumB,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,2.0,4.0,18.0,5.066,S2
+Her2,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,3.0,6.0,6.2,R5/R12 | R7 | R4
+claudin-low,Negative,Negative,Positive,YES,NO,MASTECTOMY,3.0,1.0,0.0,4.032,R5/R12 | R11 | R14
+LumA,Positive,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,4.0,6.052,G3
+claudin-low,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,1.0,1.0,0.0,2.03,R5/R12 | R7 | R11
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,,0.0,0.0,1.022,R6
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,G3
+claudin-low,Positive,Negative,Negative,NO,YES,MASTECTOMY,3.0,2.0,0.0,4.05,R6
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,3.0,2.0,0.0,4.044,R5/R12 | R14
+LumA,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.026,G3
+LumA,Positive,Negative,Negative,YES,YES,MASTECTOMY,3.0,3.0,7.0,6.1,G3
+LumA,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,0.0,4.064,G3
+Normal,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+Basal,Positive,Positive,Negative,YES,NO,MASTECTOMY,1.0,2.0,0.0,2.05,G1
+claudin-low,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,7.0,6.038,R5/R12 | R7 | R11
+LumA,Positive,Positive,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,0.0,4.042,G3
+claudin-low,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,5.0,6.06,R5/R12 | R7 | R11
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,0.0,4.042,G3
+Her2,Negative,Positive,Negative,NO,YES,BREAST CONSERVING,3.0,2.0,1.0,5.042,R4
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.036,G3
+LumA,Positive,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,1.0,5.052,G3
+LumA,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,26.0,6.074,G3 | SG4
+claudin-low,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,1.0,1.0,0.0,2.024,R5/R12 | R7 | R11
+LumA,Positive,Negative,Negative,YES,YES,MASTECTOMY,3.0,1.0,0.0,4.038,G3
+LumA,Positive,Negative,Positive,YES,NO,MASTECTOMY,2.0,2.0,14.0,5.04,SG4
+LumB,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,14.0,6.046,SG4
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,1.0,5.042,G3
+LumA,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,2.0,5.08,G3
+Basal,Negative,Negative,Negative,NO,NO,MASTECTOMY,3.0,2.0,14.0,6.052,SG4
+LumB,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,2.0,15.0,6.06,SG4
+LumA,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,9.0,6.054,G3
+LumA,Positive,Positive,Negative,YES,YES,,3.0,2.0,2.0,5.06,G3
+claudin-low,Negative,Negative,Negative,NO,NO,MASTECTOMY,3.0,2.0,5.0,6.05,H1
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.024,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.04,R6
+Her2,Negative,Negative,Positive,YES,NO,MASTECTOMY,3.0,3.0,12.0,6.12,R5/R12 | R14 | C3
+Her2,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,2.0,5.056,R5/R12 | R7 | R4 | C3
+claudin-low,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,2.0,5.05,R5/R12 | R7 | R11
+Her2,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,1.0,22.0,6.32,R5/R12 | R7 | R4 | SG1 | SG4 | ST1
+LumA,Positive,Positive,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,9.0,6.05,G3
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,0.0,4.058,R5/R12 | R7 | R8
+LumB,Positive,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,15.0,6.046,SG4
+claudin-low,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,3.0,5.056,R5/R12 | R7 | R11
+claudin-low,Negative,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,0.0,4.056,R5/R12 | R7 | R11
+LumA,Negative,Negative,Positive,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R1
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.02,R6 | H1
+claudin-low,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.036,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.032,R6
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,1.0,2.0,2.0,3.028,H1
+LumB,Positive,Positive,Negative,NO,YES,MASTECTOMY,3.0,2.0,3.0,5.07,R6
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.018,R6 | H1
+LumB,Positive,Positive,Negative,NO,YES,MASTECTOMY,3.0,3.0,11.0,6.08,R6
+LumB,Positive,Negative,Negative,NO,YES,BREAST CONSERVING,3.0,2.0,1.0,5.024,R6
+claudin-low,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,2.0,2.0,1.0,4.03,H1
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+Basal,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.032,R5/R12 | R7 | R8
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+LumA,Positive,Negative,Positive,YES,NO,MASTECTOMY,3.0,2.0,3.0,5.056,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.034,R6
+claudin-low,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.024,R6
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.036,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.026,R6
+Normal,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.044,R6
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.036,G3
+claudin-low,Negative,Negative,Negative,NO,YES,MASTECTOMY,3.0,2.0,2.0,5.046,H1
+Her2,Negative,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,1.0,4.018,R4 | C3 | SG1
+LumA,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.026,R6
+Her2,Negative,Negative,Positive,YES,NO,MASTECTOMY,3.0,3.0,18.0,6.07,R5/R12 | R14 | C3
+Basal,Negative,Negative,Negative,YES,NO,MASTECTOMY,3.0,1.0,0.0,4.052,R5/R12 | R7 | R8
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.032,G3
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.046,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.032,R6 | H1
+Her2,Negative,Negative,Negative,NO,YES,MASTECTOMY,3.0,3.0,8.0,6.05,R4
+Her2,Negative,Negative,Negative,NO,YES,MASTECTOMY,2.0,2.0,1.0,4.04,R4
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.024,R6 | H1
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.036,R6
+claudin-low,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,2.0,3.0,4.0,5.02,R5/R12 | R7 | R11
+Her2,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,3.0,7.0,6.06,R4 | C3
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,2.0,5.036,G3
+LumA,Positive,Positive,Negative,NO,NO,MASTECTOMY,2.0,1.0,0.0,3.026,R6
+claudin-low,Negative,Negative,Negative,YES,NO,MASTECTOMY,3.0,1.0,0.0,4.04,R5/R12 | R7 | R11
+LumA,Positive,Positive,Positive,YES,NO,BREAST CONSERVING,3.0,2.0,1.0,5.036,G3
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.032,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.046,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.024,R6
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,1.0,5.044,G3 | SG1
+LumA,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,0.0,4.044,G3
+Her2,Positive,Negative,Positive,NO,YES,MASTECTOMY,3.0,2.0,2.0,5.042,R6 | H1
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.03,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.026,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.032,R6
+claudin-low,Negative,Negative,Negative,NO,YES,MASTECTOMY,3.0,2.0,2.0,5.036,H1
+LumA,Positive,Positive,Negative,NO,NO,MASTECTOMY,2.0,1.0,0.0,3.03,R6
+Normal,Positive,Positive,Negative,NO,NO,MASTECTOMY,2.0,1.0,0.0,3.05,R6
+LumA,Positive,Negative,Positive,NO,NO,MASTECTOMY,2.0,1.0,0.0,3.04,R6
+Basal,Positive,Negative,Negative,NO,YES,BREAST CONSERVING,3.0,2.0,1.0,5.056,R6
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,2.0,1.0,1.0,4.032,SG1
+Basal,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.026,R5/R12 | R7 | R8
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.034,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.036,R6
+claudin-low,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,R5/R12 | R7 | R11
+Her2,Negative,Negative,Positive,NO,NO,MASTECTOMY,3.0,1.0,0.0,4.04,C3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.046,R6
+Basal,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,R6
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.032,R6
+LumA,Positive,Positive,Positive,YES,NO,MASTECTOMY,3.0,1.0,0.0,4.04,G3
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,3.0,5.04,G3
+LumB,Positive,Positive,Negative,NO,YES,MASTECTOMY,3.0,2.0,3.0,5.056,R6
+LumA,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,3.0,7.0,6.052,G3
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,1.0,5.05,G3
+LumB,Positive,Positive,Negative,NO,YES,MASTECTOMY,3.0,3.0,6.0,6.26,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.034,R6
+Her2,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,R4 | C3
+Her2,Positive,Negative,Positive,NO,YES,MASTECTOMY,3.0,2.0,0.0,4.1,R6
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,1.0,0.0,4.042,G3
+Her2,Negative,Negative,Positive,NO,YES,MASTECTOMY,3.0,2.0,2.0,5.16,H1
+claudin-low,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,0.0,4.05,R5/R12 | R7 | R11
+Her2,Negative,Negative,Positive,NO,NO,MASTECTOMY,3.0,1.0,0.0,4.08,C3
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,1.0,0.0,4.03,G3
+claudin-low,Negative,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,H1
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.036,R6
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.032,R6
+LumA,Positive,Positive,Positive,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.046,G3
+claudin-low,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,1.0,1.0,0.0,2.03,H1
+Her2,Negative,Negative,Positive,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.024,C3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+Her2,Negative,Negative,Positive,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.026,C3
+LumA,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+Her2,Positive,Positive,Negative,NO,NO,MASTECTOMY,2.0,1.0,0.0,3.04,R4 | R6 | C3
+LumA,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,,0.0,4.044,G3
+Her2,Negative,Negative,Positive,NO,NO,BREAST CONSERVING,,2.0,0.0,3.05,C3
+Basal,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,0.0,4.05,R5/R12 | R7 | R8
+Her2,Positive,Positive,Negative,NO,NO,MASTECTOMY,3.0,2.0,0.0,4.044,R4 | R6 | C3
+Her2,Positive,Negative,Negative,YES,NO,MASTECTOMY,2.0,2.0,1.0,4.04,R4 | C3
+Her2,Positive,Positive,Negative,NO,NO,MASTECTOMY,,2.0,0.0,1.06,R4 | R6 | C3
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,3.0,3.0,6.0,6.08,R5/R12 | R14
+LumA,Positive,Negative,Negative,NO,NO,MASTECTOMY,3.0,2.0,0.0,4.046,R6 | G3
+Her2,Positive,Positive,Negative,NO,NO,MASTECTOMY,3.0,,0.0,4.03,R4 | R6 | C3
+Her2,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,,1.0,0.0,1.04,R4 | R6 | C3
+Basal,Negative,Negative,Negative,NO,YES,MASTECTOMY,3.0,2.0,13.0,6.04,SG4
+LumB,Positive,Positive,Negative,NO,NO,MASTECTOMY,3.0,2.0,0.0,4.06,R6
+Her2,Positive,Positive,Negative,YES,NO,,,,1.0,2.0,R4 | C3
+Her2,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,1.0,5.036,R4 | C3
+Her2,Positive,Positive,Positive,NO,YES,MASTECTOMY,2.0,2.0,4.0,5.036,R6
+Her2,Positive,Positive,Positive,YES,NO,MASTECTOMY,2.0,2.0,1.0,4.07,C3
+Her2,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,1.0,5.046,R4 | C3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.02,R6 | G3
+Her2,Positive,Negative,Positive,YES,NO,MASTECTOMY,1.0,1.0,0.0,2.04,C3
+LumA,Positive,Positive,Negative,NO,NO,MASTECTOMY,3.0,,0.0,4.05,R6 | G3
+LumA,Positive,Negative,Negative,NO,NO,MASTECTOMY,2.0,2.0,0.0,3.06,R6
+Her2,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,1.0,5.06,R4 | C3
+LumA,Positive,Positive,Negative,NO,NO,MASTECTOMY,1.0,,0.0,2.1,R6
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,5.0,6.08,G3
+Her2,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,24.0,6.1,R4 | C3 | SG4
+Her2,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,2.0,5.04,R4 | C3
+LumB,Positive,Positive,Negative,NO,NO,MASTECTOMY,2.0,1.0,0.0,3.04,R6
+Her2,Negative,Negative,Positive,NO,YES,MASTECTOMY,3.0,2.0,18.0,6.08,SG4
+Her2,Positive,Negative,Positive,YES,NO,MASTECTOMY,3.0,2.0,4.0,6.08,C3
+Her2,Negative,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,R4 | C3
+Her2,Negative,Negative,Negative,YES,NO,MASTECTOMY,2.0,,2.0,4.07,R5/R12 | R7 | R4 | C3
+LumA,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,,2.0,5.04,G3
+Normal,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,R6
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,0.0,4.06,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+LumA,Positive,Positive,Negative,NO,NO,MASTECTOMY,2.0,1.0,0.0,3.02,R6
+Her2,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,1.0,5.05,R4 | C3
+Her2,Negative,Negative,Positive,NO,YES,BREAST CONSERVING,3.0,2.0,1.0,5.002,H1
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,,7.0,6.036,G3
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,2.0,0.0,4.05,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,3.0,5.08,G3
+Normal,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumA,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.024,R6
+Her2,Positive,Negative,Positive,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,R6 | C3
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,9.0,6.04,G3
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,2.0,5.05,G3
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,2.0,5.03,G3
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,2.0,0.0,4.06,R6
+Her2,Negative,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,2.0,0.0,4.05,R4 | C3
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,2.0,5.03,G3
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.05,R6
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.07,R6
+Basal,Negative,Negative,Negative,NO,YES,BREAST CONSERVING,3.0,2.0,14.0,6.056,SG4
+Her2,Negative,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,R4 | C3
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,2.0,0.0,4.06,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.036,R6 | G3
+LumA,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,3.0,5.07,G3
+Basal,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,2.0,0.0,4.05,R6 | G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,R6 | G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+Basal,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,11.0,6.002,R5/R12 | R7 | R8 | SG4 | H1
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,2.0,0.0,4.056,R6 | G3
+LumB,Positive,Negative,Negative,NO,NO,MASTECTOMY,3.0,1.0,0.0,4.03,R6
+Her2,Negative,Negative,Positive,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,C3
+LumA,Positive,Negative,Positive,YES,NO,BREAST CONSERVING,3.0,,1.0,5.05,G3
+claudin-low,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,4.0,6.036,R5/R12 | R7 | R11
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6 | H1
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,0.0,4.1,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.06,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.056,R6
+Normal,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.05,R6
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,7.0,6.07,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.022,R6
+Her2,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,,0.0,4.032,R4 | R6 | C3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.02,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,2.0,0.0,2.05,R6
+claudin-low,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.056,R6
+Her2,Negative,Negative,Positive,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.036,C3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,,0.0,3.02,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+Her2,Negative,Negative,Positive,YES,NO,MASTECTOMY,3.0,2.0,6.0,6.052,R5/R12 | R14 | C3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.036,R6
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,12.0,6.06,G3 | SG4
+Her2,Negative,Negative,Positive,NO,NO,BREAST CONSERVING,3.0,2.0,0.0,4.042,C3
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.05,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.05,R6
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,,5.0,6.044,G3
+Her2,Negative,Negative,Negative,YES,NO,MASTECTOMY,3.0,,5.0,6.034,R5/R12 | R7 | R4 | C3
+LumA,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.1,R6
+Her2,Negative,Negative,Negative,NO,YES,BREAST CONSERVING,3.0,2.0,4.0,6.1,R4
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.044,R6
+LumA,Positive,Positive,Negative,NO,NO,MASTECTOMY,2.0,2.0,0.0,3.06,R6
+Her2,Positive,Negative,Negative,NO,YES,MASTECTOMY,3.0,2.0,2.0,5.074,R4 | R6
+Her2,Negative,Negative,Negative,NO,YES,BREAST CONSERVING,3.0,3.0,2.0,5.12,R4
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.046,R6
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,2.0,2.0,1.0,4.04,H1
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,2.0,0.0,4.044,R6 | G3
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,4.0,6.034,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,2.0,0.0,4.05,R6 | G3
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,1.0,2.0,0.0,2.086,R6
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,3.0,6.0,6.08,G3
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.034,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,2.0,0.0,4.05,R6 | G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.032,R6
+Normal,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,16.0,6.03,R5/R12 | R7 | SG4
+LumA,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,0.0,4.05,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+claudin-low,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,17.0,6.04,R5/R12 | R7 | R11 | SG4
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,20.0,6.04,R5/R12 | R7 | R8 | SG4
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.022,R6
+LumA,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,2.0,1.0,,3.03,R5/R12 | R7 | R1
+LumB,Positive,Positive,Negative,NO,NO,MASTECTOMY,3.0,2.0,0.0,4.06,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,R6 | G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.02,R6
+Basal,Negative,Negative,Negative,YES,YES,,3.0,,2.0,5.03,R5/R12 | R7 | R8
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+Normal,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,0.0,4.05,R5/R12 | R7
+Her2,Negative,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,R4 | C3
+Normal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,,2.0,3.0,2.06,R5/R12 | R7
+Normal,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.024,R6 | H1
+LumA,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.036,G3
+Normal,Positive,Positive,Positive,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.026,R6
+Normal,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.022,R6
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,3.0,3.0,7.0,6.08,R5/R12 | R14
+claudin-low,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,,0.0,4.06,G3
+LumA,Positive,Positive,Positive,NO,NO,BREAST CONSERVING,,1.0,0.0,1.02,R6
+LumA,Positive,Positive,Positive,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,G3
+Basal,Negative,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,0.0,4.12,R5/R12 | R7 | R8
+Her2,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,3.0,12.0,6.05,R5/R12 | R7 | R4
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.02,R6
+claudin-low,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,R5/R12 | R7 | R11
+Basal,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,0.0,4.06,R5/R12 | R7 | R8
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,3.0,3.0,5.13,R5/R12 | R7 | R8
+Normal,Positive,Negative,Positive,NO,YES,BREAST CONSERVING,3.0,2.0,2.0,5.04,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.024,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.036,R6 | G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.06,R6
+claudin-low,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,R6 | H1
+LumA,Negative,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,R1 | G3
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,5.0,6.08,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,,5.052,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.06,R6
+Basal,Negative,Positive,Negative,YES,YES,MASTECTOMY,3.0,3.0,14.0,6.198,R8
+claudin-low,Negative,Negative,Positive,YES,NO,MASTECTOMY,3.0,3.0,6.0,6.08,R5/R12 | R11 | R14
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.03,R6
+Her2,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,,3.036,R4 | R6 | C3
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,3.0,3.0,16.0,6.16,R5/R12 | R14
+LumB,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.036,R6
+claudin-low,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,,,5.16,R5/R12 | R7 | R11
+Her2,Negative,Negative,Positive,YES,NO,BREAST CONSERVING,2.0,2.0,0.0,3.05,R5/R12 | R14 | C3
+LumA,Positive,Negative,Negative,NO,YES,MASTECTOMY,3.0,3.0,13.0,6.13,R6 | G3
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,G3
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+Normal,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,H1
+Basal,Positive,Negative,Negative,NO,YES,MASTECTOMY,3.0,3.0,3.0,5.09,R6
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,3.0,2.0,2.0,5.1,R5/R12 | R14
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,3.0,12.0,6.026,R5/R12 | R7 | R8
+Her2,Negative,Negative,Positive,YES,NO,MASTECTOMY,2.0,3.0,,4.056,R5/R12 | R14 | C3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.028,R6 | G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.002,R6 | G3
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,3.0,2.0,5.0,6.044,R5/R12 | R14
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,0.0,4.06,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.028,R6
+Basal,Positive,Negative,Positive,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.04,R6
+Basal,Negative,Positive,Positive,YES,YES,BREAST CONSERVING,3.0,2.0,11.0,6.05,R8 | SG4
+Basal,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,2.0,2.0,0.0,3.05,R5/R12 | R7 | R8
+claudin-low,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,,0.0,2.03,R6
+Her2,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,2.0,1.0,5.05,R5/R12 | R7 | R4
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+Basal,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,,4.01,R6
+LumB,Positive,Positive,Negative,YES,NO,MASTECTOMY,,2.0,16.0,3.096,SG4
+Basal,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,0.0,4.05,R5/R12 | R7 | R8
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,2.0,5.0,6.07,G3
+LumA,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,3.0,21.0,6.04,G3
+Basal,Positive,Negative,Negative,NO,YES,BREAST CONSERVING,3.0,2.0,2.0,5.032,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.04,R6
+Her2,Positive,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.03,R4 | R6 | C3
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.056,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+LumB,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,0.0,4.056,G5
+claudin-low,Negative,Negative,Positive,YES,YES,MASTECTOMY,2.0,2.0,8.0,5.022,R5/R12 | R11 | R14
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,3.0,2.0,4.0,6.044,R5/R12 | R14
+Basal,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,0.0,4.054,R5/R12 | R7 | R8
+Basal,Positive,Positive,Negative,NO,YES,MASTECTOMY,3.0,2.0,1.0,5.096,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+claudin-low,Negative,Positive,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,2.0,5.06,R11
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,,14.0,6.064,R5/R12 | R7 | R8
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,2.0,4.0,6.06,G3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.02,R6 | H1
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.032,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,,0.0,3.04,R6
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.05,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,1.0,0.0,4.034,R6 | G3
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,,1.0,5.05,R5/R12 | R7 | R8
+LumA,Positive,Negative,Negative,YES,NO,MASTECTOMY,3.0,2.0,11.0,6.07,G3 | SG4
+claudin-low,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,2.0,1.0,5.052,R5/R12 | R7 | R11
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,,6.0,6.02,G3
+claudin-low,Negative,Negative,Negative,NO,YES,BREAST CONSERVING,3.0,,2.0,5.05,H1
+claudin-low,Negative,Negative,Negative,NO,NO,BREAST CONSERVING,3.0,,0.0,4.044,H1
+LumB,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,3.0,5.0,6.06,H1
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+Her2,Negative,Negative,Positive,NO,NO,BREAST CONSERVING,3.0,,0.0,4.042,C3
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.02,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,1.0,0.0,3.03,R6
+Basal,Negative,Negative,Negative,NO,YES,BREAST CONSERVING,3.0,2.0,2.0,5.04,H1
+Her2,Negative,Positive,Positive,NO,YES,MASTECTOMY,3.0,2.0,31.0,6.02,SG4
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,1.0,0.0,2.04,R6
+Normal,Positive,Positive,Negative,NO,YES,BREAST CONSERVING,2.0,2.0,6.0,5.04,R6
+Basal,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,,1.0,5.11,R5/R12 | R7 | R8
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,,0.0,2.022,R6
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,,0.0,2.028,R6
+LumB,Positive,Positive,Negative,NO,YES,MASTECTOMY,3.0,,1.0,5.07,R6
+claudin-low,Negative,Negative,Negative,NO,YES,MASTECTOMY,3.0,,3.0,5.06,H1
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,2.0,,2.0,4.04,R5/R12 | R14
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,2.0,0.0,3.044,R6
+Her2,Positive,Negative,Negative,NO,YES,MASTECTOMY,2.0,,3.0,4.08,R4 | R6
+Basal,Negative,Negative,Negative,YES,NO,MASTECTOMY,2.0,,1.0,4.1,R5/R12 | R7 | R8
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,,0.0,2.03,R6
+Her2,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,2.0,,0.0,3.04,R5/R12 | R7 | R4 | C3
+Her2,Positive,Negative,Positive,YES,NO,BREAST CONSERVING,2.0,,0.0,3.046,C3
+Her2,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,2.0,,0.0,3.028,R4 | C3
+Her2,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,2.0,,0.0,3.04,R4 | C3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,,0.0,4.029,R6 | G3
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,,0.0,4.04,G3
+LumB,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,,0.0,3.038,R6
+Her2,Negative,Negative,Negative,NO,YES,BREAST CONSERVING,3.0,,1.0,5.037,R4
+Her2,Positive,Negative,Positive,YES,NO,BREAST CONSERVING,3.0,,0.0,4.052,C3
+Her2,Negative,Negative,Positive,YES,NO,BREAST CONSERVING,3.0,,0.0,4.043,R5/R12 | R14 | C3
+Her2,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,3.0,,0.0,4.036,R4 | R6 | C3
+claudin-low,Negative,Negative,Negative,YES,NO,MASTECTOMY,3.0,,0.0,4.1,R5/R12 | R7 | R11
+claudin-low,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,,0.0,4.056,R5/R12 | R7 | R11
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,,3.0,5.028,R5/R12 | R7 | R8
+Her2,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,1.0,,0.0,2.04,R4 | C3
+Basal,Negative,Negative,Negative,YES,NO,BREAST CONSERVING,3.0,,0.0,4.032,R5/R12 | R7 | R8
+Her2,Positive,Negative,Positive,YES,NO,MASTECTOMY,3.0,,0.0,4.14,C3
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,,2.0,5.046,R5/R12 | R7 | R8
+claudin-low,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,,4.0,6.076,R5/R12 | R7 | R11
+Her2,Negative,Negative,Positive,YES,YES,BREAST CONSERVING,3.0,,16.0,6.052,R5/R12 | R14
+Her2,Negative,Negative,Positive,YES,NO,BREAST CONSERVING,3.0,,0.0,4.068,R5/R12 | R14 | C3
+LumA,Positive,Positive,Negative,YES,YES,MASTECTOMY,3.0,,,6.26,G3
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,,0.0,4.068,R5/R12 | R7 | R8
+Her2,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,,0.0,4.046,R4 | C3
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,2.0,,5.0,5.092,R6
+Her2,Positive,Positive,Negative,YES,NO,MASTECTOMY,2.0,,0.0,3.17,R4 | C3
+Normal,Negative,Negative,Positive,YES,YES,BREAST CONSERVING,2.0,,0.0,3.0046,R5/R12 | R14
+Her2,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,,4.0,6.15,R4 | C3
+claudin-low,Negative,Positive,Negative,YES,NO,BREAST CONSERVING,2.0,,0.0,3.032,R11
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,,2.0,5.05,R5/R12 | R7 | R8
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,,,1.0,2.06,R5/R12 | R14
+Basal,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,,9.0,6.0622,R5/R12 | R7 | R8
+claudin-low,Positive,Negative,Negative,YES,NO,BREAST CONSERVING,2.0,,2.0,4.031,H1
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,,,0.0,1.02,R6
+Basal,Negative,Negative,Negative,YES,YES,MASTECTOMY,3.0,,3.0,5.076,R5/R12 | R7 | R8
+LumA,Positive,Positive,Negative,NO,NO,BREAST CONSERVING,1.0,,1.0,3.024,R6
+Her2,Negative,Negative,Positive,NO,NO,BREAST CONSERVING,3.0,,0.0,4.0354,C3
+Her2,Negative,Negative,Positive,YES,YES,BREAST CONSERVING,2.0,,17.0,5.08,R5/R12 | R14
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,,6.0,6.06,R5/R12 | R7 | R8
+Her2,Positive,Negative,Positive,NO,YES,BREAST CONSERVING,3.0,,7.0,6.0483,R6
+LumA,Positive,Positive,Negative,YES,NO,MASTECTOMY,3.0,,1.0,5.1,G3
+Basal,Negative,Negative,Negative,YES,YES,BREAST CONSERVING,3.0,,2.0,5.05,R5/R12 | R7 | R8
+Her2,Negative,Negative,Positive,YES,YES,MASTECTOMY,3.0,,3.0,5.032,R5/R12 | R14
+LumA,Positive,Positive,Negative,YES,NO,BREAST CONSERVING,3.0,,1.0,5.05,G3
+LumB,Positive,Negative,Positive,NO,NO,MASTECTOMY,3.0,,1.0,5.04,R6

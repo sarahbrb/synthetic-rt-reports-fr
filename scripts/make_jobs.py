@@ -1,16 +1,22 @@
 """
-Génère les scripts OAR pour la campagne complète (génération + évaluation).
+Generate OAR batch scripts for the full campaign (generation + evaluation).
 
-Pour chaque modèle :
-  - 1 job OAR par combinaison (dataset × prompt_type × sampling_preset)
-  - apertus70b : 2 jobs par combinaison (part1=400 CR, part2=300 CR, via --skip)
-  - 1 job d'évaluation par modèle, déclenché automatiquement après tous les
-    jobs de génération via les dépendances OAR (-a <job_id>)
+Per model:
+  - 1 OAR job per combination (dataset × prompt_type × sampling_preset)
+  - apertus70b: 2 jobs per combination (part1=400 CR, part2=300 CR, via --skip)
+  - 1 evaluation job per model, triggered automatically after all generation jobs finish via OAR dependencies (-a <job_id>)
 
-Usage :
+To reproduce : run from the OAR frontend (aker.imag.fr):
+
+    ssh aker.imag.fr
     cd /home/getalp/bouarabs/Data_Generation_3/CAG
-    python scripts/make_jobs.py
-    bash logs/submit_all.sh
+    conda activate synthgen
+    python scripts/make_jobs.py   # writes logs/jobscripts/ + logs/submit_all.sh
+    bash logs/submit_all.sh       # submits everything to OAR
+
+Monitor:
+    oarstat -u $(whoami)
+    tail -f logs/oar/<tag>.stdout
 """
 
 import sys
@@ -30,7 +36,7 @@ OUTPUT_DIR = BASE_DIR / "outputs"
 for d in (JOBS_DIR, LOGS_DIR, OUTPUT_DIR):
     d.mkdir(parents=True, exist_ok=True)
 
-ACTIVE        = [m for m in MODELS if m not in ("_smoketest", "mixtral")]
+ACTIVE        = list(MODELS)
 EVAL_WALLTIME = "08:00:00"
 EVAL_GPU      = 2
 
@@ -42,7 +48,7 @@ def _p_constraint(nodes):
     return f"host in ({nodes_q})"
 
 
-def write_gen_job(tag, nodes, n_gpu, walltime, model_id, dataset,
+def write_gen_job(tag, nodes, n_gpu, walltime, dtype, model_id, dataset,
                   prompt_type, temp, top_p, rep_pen, n, skip, out_jsonl):
     script_path = JOBS_DIR / f"{tag}.sh"
     stdout_path = LOGS_DIR / f"{tag}.stdout"
@@ -60,7 +66,7 @@ python scripts/generate_cag.py \\
     --model         {model_id} \\
     --n             {n} \\
     --skip          {skip} \\
-    --dtype         bf16 \\
+    --dtype         {dtype} \\
     --temperature   {temp} \\
     --top_p         {top_p} \\
     --repetition_penalty {rep_pen} \\
@@ -73,7 +79,7 @@ exit $code
 
     oarsub = (
         f"oarsub"
-        f" -l host=1/gpu={n_gpu},walltime={walltime}"
+        f" -l /gpu={n_gpu},walltime={walltime}"
         f" -p \"{_p_constraint(nodes)}\""
         f" -q default"
         f" -O {stdout_path}"
@@ -107,7 +113,7 @@ exit $code
 
     oarsub = (
         f"oarsub"
-        f" -l host=1/gpu={EVAL_GPU},walltime={EVAL_WALLTIME}"
+        f" -l /gpu={EVAL_GPU},walltime={EVAL_WALLTIME}"
         f" -p \"{_p_constraint(nodes)}\""
         f" -q default"
         f" -O {stdout_path}"
@@ -117,20 +123,20 @@ exit $code
     return oarsub
 
 
-# submit_all.sh : pour chaque modèle, soumet les jobs de génération,
-# capture leurs IDs, puis soumet le job d'évaluation en dépendance.
+# submit_all.sh: for each model, submit all generation jobs, capture their IDs,
+# then submit the evaluation job as a dependent of all of them.
 submit_lines = [
     "#!/bin/bash",
-    "# Soumission OAR — génération + évaluation automatique par modèle.",
-    "# L'évaluation de chaque modèle démarre automatiquement quand tous ses",
-    "# jobs de génération sont terminés (dépendances OAR via -a <job_id>).",
+    "# OAR submission — generation + automatic evaluation per model.",
+    "# Each model's evaluation job starts only after all its generation jobs",
+    "# have completed successfully (OAR dependencies via -a <job_id>).",
     "",
-    "# Utilitaire : soumet un job et renvoie son ID OAR.",
+    "# Helper: submit a job and return its OAR job ID.",
     "submit() {",
     '    local jid',
     '    jid=$("$@" 2>&1 | grep OAR_JOB_ID | cut -d= -f2)',
     '    if [ -z "$jid" ]; then',
-    '        echo "[ERREUR] oarsub a échoué : $*" >&2',
+    '        echo "[ERROR] oarsub failed: $*" >&2',
     '        exit 1',
     '    fi',
     '    echo "$jid"',
@@ -143,7 +149,7 @@ n_eval_scripts = 0
 
 for short_name in ACTIVE:
     model_id         = MODELS[short_name]
-    nodes, n_gpu, wt = MODEL_NODE[short_name]
+    nodes, n_gpu, wt, dtype = MODEL_NODE[short_name]
     splits           = N_SPLIT.get(short_name)
     n_label          = "+".join(str(s["n"]) for s in splits) if splits else str(N_PER_RUN)
 
@@ -152,7 +158,7 @@ for short_name in ACTIVE:
         f"# {short_name}  ({model_id})",
         f"# {' / '.join(nodes)}  {n_gpu} GPU  N={n_label}",
         f"# {'─' * 60}",
-        f'echo "=== Soumission {short_name} ==="',
+        f'echo "=== Submitting {short_name} ==="',
         f"DEPS_{short_name.upper()}=\"\"",
         "",
     ]
@@ -167,7 +173,7 @@ for short_name in ACTIVE:
                         tag      = f"{base_tag}_{part['suffix']}"
                         out_file = OUTPUT_DIR / f"{tag}.jsonl"
                         oarsub   = write_gen_job(
-                            tag, nodes, n_gpu, part["walltime"], model_id,
+                            tag, nodes, n_gpu, part["walltime"], dtype, model_id,
                             dataset, prompt_type, temp, top_p, rep_pen,
                             part["n"], part["skip"], out_file,
                         )
@@ -180,7 +186,7 @@ for short_name in ACTIVE:
                 else:
                     out_file = OUTPUT_DIR / f"{base_tag}.jsonl"
                     oarsub   = write_gen_job(
-                        base_tag, nodes, n_gpu, wt, model_id,
+                        base_tag, nodes, n_gpu, wt, dtype, model_id,
                         dataset, prompt_type, temp, top_p, rep_pen,
                         N_PER_RUN, 0, out_file,
                     )
@@ -194,7 +200,7 @@ for short_name in ACTIVE:
     eval_oarsub = write_eval_job(short_name, nodes)
     submit_lines += [
         "",
-        f'echo "  -> lancement évaluation {short_name} (après tous les jobs de génération)"',
+        f'echo "  -> submitting evaluation {short_name} (after all generation jobs)"',
         f'JID=$(submit {eval_oarsub.replace("oarsub ", "oarsub $DEPS_" + short_name.upper() + " ", 1)})',
         f'echo "  eval_{short_name} -> JID=$JID"',
         "",
@@ -205,9 +211,9 @@ submit_path = BASE_DIR / "logs" / "submit_all.sh"
 submit_path.write_text("\n".join(submit_lines) + "\n")
 submit_path.chmod(0o755)
 
-print(f"[OK] {n_gen_scripts} scripts de génération")
-print(f"[OK] {n_eval_scripts} scripts d'évaluation")
-print(f"[OK] Script de soumission : {submit_path}")
+print(f"[OK] {n_gen_scripts} generation scripts")
+print(f"[OK] {n_eval_scripts} evaluation scripts")
+print(f"[OK] Submission script: {submit_path}")
 print()
-print("Vérifier puis lancer depuis aker.imag.fr :")
+print("Review then run from aker.imag.fr:")
 print(f"    bash {submit_path}")

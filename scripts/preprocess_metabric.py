@@ -1,17 +1,20 @@
 """
-Préprocessing METABRIC pour la campagne CAG.
+METABRIC preprocessing pipeline for the CAG campaign.
 
-Prend le fichier brut téléchargé depuis cBioPortal et produit le fichier
-final utilisé par generate_cag.py. Trois étapes enchaînées :
-  1. Sélection et renommage des colonnes cliniques
-  2. Restriction aux patients ayant reçu une radiothérapie
-  3. Exclusion des profils cliniquement incohérents
+Produces the patient profiles used by generate_cag.py from the raw cBioPortal clinical file.
+Three steps applied in sequence:
+  1. Select and rename clinically relevant columns
+  2. Restrict to radiotherapy-treated patients (Radio Therapy == YES)
+  3. Exclude clinically incoherent profiles
 
-Les règles d'exclusion (étape 3) ont été définies avec une radio-oncologue
-praticienne à partir des référentiels SENORIF 2021-2022 et ONCO AURA 2023,
-puis validées cas par cas par retour d'expert.
+The coherence rules in step 3 were defined with a practising radiation oncologist against SENORIF 2021-2022 and ONCO AURA 2023 guidelines.
+Each rule is traceable to its row in:
+    Analyse datasets/analyse_incoherences (metabric).xlsx
 
-Usage :
+Expected result (validated against the xlsx summary sheet):
+    1173 patients after RT filter  →  702 retained after exclusions (59.8%)
+
+Usage:
     python scripts/preprocess_metabric.py
 """
 
@@ -26,16 +29,14 @@ EXCL_LOG = DATA_DIR / "metabric_exclusion_report.csv"
 
 
 # ---------------------------------------------------------------------------
-# 1. Chargement et sélection des colonnes
+# Step 1 : Column selection
 # ---------------------------------------------------------------------------
 
 df = pd.read_csv(RAW, sep="\t", low_memory=False)
 df.replace("NA", np.nan, inplace=True)
+print(f"Loaded: {len(df)} patients, {len(df.columns)} columns")
 
-print(f"Chargé : {len(df)} patients, {len(df.columns)} colonnes")
-
-# Seules ces colonnes sont utiles pour la génération ; on renomme en français
-# pour garder la cohérence avec les templates de prompts.
+# Only the columns needed for generation; renamed to match the French clinical terminology used in the prompt templates.
 cols = {
     "Age at Diagnosis"               : "age_diagnostic",
     "Type of Breast Surgery"         : "type_chirurgie",
@@ -57,31 +58,27 @@ cols = {
     "Tumor Stage"                    : "stade_tumoral",
     "Oncotree Code"                  : "code_oncotree",
 }
-
 df = df[list(cols.keys())].rename(columns=cols)
 
 
 # ---------------------------------------------------------------------------
-# 2. Restriction aux cas traités par radiothérapie
+# Step 2 : Radiotherapy filter
 # ---------------------------------------------------------------------------
 
-n_before = len(df)
+n_raw = len(df)
 df = df[df["radiotherapie"] == "YES"].copy()
-print(f"Après filtre radiothérapie : {len(df)} patients (retirés : {n_before - len(df)})")
+print(f"After RT filter: {len(df)} patients (removed {n_raw - len(df)})")
 
-# La colonne ne porte plus d'information différenciante, on la supprime.
+# Constant after the filter, no longer informative
 df.drop(columns=["radiotherapie"], inplace=True)
 
 
 # ---------------------------------------------------------------------------
-# 3. Filtrage des profils cliniquement incohérents
+# Step 3 : Coherence rule filtering
 # ---------------------------------------------------------------------------
-#
-# Chaque règle correspond à une combinaison de caractéristiques biologiquement
-# ou cliniquement impossible dans ce contexte. Validée par l'experte médicale.
-#
-# Abrév. : RH = récepteurs hormonaux (ER/PR), TN = triple négatif,
-#           NPI = Nottingham Prognostic Index.
+
+# Source: Analyse datasets/analyse_incoherences (metabric).xlsx
+# Severity levels: Absolute (biologically impossible) / Strong (clinically inconsistent, high rate) / Atypical (rare but documented).
 
 pam   = df["sous_type_pam50"].astype(str)
 er    = df["statut_er"].astype(str)
@@ -98,58 +95,103 @@ npi   = pd.to_numeric(df["indice_nottingham"], errors="coerce")
 type_h = df["type_histologique"].astype(str)
 sub_h  = df["sous_type_histologique"].fillna("").astype(str)
 
-rh_neg = (er == "Negative") & (pr == "Negative")
-tn     = rh_neg & (her2 == "Negative")
+rh_neg = (er == "Negative") & (pr == "Negative")   # no hormonal target
+tn     = rh_neg & (her2 == "Negative")              # triple negative
 
-violations = {
-    # Hormonothérapie sans cible hormonale — biologiquement sans sens.
-    "R5":  rh_neg & (horm == "YES"),
-    "R7":  tn & (horm == "YES"),
-    "R8":  (pam == "Basal") & (er == "Negative") & (horm == "YES"),
-    "R11": (pam == "claudin-low") & (er == "Negative") & (horm == "YES"),
-    "R14": (her2 == "Positive") & rh_neg & (horm == "YES"),
+violations = {}
 
-    # ER+ sans hormonothérapie — rare cliniquement ; à 15.7% dans METABRIC,
-    # l'experte recommande d'exclure (probable erreur de saisie ou protocole
-    # non renseigné).
-    "R6":  (er == "Positive") & (horm == "NO"),
 
-    # Sous-type PAM50 vs statut IHC : contradictions par définition.
-    "R1":  (pam == "LumA") & (er == "Negative"),   # LumA = RE+RP+ par déf.
-    "R2":  (pam == "LumB") & (er == "Negative"),
-    "R4":  (pam == "Her2") & (her2 == "Negative"),  # discordance ARNm/protéine
+# Group R : Biomarkers / Hormone therapy
+# --------------------------------------
 
-    # Stade vs ganglions — la classification AJCC est incompatible avec ces
-    # combinaisons (Stade I = N0 obligatoirement).
-    "SG1": (stade == 1) & (gangl > 0),
-    "SG4": (stade < 3) & (gangl >= 10),  # N3 impose un stade ≥ IIIC
-    "ST1": (stade == 1) & (gangl > 3),
+# R5/R12 [Absolute] : hormone therapy with no hormonal target (ER- AND PR-)
+violations["R5/R12"] = rh_neg & (horm == "YES")
 
-    # Chimiothérapie au stade 0 (DCIS) : le carcinome in situ n'envahit pas
-    # les ganglions, la chimio n'est pas indiquée.
-    "C1":  (stade == 0) & (chim == "YES"),
+# R7 [Absolute] : triple-negative profile (ER-, PR-, HER2-) with hormone therapy
+violations["R7"]  = tn & (horm == "YES")
 
-    # HER2-enrichi non traité par chimio — recommandé systématiquement dès
-    # que la tumeur dépasse 5 mm. L'experte confirme d'exclure si taille NR
-    # aussi (toutes les tailles METABRIC sont > 5mm).
-    "C3":  (pam == "Her2") & (chim == "NO") & ((taille > 5) | taille.isna()),
+# R8 [Absolute] : Basal-like with ER- and hormone therapy (functionally TN)
+violations["R8"]  = (pam == "Basal") & (er == "Negative") & (horm == "YES")
 
-    # Stade 4 métastatique + chirurgie conservatrice : incompatible.
-    "S2":  (stade == 4) & (chir == "BREAST CONSERVING"),
+# R11 [Absolute] : Claudin-low with ER- and hormone therapy
+violations["R11"] = (pam == "claudin-low") & (er == "Negative") & (horm == "YES")
 
-    # Contradictions grade / sous-type.
-    "G1":  (pam == "Basal") & (grade == 1),       # Basal = quasi exclusivement G3
-    "G3":  (pam == "LumA") & (grade == 3),         # LumA = bas grade, G3 → reclassement LumB
-    "G5":  type_h.str.contains("Mucinous", na=False) & (grade == 3),  # mucineux = bas grade
+# R14 [Absolute] : HER2+ with RH- (ER- AND PR-) and hormone therapy
+violations["R14"] = (her2 == "Positive") & rh_neg & (horm == "YES")
 
-    # NPI ≥ 6 implique mathématiquement grade ≥ 2 (NPI = 0.2×taille + G + N).
-    "NPI2": (npi >= 6.0) & (grade == 1),
+# R1 [Strong] : LumA with ER-: contradicts LumA definition (ER+PR+ by definition)
+violations["R1"]  = (pam == "LumA") & (er == "Negative")
 
-    # Discordance entre type histologique principal et sous-type renseigné.
-    # Ex. : type = IDC mais sous-type = Lobular → erreur de saisie.
-}
+# R2 [Strong] : LumB with ER-: same issue (LumB also implies ER+ by definition)
+violations["R2"]  = (pam == "LumB") & (er == "Negative")
 
-# Règle H1 traitée séparément car elle compare deux colonnes texte.
+# R4 [Strong] : HER2-enriched (PAM50) with HER2- by IHC
+violations["R4"]  = (pam == "Her2") & (her2 == "Negative")
+
+# R6 [Strong] : ER+ without hormone therapy
+violations["R6"]  = (er == "Positive") & (horm == "NO")
+
+
+# Group C : Chemotherapy
+# ----------------------
+
+# C1 [Absolute] : DCIS (stage 0) with chemotherapy
+#   0 patients in METABRIC, expert confirmed rule.
+violations["C1"]  = (stade == 0) & (chim == "YES")
+
+# C3 [Strong] : HER2-enriched (PAM50) without chemotherapy, tumor > 5mm
+violations["C3"]  = (pam == "Her2") & (chim == "NO") & ((taille > 5) | taille.isna())
+
+
+# Group G : Histological grade
+# ----------------------------
+
+# G1 [Absolute] : Basal-like with Grade 1: biologically impossible
+violations["G1"]  = (pam == "Basal") & (grade == 1)
+
+# G3 [Strong] : LumA with Grade 3
+violations["G3"]  = (pam == "LumA") & (grade == 3)
+
+# G5 [Atypical] : Mucinous carcinoma with Grade 3
+violations["G5"]  = type_h.str.contains("Mucinous", na=False) & (grade == 3)
+
+
+# Group SG : Stage / Lymph nodes
+# --------------------------------
+
+# SG1 [Absolute] : Stage 1 with any positive lymph node
+violations["SG1"] = (stade == 1) & (gangl > 0)
+
+# SG4 [Absolute] : Stage < 3 with ≥ 10 positive nodes
+violations["SG4"] = (stade < 3) & (gangl >= 10)
+
+
+# Group ST : Stage / Lymph nodes (additional)
+# --------------------------------------------
+
+# ST1 [Strong] : Stage 1 with more than 3 positive nodes
+violations["ST1"] = (stade == 1) & (gangl > 3)
+
+
+# Group NPI : Nottingham Prognostic Index
+# ----------------------------------------
+
+# NPI2 [Strong] : NPI ≥ 6.0 with Grade 1: mathematically impossible
+#   0 patients in METABRIC
+violations["NPI2"] = (npi >= 6.0) & (grade == 1)
+
+
+# Group S : Surgery
+# -----------------
+
+# S2 [Strong] : Stage 4 (metastatic) with breast-conserving surgery
+violations["S2"]  = (stade == 4) & (chir == "BREAST CONSERVING")
+
+
+# Group H : Histology
+# --------------------
+
+# H1 [Atypical] : mismatch between the primary histological type and the
 histo_map = {
     "Breast Invasive Ductal Carcinoma":          "Ductal/NST",
     "Breast Invasive Lobular Carcinoma":         "Lobular",
@@ -159,46 +201,49 @@ histo_map = {
 h1 = pd.Series(False, index=df.index)
 for type_val, expected_sub in histo_map.items():
     h1 |= (type_h == type_val) & (sub_h != "") & (sub_h != "nan") & (sub_h != expected_sub)
-violations["H1"] = h1
+violations["H1"]  = h1
 
-# Un patient est exclu s'il viole au moins une règle.
+
+# ---------------------------------------------------------------------------
+# Apply exclusions
+# ---------------------------------------------------------------------------
+
 excl_mask = pd.Series(False, index=df.index)
 for mask in violations.values():
     excl_mask |= mask.fillna(False)
 
-# Résumé règle par règle avant d'appliquer l'exclusion globale.
-print(f"\nRègles d'exclusion ({len(violations)} règles) :")
-n_total = len(df)
-for rule_id, mask in sorted(violations.items()):
+n_start = len(df)
+print(f"\nCoherence rules ({len(violations)} applied, action = EXCLURE):")
+for rule_id, mask in violations.items():
     n = int(mask.fillna(False).sum())
-    print(f"  {rule_id:<6} {n:4d} patients  ({100*n/n_total:.1f}%)")
+    print(f"  {rule_id:<8} {n:4d} patients  ({100*n/n_start:.1f}%)")
 
+n_excl = int(excl_mask.sum())
 df_clean = df[~excl_mask].copy()
-n_excl   = int(excl_mask.sum())
-print(f"\nExclus  : {n_excl} patients ({100*n_excl/n_total:.1f}%)")
-print(f"Retenus : {len(df_clean)} patients ({100*len(df_clean)/n_total:.1f}%)")
+print(f"\nRemoved : {n_excl} patients ({100*n_excl/n_start:.1f}%)")
+print(f"Retained: {len(df_clean)} patients ({100*len(df_clean)/n_start:.1f}%)")
+# Expected: 702 retained
 
 
 # ---------------------------------------------------------------------------
-# 4. Sauvegarde
+# Save
 # ---------------------------------------------------------------------------
 
 df_clean.to_csv(OUT, index=False)
-print(f"\nDataset final → {OUT.name}  ({len(df_clean)} patients, {len(df_clean.columns)} colonnes)")
+print(f"\nSaved: {OUT.name}  ({len(df_clean)} patients, {len(df_clean.columns)} columns)")
 
-# Log des patients exclus avec les règles violées — utile pour valider ou
-# retravailler les règles sans relancer tout le préprocessing.
+# Exclusion log (useful for auditing rules without re-running preprocessing)
 df_excl = df[excl_mask].copy()
 for rule_id, mask in violations.items():
     df_excl[f"excl_{rule_id}"] = mask[excl_mask].fillna(False).values
 
 rule_cols = [c for c in df_excl.columns if c.startswith("excl_")]
-df_excl["règles_violées"] = df_excl[rule_cols].apply(
+df_excl["rules_violated"] = df_excl[rule_cols].apply(
     lambda row: " | ".join(c.replace("excl_", "") for c in rule_cols if row[c]),
     axis=1,
 )
 df_excl[["sous_type_pam50", "statut_er", "statut_pr", "statut_her2",
           "hormonotherapie", "chimiotherapie", "type_chirurgie",
           "grade_sbr", "stade_tumoral", "ganglions_positifs",
-          "indice_nottingham", "règles_violées"]].to_csv(EXCL_LOG, index=False)
-print(f"Log exclusion  → {EXCL_LOG.name}  ({n_excl} patients)")
+          "indice_nottingham", "rules_violated"]].to_csv(EXCL_LOG, index=False)
+print(f"Exclusion log: {EXCL_LOG.name}  ({n_excl} patients)")

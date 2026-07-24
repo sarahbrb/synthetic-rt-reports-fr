@@ -1,64 +1,54 @@
 """
-configuration de la campagne multi-modèles (génération + évaluation).
-centralise les décisions prises ensemble : quel modèle sur quel noeud,
-quelles configs de sampling comparer.
+Multi-model campaign configuration (generation + evaluation).
+Central place for all decisions: which model runs on which node,
+which sampling configs to compare.
 
-ne contient aucune logique d'exécution -- juste des données, importées par
-run_one_model.sh (via un petit appel python) et launch_campaign.py.
+No executable logic — just data, imported by make_jobs.py to generate OAR scripts.
 """
 
 # ──────────────────────────────────────────────────────────────────────────
-# modèles : nom court -> identifiant huggingface
+# Models: short name -> HuggingFace model ID
 # ──────────────────────────────────────────────────────────────────────────
 MODELS = {
-    # entrée de test uniquement -- ne fait PAS partie de la campagne des 9 modèles.
-    # modèle minuscule (0.5B), utilisé pour valider toute la chaîne (run_one_model.py,
-    # sous-process generate_cag.py/evaluate_cag.py, fusion des .jsonl) sans avoir besoin
-    # d'un vrai GPU compatible -- tourne sur CPU en quelques minutes.
-    "_smoketest": "Qwen/Qwen2.5-0.5B-Instruct",
-
     "qwen7b":     "Qwen/Qwen2.5-7B-Instruct",
     "qwen32b":    "Qwen/Qwen2.5-32B-Instruct",
     "mistral7b":  "mistralai/Mistral-7B-Instruct-v0.3",
     "mistral12b": "mistralai/Mistral-Nemo-Instruct-2407",
     "mistral24b": "mistralai/Mistral-Small-24B-Instruct-2501",
-    "mixtral":    "mistralai/Mixtral-8x7B-Instruct-v0.1",
-    "llama70b":   "meta-llama/Llama-3.3-70B-Instruct",
     "apertus8b":  "swiss-ai/Apertus-8B-Instruct-2509",
-    "apertus70b": "swiss-ai/Apertus-70B-Instruct-2509",
+    "apertus70b": "swiss-ai/Apertus-70B-2509",
 }
 
-# affectation modèle -> (noeud, nb de gpu, walltime PAR COMBINAISON)
-# 1 job OAR = 1 combinaison (dataset × prompt_type × sampling_preset)
+# Model-to-node mapping: short_name -> (node_pool, n_gpu, walltime_per_combo, dtype)
+# One OAR job = one combination (dataset × prompt_type × sampling_preset).
 #
-# lig-gpu1 à 5 exclus : Pascal/sm_61, incompatible avec sm_70+ requis.
+# lig-gpu1 to gpu5 excluded: Pascal/sm_61, incompatible with PyTorch sm_70+ requirement.
 #
-# walltimes estimés à partir de la mesure réelle qwen7b (~2.4 min/CR sur
-# 2x RTX2080Ti avec device_map="auto"). extrapolés par taille de modèle.
-# llama70b sur H100 NVLink supposé ~3x plus rapide qu'apertus70b.
+# Walltimes extrapolated from measured qwen7b throughput (~2.4 min/CR on
+# 2× RTX 2080 Ti with device_map="auto").
 MODEL_NODE = {
-    # modèle      : ([pool de nœuds], n_gpu, walltime/combo)
-    # OAR choisit n'importe quel nœud libre dans le pool → parallélisme max.
-    #
-    # 7B/8B → gpu6 ou gpu7 (même classe de VRAM, ~22 GB par paire)
-    "qwen7b":     (["lig-gpu6.imag.fr", "lig-gpu7.imag.fr"],  2, "30:00:00"),
-    "mistral7b":  (["lig-gpu6.imag.fr", "lig-gpu7.imag.fr"],  2, "30:00:00"),
-    "apertus8b":  (["lig-gpu6.imag.fr", "lig-gpu7.imag.fr"],  2, "30:00:00"),
-    # 12B → gpu7 ou gpu8
-    "mistral12b": (["lig-gpu7.imag.fr", "lig-gpu8.imag.fr"],  2, "45:00:00"),
-    # 24B/32B → gpu8 uniquement (VRAM supérieure requise)
-    "mistral24b": (["lig-gpu8.imag.fr"],                       2, "90:00:00"),
-    "qwen32b":    (["lig-gpu8.imag.fr"],                       2, "90:00:00"),
-    # 70B : nœuds spécialisés uniquement
-    "mixtral":    (["lig-gpu9.imag.fr"],                       4, "90:00:00"),   # exclu
-    "apertus70b": (["lig-gpu9.imag.fr"],                       4, "96:00:00"),
-    "llama70b":   (["lig-gpu10.imag.fr"],                      2, "48:00:00"),   # H100 NVLink
+    # dtype: fp16 for Turing (gpu6/7, sm_75 — bf16 emulated in fp32, 2× slower)
+    #        bf16 for Ampere/Hopper (gpu8/9/10 — native bf16 tensor cores)
+    #        gpu9 (RTX 8000) is Turing but used for 70B where numerical stability
+    #        outweighs the speed cost.
+
+    # 7B/8B → gpu6, gpu7, or gpu10 (H100 overkill but reduces waiting time)
+    "qwen7b":     (["lig-gpu6.imag.fr", "lig-gpu7.imag.fr", "lig-gpu10.imag.fr"],  2, "30:00:00", "fp16"),
+    "mistral7b":  (["lig-gpu6.imag.fr", "lig-gpu7.imag.fr", "lig-gpu10.imag.fr"],  2, "30:00:00", "fp16"),
+    "apertus8b":  (["lig-gpu6.imag.fr", "lig-gpu7.imag.fr", "lig-gpu10.imag.fr"],  2, "30:00:00", "fp16"),
+    # 12B → gpu7, gpu8, or gpu10
+    "mistral12b": (["lig-gpu7.imag.fr", "lig-gpu8.imag.fr", "lig-gpu10.imag.fr"],  2, "45:00:00", "fp16"),
+    # 24B/32B → gpu8 or gpu10 (both have ≥96 GB over 2 GPUs)
+    "mistral24b": (["lig-gpu8.imag.fr", "lig-gpu10.imag.fr"],                       2, "90:00:00", "bf16"),
+    "qwen32b":    (["lig-gpu8.imag.fr", "lig-gpu10.imag.fr"],                       2, "90:00:00", "bf16"),
+    # 70B → gpu9 only (4×48 GB = 192 GB required; gpu10 only has 96 GB total)
+    "apertus70b": (["lig-gpu9.imag.fr"],                                             4, "96:00:00", "bf16"),
 }
 
 # ──────────────────────────────────────────────────────────────────────────
-# configs de sampling à comparer (3 retenues : conservateur/standard/exploratoire)
-# nom -> (temperature, top_p, repetition_penalty)
-# "standard" reprend les défauts déjà utilisés dans generate_cag.py
+# Sampling configurations to compare (3 presets: conservative/standard/exploratory)
+# name -> (temperature, top_p, repetition_penalty)
+# "standard" matches the defaults already used in generate_cag.py
 # ──────────────────────────────────────────────────────────────────────────
 SAMPLING_PRESETS = {
     "conservateur": (0.3, 0.85, 1.10),
@@ -70,8 +60,8 @@ DATASETS = ["metabric", "seer"]
 PROMPT_TYPES = ["0shot", "5shot"]
 N_PER_RUN = 700
 
-# apertus70b sur gpu9 (4 GPU sans NVLink) : ~12 min/CR → 700 CR = 140h >> 100h (limite OAR).
-# Solution : 2 jobs par combinaison avec --skip. Part1=400 CR (~80h), Part2=300 CR (~60h).
+# apertus70b on gpu9 (4 GPUs, no NVLink): ~12 min/CR → 700 CR = 140h >> 100h (OAR cap).
+# Fix: 2 jobs per combination using --skip. Part1=400 CR (~80h), Part2=300 CR (~60h).
 N_SPLIT = {
     "apertus70b": [
         {"n": 400, "skip": 0,   "walltime": "84:00:00", "suffix": "part1"},

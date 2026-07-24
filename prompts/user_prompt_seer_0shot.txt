@@ -18,19 +18,19 @@ Rédigez un compte rendu narratif de fin de traitement de radiothérapie pour ce
 
 
 Le compte rendu doit intégrer de manière fluide et naturelle :
-– les destinataires, la référence et la date du courrier
-– l'identification du patient ({patient_name}, né(e) le {birth_date}), âgé(e) de {age} ans
-– le diagnostic : stade {stade_t}{stade_n}M0 ({stade_global}), grade SBR {grade}, taille tumorale {taille_tumorale_mm} mm, récepteurs ER {statut_er}, PR {statut_pr}, {ganglions_positifs} ganglion(s) positif(s) sur {ganglions_examines} examiné(s)
-– le contexte thérapeutique : chirurgie (à adapter selon stade {stade_t}{stade_n}M0), traitements systémiques cohérents avec les récepteurs ER {statut_er} et PR {statut_pr}, décision de réunion de concertation pluridisciplinaire
+– les destinataires, la référence et la date du courrier ({report_date})
+– l'identification du patient (nom du patient(e):{patient_name}, date de naissance: {birth_date}, âge: {age} ans)
+– le diagnostic (stade {stade_t}{stade_n}M0 ({stade_global}), grade SBR {grade}, taille tumorale {taille_tumorale_mm} mm, récepteurs ER {statut_er}, PR {statut_pr}, {ganglions_positifs} ganglion(s) positif(s) sur {ganglions_examines} examiné(s))
+– le contexte thérapeutique (chirurgie selon stade {stade_t}{stade_n}M0, traitements adjuvants selon ER {statut_er} et PR {statut_pr}, décision de réunion de concertation pluridisciplinaire)
 – la préparation du traitement (scanner dosimétrique, CTDI, PDL, technique de dosimétrie)
 – les caractéristiques de la radiothérapie (dates, étalement, accélérateur, énergie, volumes cibles, technique, doses totales et par fraction, doses moyenne et maximale)
 – les contraintes aux organes à risque (poumon, cœur) avec les seuils de tolérance entre parenthèses
 – la tolérance au traitement (toxicités observées avec grade CTCAE et prise en charge)
 – le bilan de fin de traitement (score OMS, poids, toxicités résiduelles)
 – les suites thérapeutiques prévues et les modalités de surveillance
-– la signature électronique du médecin
+– la signature électronique du médecin avec un nom, un prénom.
 
-Le texte doit mentionner explicitement : {patient_name}, {birth_date}, {age} ans, stade {stade_t}{stade_n}M0 ({stade_global}), grade SBR {grade}, {taille_tumorale_mm} mm, ER {statut_er}, PR {statut_pr}, {ganglions_positifs} ganglion(s) positif(s) sur {ganglions_examines} examiné(s).
+Le texte doit mentionner explicitement : {patient_name}, {birth_date}, {age} ans, stade {stade_t}{stade_n}M0 ({stade_global}), grade SBR {grade}, {taille_tumorale_mm} mm, ER {statut_er}, PR {statut_pr}, {ganglions_positifs} ganglion(s) positif(s) sur {ganglions_examines} examiné(s) dans des phrases bien formulées.
 Les informations médicales doivent être cohérentes et réalistes pour une radiothérapie mammaire. Le style doit être strictement clinique, sans explication, sans justification.
 
 Rédigez uniquement le texte final du compte rendu.

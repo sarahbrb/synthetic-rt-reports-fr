@@ -25,19 +25,19 @@ Rédigez un compte rendu narratif de fin de traitement de radiothérapie pour ce
 
 
 Le compte rendu doit intégrer de manière fluide et naturelle :
-– les destinataires, la référence et la date du courrier
-– l'identification du patient ({patient_name}, né(e) le {birth_date}), âgé(e) de {age_diagnostic} ans
-– le diagnostic : {diagnostic_text}
-– le contexte thérapeutique : {contexte_text}
+– les destinataires, la référence et la date du courrier ({report_date})
+– l'identification du patient (nom du patient(e):{patient_name}, date de naissance: {birth_date}, âge: {age_diagnostic} ans)
+– le diagnostic ({type_histologique}, {code_oncotree}, {sous_type_histologique}, sein {lateralite}, grade SBR {grade_sbr}, sous-type moléculaire {sous_type_pam50}, ER {statut_er}, PR {statut_pr}, HER2 {statut_her2}, taille {taille_tumorale_mm} mm, stade {stade_tumoral}, {ganglions_positifs} ganglion(s) positif(s), indice de Nottingham {indice_nottingham})
+– le contexte thérapeutique ({type_chirurgie}, {etat_menopausique}, traitements adjuvants, décision de réunion de concertation pluridisciplinaire)
 – la préparation du traitement (scanner dosimétrique, CTDI, PDL, technique de dosimétrie)
 – les caractéristiques de la radiothérapie (dates, étalement, accélérateur, énergie, volumes cibles, technique, doses totales et par fraction, doses moyenne et maximale)
 – les contraintes aux organes à risque (poumon, cœur) avec les seuils de tolérance entre parenthèses
 – la tolérance au traitement (toxicités observées avec grade CTCAE et prise en charge)
 – le bilan de fin de traitement (score OMS, poids, toxicités résiduelles)
 – les suites thérapeutiques prévues et les modalités de surveillance
-– la signature électronique du médecin
+– la signature électronique du médecin avec un nom, un prénom.
 
-Le texte doit mentionner explicitement : {patient_name}, {birth_date}, {age_diagnostic} ans, {mentions_explicites}.
+Le texte doit mentionner explicitement : {patient_name}, {birth_date}, {age_diagnostic} ans, {mentions_explicites} dans des phrases bien formulées.
 Si un champ du profil ci-dessus est marqué "non renseigné", ne pas l'évoquer ni l'inventer : rédiger uniquement à partir des informations présentes.
 Les champs binaires chimiothérapie ({chimiotherapie}) et hormonothérapie ({hormonotherapie}) ne doivent jamais apparaître sous forme de 'oui' ou 'non' dans le texte. Si oui : nommer une molécule réelle cohérente avec l'état ménopausique ({etat_menopausique}) pour l'hormonothérapie et avec le statut HER2 ({statut_her2}) pour une éventuelle thérapie anti-HER2. Si non : ne pas l'écrire comme une absence brute, mais l'omettre naturellement ou la relier implicitement au profil (récepteurs, stade, grade).
 Les informations médicales doivent être cohérentes et réalistes pour une radiothérapie mammaire. Le style doit être strictement clinique, sans explication, sans justification.

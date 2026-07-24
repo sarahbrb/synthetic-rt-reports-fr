@@ -7,9 +7,9 @@ produced by the CAG pipeline (see evaluate_cag.py for the synthetic side).
 Metrics:
   n_words      word count
   msttr_100    lexical richness (length-corrected TTR, 100-word windows)
-  flesch_re    readability — lower means more technical, expected for clinical text
-  perplexity   surface fluency via a French causal LM — lower means more natural
-  self_bleu_4  corpus-level diversity — higher means reports look too similar
+  flesch_re    readability 
+  perplexity   surface fluency via a French causal LM 
+  self_bleu_4  corpus-level diversity, higher means reports look too similar
 
 The language model for perplexity (~700 MB) is downloaded automatically from
 HuggingFace on first use.
@@ -159,7 +159,7 @@ def main():
     reports = load_reports(input_dir)
     texts   = list(reports.values())
 
-    # Surface metrics — no GPU needed
+    # Surface metrics (no GPU needed)
     rows = []
     for fname, text in reports.items():
         tokens = tokenize_words(text)
@@ -181,7 +181,7 @@ def main():
         print(f"  [{i+1}/{len(texts)}] {fname}  PPL={ppl}")
     df["perplexity"] = ppl_vals
 
-    # Self-BLEU-4 is corpus-level — same value repeated in every row
+    # Self-BLEU-4 is corpus-level : same value repeated in every row
     print("Computing Self-BLEU-4 ...")
     sb4 = self_bleu_4(texts)
     df["self_bleu_4"] = sb4
@@ -196,7 +196,7 @@ def main():
     summary.to_csv(summary_path, encoding="utf-8")
     print(f"Corpus summary     →  {summary_path}")
 
-    print(f"\nResults — {len(texts)} report(s)")
+    print(f"\nResults : {len(texts)} report(s)")
     labels = {
         "n_words":    "Word count (mean)",
         "msttr_100":  "Lexical richness  (MSTTR-100)",

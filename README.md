@@ -121,10 +121,23 @@ synthetic-rt-reports-fr/
 
 ### Prerequisites
 
+**Python 3.10+**, CUDA 11.8+ recommended for GPU inference.
+
+**OAR cluster / local machine** — install all dependencies:
+
 ```bash
-pip install transformers torch pandas faker sacrebleu bert-score scikit-learn
-# Python 3.10+, CUDA 11.8+ for GPU inference
+pip install -r requirements.txt
 ```
+
+**Jean Zay (IDRIS)** — `torch`, `pandas` and `numpy` are provided by the environment module; install only the extra packages into a local target directory:
+
+```bash
+module load pytorch-gpu/py3/2.7.0
+pip install --target=$SCRATCH/synth-data-generation/pyuser -r requirements-jeanzay.txt
+```
+
+> All pinned versions are listed in `requirements.txt` (full) and `requirements-jeanzay.txt` (Jean Zay extras only).  
+> Key versions used in this study: `torch==2.8.0`, `transformers==4.57.6`, `textstat==0.7.13`, `bert-score==0.3.13`, `sacrebleu==2.6.0`.
 
 ### 1 — Download and preprocess patient data
 
@@ -160,7 +173,11 @@ bash jobs/oar-cluster/submit_all.sh        # submits all OAR jobs (generation + 
 
 ```bash
 # From the Jean Zay login node
-# 1. Download models to $SCRATCH/hf_cache (once)
+# 0. Install extra Python packages (once)
+module load pytorch-gpu/py3/2.7.0
+pip install --target=$SCRATCH/synth-data-generation/pyuser -r requirements-jeanzay.txt
+
+# 1. Download models to $SCRATCH/synth-data-generation/hf_cache (once)
 bash jobs/jean-zay/download_models.sh
 bash jobs/jean-zay/download_eval_models.sh
 
@@ -173,7 +190,8 @@ python scripts/jean-zay/make_resubmit.py   # scans outputs, skips complete, cont
 bash $SCRATCH/CAG_slurm/resubmit_jeanzay.sh
 ```
 
-> **Jean Zay environment:** use `module load pytorch-gpu/py3/2.7.0`. The `$SCRATCH` filesystem holds model weights and outputs (not tracked by git). See `scripts/jean-zay/campaign_config.py` for partition and QOS configuration.
+> **Jean Zay environment:** use `module load pytorch-gpu/py3/2.7.0` (provides torch 2.8.0, pandas 2.2.3, numpy 2.5.2). Model weights, outputs and the Python environment are stored under `$SCRATCH/synth-data-generation/` (not tracked by git). See `scripts/jean-zay/campaign_config.py` for partition and QOS configuration.  
+> **Scratch purge policy:** files not accessed for 30 days are automatically deleted. Run `touch -a -r $SCRATCH/synth-data-generation/` periodically if the cluster is not in use.
 
 ### 4 — Evaluate manually (single model, any cluster)
 

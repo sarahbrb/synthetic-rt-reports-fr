@@ -114,7 +114,7 @@ synthetic-rt-reports-fr/
 
 **BERTScore encoders:** CamemBERT-base, CamemBERT-bio, DrBERT — computed via `add_bertscore_encoder.py`.
 
-> Flesch RE and Gunning Fog use a native French syllable-counting implementation (vowel-group heuristic, Kandel & Moles 1958) — no `textstat` dependency.
+> Flesch RE and Gunning Fog are computed with `textstat` (French locale, Kandel & Moles 1958 formula): `textstat.set_lang("fr")` then `textstat.flesch_reading_ease()` / `textstat.gunning_fog()`.
 
 ---
 

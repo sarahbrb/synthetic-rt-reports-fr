@@ -1,6 +1,7 @@
 # Patient data — never publish
 data/
 data_processed/
+real_data/
 
 # OAR job scripts and logs — cluster-specific, not reproducible
 logs/

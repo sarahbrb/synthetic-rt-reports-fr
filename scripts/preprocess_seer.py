@@ -10,7 +10,7 @@ Each rule is traceable to its row in:
     Analyse datasets/analyse_incoherences (SEER).xlsx
 
 Expected result (validated against the xlsx summary sheet):
-    4024 patients  →  3832 retained after exclusions (95.2%)
+    4024 patients  -->  3832 retained after exclusions (95.2%)
 
 Usage:
     python scripts/preprocess_seer.py
@@ -26,9 +26,9 @@ OUT      = DATA_DIR / "seer_preprocessed.csv"
 EXCL_LOG = DATA_DIR / "seer_exclusion_report.csv"
 
 
-# ---------------------------------------------------------------------------
+
 # Step 1 : Column selection
-# ---------------------------------------------------------------------------
+
 
 df = pd.read_csv(RAW)
 df.columns = df.columns.str.strip()
@@ -58,9 +58,8 @@ gexam  = pd.to_numeric(df["ganglions_examines"],  errors="coerce")
 grade  = df["grade"].astype(str).str.strip()
 
 
-# ---------------------------------------------------------------------------
+
 # Step 2 : Coherence rule filtering
-# ---------------------------------------------------------------------------
 
 # Source: Analyse datasets/analyse_incoherences (SEER).xlsx
 # Severity levels: Absolute (biologically/clinically impossible) / Strong (clinically inconsistent) / Atypical (rare but possible)
@@ -157,9 +156,9 @@ violations["E1"] = grade.str.lower().str.contains("anaplastic|iv", na=False)
 violations["E2"] = (grade == "1") & (df["statut_er"] == "Negative") & (df["statut_pr"] == "Negative")
 
 
-# ---------------------------------------------------------------------------
+
 # Apply exclusions
-# ---------------------------------------------------------------------------
+
 
 excl_mask = pd.Series(False, index=df.index)
 for mask in violations.values():
@@ -178,9 +177,8 @@ print(f"Retained: {len(df_clean)} patients ({100*len(df_clean)/n_start:.1f}%)")
 # Expected: 3832 retained
 
 
-# ---------------------------------------------------------------------------
+
 # Save
-# ---------------------------------------------------------------------------
 
 df_clean.to_csv(OUT, index=False)
 print(f"\nSaved: {OUT.name}  ({len(df_clean)} patients, {len(df_clean.columns)} columns)")

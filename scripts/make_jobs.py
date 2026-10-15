@@ -1,18 +1,17 @@
 """
-Generate OAR batch scripts for the full campaign (generation + evaluation).
+Generate OAR batch scripts for the full campaign (generation + evaluation)
 
 Per model:
   - 1 OAR job per combination (dataset × prompt_type × sampling_preset)
-  - apertus70b: 2 jobs per combination (part1=400 CR, part2=300 CR, via --skip)
-  - 1 evaluation job per model, triggered automatically after all generation jobs finish via OAR dependencies (-a <job_id>)
+  - 1 evaluation job per model, after all generation jobs finish via OAR dependencies
 
 To reproduce : run from the OAR frontend (aker.imag.fr):
 
     ssh aker.imag.fr
     cd /home/getalp/bouarabs/Data_Generation_3/CAG
     conda activate synthgen
-    python scripts/make_jobs.py   # writes logs/jobscripts/ + logs/submit_all.sh
-    bash logs/submit_all.sh       # submits everything to OAR
+    python scripts/make_jobs.py   # writes logs/jobscripts/ + jobs/submit_all.sh
+    bash jobs/submit_all.sh       #submits everything to OAR
 
 Monitor:
     oarstat -u $(whoami)
@@ -58,6 +57,7 @@ def write_gen_job(tag, nodes, n_gpu, walltime, dtype, model_id, dataset,
 #!/bin/bash
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate synthgen
+export PYTORCH_ALLOC_CONF=expandable_segments:True
 cd "{BASE_DIR}"
 echo "=== $(date) -- START {tag} on $(hostname) ==="
 python scripts/generate_cag.py \\
@@ -101,7 +101,7 @@ source ~/miniconda3/etc/profile.d/conda.sh
 conda activate synthgen
 cd "{BASE_DIR}"
 echo "=== $(date) -- START {tag} on $(hostname) ==="
-python scripts/evaluate_cag.py \\
+python scripts/evaluate_synthetic_reports.py \\
     --input outputs/{short_name}_*.jsonl \\
     --out_per_cr  outputs/{short_name}_eval_per_cr.csv \\
     --out_summary outputs/{short_name}_eval_summary.csv
@@ -123,15 +123,14 @@ exit $code
     return oarsub
 
 
-# submit_all.sh: for each model, submit all generation jobs, capture their IDs,
-# then submit the evaluation job as a dependent of all of them.
+# submit_all.sh: for each model, submit all generation jobs, capture their IDs, then submit the evaluation job as a dependent of all of them
 submit_lines = [
     "#!/bin/bash",
-    "# OAR submission — generation + automatic evaluation per model.",
+    "# OAR submission: generation + automatic evaluation per model",
     "# Each model's evaluation job starts only after all its generation jobs",
-    "# have completed successfully (OAR dependencies via -a <job_id>).",
+    "# have completed successfully (OAR dependencies via -a <job_id>)",
     "",
-    "# Helper: submit a job and return its OAR job ID.",
+    "# Helper: submit a job and return its OAR job ID",
     "submit() {",
     '    local jid',
     '    jid=$("$@" 2>&1 | grep OAR_JOB_ID | cut -d= -f2)',

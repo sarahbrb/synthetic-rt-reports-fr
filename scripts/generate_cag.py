@@ -30,7 +30,7 @@ import torch
 from faker import Faker
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-# All paths are relative to the script location so the script works regardless of where it is called from.
+# All paths are relative to the script location so the script works regardless of where it is called from
 BASE_DIR   = Path(__file__).parent.parent
 DATA_DIR   = BASE_DIR / "data_processed"
 PROMPT_DIR = BASE_DIR / "prompts"
@@ -50,7 +50,7 @@ PROMPTS = {
 SYSTEM_PROMPT_PATH = PROMPT_DIR / "system_prompt.txt"
 
 
-# Translation table for categorical values that come in English from both datasets and need to appear in French in the prompt.
+# Translation table for categorical values that come in English from both datasets and need to appear in French in the prompt
 FR = {
     # biomarkers
     "Positive": "positifs",
@@ -98,8 +98,7 @@ FR = {
     "Distant":  "distante",
 }
 
-# SBR grade and tumour stage are both stored as raw digits ("1", "2", ...) in the CSVs. They can't share the FR table because "1" means something different
-# in each, a collision would silently mistranslate one of them.
+# SBR grade and tumour stage are both stored as raw digits ("1", "2", ...) in the CSVs. They can't share the FR table because "1" means something different in each, a collision would silently mistranslate one of them
 GRADE_SBR_MAP = {
     "1": "I",
     "2": "II",
@@ -113,7 +112,7 @@ STADE_TUMORAL_MAP = {
     "4": "IV",
 }
 
-# Log untranslated values once per unique value to avoid flooding the console when a field appears in hundreds of rows.
+# Log untranslated values once per unique value to avoid flooding the console when a field appears in hundreds of rows
 _UNTRANSLATED_SEEN: set = set()
 
 
@@ -170,7 +169,7 @@ def generate_identity(age: float, rng: random.Random, faker_fr: Faker) -> Dict[s
 # ---------------------------------------------------------------------------
 # METABRIC context builders
 
-# METABRIC has a significant number of missing fields (the dataset was built for genomic survival analysis, not clinical documentation). The system prompt forbids writing "non renseigné" in the final report text, so we build sentences on the fly and simply skip absent fields rather than inserting them as blanks.
+# METABRIC has a significant number of missing fields (the dataset was built for genomic survival analysis, not clinical documentation). The system prompt forbids writing "non renseigné" in the final report text, so we build sentences on the fly and simply skip absent fields rather than inserting them as blanks
 # ---------------------------------------------------------------------------
 
 def _histo_fragment(ctx: Dict[str, str]) -> str | None:
@@ -288,8 +287,8 @@ def generate(
     ]
     text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
-    # add_special_tokens=False: the chat template already inserted the required special tokens (e.g. <s> for Mistral).
-    # Letting the tokenizer add them again would create a duplicate at the start of the sequence.
+    # add_special_tokens=False: the chat template already inserted the required special tokens (e.g. <s> for Mistral)
+    # Letting the tokenizer add them again would create a duplicate at the start of the sequence
     inputs = tokenizer(text, return_tensors="pt", add_special_tokens=False).to(model.device)
 
     with torch.no_grad():
@@ -327,9 +326,9 @@ def main():
     rng      = random.Random(args.seed)
     faker_fr = Faker("fr_FR")
 
-    # Fixed-seed shuffle ensures the same patients are selected across runs with the same seed.
+    # Fixed-seed shuffle ensures the same patients are selected across runs with the same seed
     # --skip allows splitting one large run into multiple
-    # OAR jobs without re-generating already-done patients.
+    # OAR jobs without re-generating already-done patients
     df = pd.read_csv(DATASETS[args.dataset])
     df = df.sample(frac=1, random_state=args.seed).reset_index(drop=True)
     df = df.iloc[args.skip : args.skip + args.n].reset_index(drop=True)

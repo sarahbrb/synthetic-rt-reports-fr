@@ -12,7 +12,7 @@ Each rule is traceable to its row in:
     Analyse datasets/analyse_incoherences (metabric).xlsx
 
 Expected result (validated against the xlsx summary sheet):
-    1173 patients after RT filter  →  702 retained after exclusions (59.8%)
+    1173 patients after RT filter  -->  702 retained after exclusions (59.8%)
 
 Usage:
     python scripts/preprocess_metabric.py
@@ -28,9 +28,9 @@ OUT      = DATA_DIR / "metabric_preprocessed.csv"
 EXCL_LOG = DATA_DIR / "metabric_exclusion_report.csv"
 
 
-# ---------------------------------------------------------------------------
+
 # Step 1 : Column selection
-# ---------------------------------------------------------------------------
+
 
 df = pd.read_csv(RAW, sep="\t", low_memory=False)
 df.replace("NA", np.nan, inplace=True)
@@ -61,9 +61,9 @@ cols = {
 df = df[list(cols.keys())].rename(columns=cols)
 
 
-# ---------------------------------------------------------------------------
+
 # Step 2 : Radiotherapy filter
-# ---------------------------------------------------------------------------
+
 
 n_raw = len(df)
 df = df[df["radiotherapie"] == "YES"].copy()
@@ -73,12 +73,12 @@ print(f"After RT filter: {len(df)} patients (removed {n_raw - len(df)})")
 df.drop(columns=["radiotherapie"], inplace=True)
 
 
-# ---------------------------------------------------------------------------
+
 # Step 3 : Coherence rule filtering
-# ---------------------------------------------------------------------------
+
 
 # Source: Analyse datasets/analyse_incoherences (metabric).xlsx
-# Severity levels: Absolute (biologically impossible) / Strong (clinically inconsistent, high rate) / Atypical (rare but documented).
+# Severity levels: Absolute (biologically impossible) / Strong (clinically inconsistent, high rate) / Atypical (rare but documented)
 
 pam   = df["sous_type_pam50"].astype(str)
 er    = df["statut_er"].astype(str)
@@ -204,9 +204,9 @@ for type_val, expected_sub in histo_map.items():
 violations["H1"]  = h1
 
 
-# ---------------------------------------------------------------------------
+
 # Apply exclusions
-# ---------------------------------------------------------------------------
+
 
 excl_mask = pd.Series(False, index=df.index)
 for mask in violations.values():
@@ -225,9 +225,9 @@ print(f"Retained: {len(df_clean)} patients ({100*len(df_clean)/n_start:.1f}%)")
 # Expected: 702 retained
 
 
-# ---------------------------------------------------------------------------
+
 # Save
-# ---------------------------------------------------------------------------
+
 
 df_clean.to_csv(OUT, index=False)
 print(f"\nSaved: {OUT.name}  ({len(df_clean)} patients, {len(df_clean.columns)} columns)")

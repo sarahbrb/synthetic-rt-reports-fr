@@ -108,36 +108,24 @@ def msttr_100(tokens: List[str], window: int = 100) -> float:
     return float(np.mean([ttr(c) for c in chunks]))
 
 
-_VOWELS_FR = re.compile(r"[aeiouyàâäéèêëîïôùûüœæ]+", re.IGNORECASE)
-_SENT_RE   = re.compile(r"[.!?]+")
-
-
-def _count_syllables(word: str) -> int:
-    return max(1, len(_VOWELS_FR.findall(word)))
-
-
-def _readability_stats(text: str):
-    sentences = [s.strip() for s in _SENT_RE.split(text) if s.strip()]
-    n_sent = max(1, len(sentences))
-    words = tokenize_words(text)
-    n_words = max(1, len(words))
-    syllables = [_count_syllables(w) for w in words]
-    asl  = n_words / n_sent
-    asw  = sum(syllables) / n_words
-    poly = sum(1 for s in syllables if s >= 3) / n_words * 100
-    return asl, asw, poly
-
-
 def flesch_re_fr(text: str) -> float:
-    """French Flesch Reading Ease (Kandel & Moles, 1958): 207 − 1.015×ASL − 73.6×ASW."""
-    asl, asw, _ = _readability_stats(text)
-    return round(207.0 - 1.015 * asl - 73.6 * asw, 2)
+    try:
+        import textstat
+        textstat.set_lang("fr")
+        return float(textstat.flesch_reading_ease(text))
+    except Exception as e:
+        print(f"[warn] flesch_re_fr failed: {e}")
+        return float("nan")
 
 
 def gunning_fog_fr(text: str) -> float:
-    """Gunning Fog index: 0.4 × (ASL + %polysyllabic words)."""
-    asl, _, poly = _readability_stats(text)
-    return round(0.4 * (asl + poly), 2)
+    try:
+        import textstat
+        textstat.set_lang("fr")
+        return float(textstat.gunning_fog(text))
+    except Exception as e:
+        print(f"[warn] gunning_fog_fr failed: {e}")
+        return float("nan")
 
 
 class FluencyScorer:

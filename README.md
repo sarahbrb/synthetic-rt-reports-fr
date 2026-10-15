@@ -67,28 +67,29 @@ synthetic-rt-reports-fr/
 
 ## Models evaluated
 
-### LIG OAR cluster
+### LIG OAR cluster — NVIDIA A6000 (48 GB)
 
-| Short name     | HuggingFace ID                                 | Size  | dtype |
-|----------------|------------------------------------------------|-------|-------|
-| `qwen7b`       | Qwen/Qwen2.5-7B-Instruct                       | 7B    | fp16  |
-| `qwen32b`      | Qwen/Qwen2.5-32B-Instruct                      | 32B   | bf16  |
-| `mistral7b`    | mistralai/Mistral-7B-Instruct-v0.3             | 7B    | fp16  |
-| `mistral12b`   | mistralai/Mistral-Nemo-Instruct-2407           | 12B   | fp16  |
-| `mistral24b`   | mistralai/Mistral-Small-24B-Instruct-2501      | 24B   | bf16  |
-| `apertus8b`    | swiss-ai/Apertus-8B-Instruct-2509              | 8B    | fp32  |
-| `medgemma27b`  | google/medgemma-27b-it *(license required)*    | 27B   | bf16  |
+| Short name     | HuggingFace ID                                 | Size  | dtype | Total gen. | Avg/CR |
+|----------------|------------------------------------------------|-------|-------|-----------|--------|
+| `qwen7b`       | Qwen/Qwen2.5-7B-Instruct                       | 7B    | fp16  | 40h04m    | 17 s   |
+| `qwen32b`      | Qwen/Qwen2.5-32B-Instruct                      | 32B   | bf16  | 143h46m   | 62 s   |
+| `mistral7b`    | mistralai/Mistral-7B-Instruct-v0.3             | 7B    | fp16  | 48h48m    | 21 s   |
+| `mistral12b`   | mistralai/Mistral-Nemo-Instruct-2407           | 12B   | fp16  | 55h37m    | 24 s   |
+| `mistral24b`   | mistralai/Mistral-Small-24B-Instruct-2501      | 24B   | bf16  | 127h58m   | 55 s   |
+| `apertus8b`    | swiss-ai/Apertus-8B-Instruct-2509              | 8B    | fp32  | 138h45m   | 60 s   |
+| `medgemma27b`  | google/medgemma-27b-it *(license required)*    | 27B   | bf16  | 189h31m   | 81 s   |
 
-### Jean Zay (IDRIS) — medical / large models
+### Jean Zay (IDRIS) — NVIDIA V100 (16/32 GB)
 
-| Short name      | HuggingFace ID                              | Size  | dtype | Notes |
-|-----------------|---------------------------------------------|-------|-------|-------|
-| `apertus70b`    | swiss-ai/Apertus-70B-Instruct-2509          | 70B   | fp16  | 8× V100 32GB |
-| `medllama8b`    | Henrychur/MMed-Llama-3-8B-EnIns             | 8B    | fp16  | Medical multilingual |
-| `openbiollm8b`  | aaditya/Llama3-OpenBioLLM-8B               | 8B    | fp16  | Biomedical |
-| `openbiollm70b` | aaditya/Llama3-OpenBioLLM-70B              | 70B   | fp16  | Biomedical, 8× V100 32GB |
+| Short name      | HuggingFace ID                              | Size  | dtype | GPUs | Total gen. | Avg/CR |
+|-----------------|---------------------------------------------|-------|-------|------|-----------|--------|
+| `medllama8b`    | Henrychur/MMed-Llama-3-8B-EnIns             | 8B    | fp16  | 4× V100 16GB | 196h18m | 84 s |
+| `openbiollm8b`  | aaditya/Llama3-OpenBioLLM-8B                | 8B    | fp16  | 4× V100 16GB | 9h46m   | 4 s  |
+| `apertus70b`    | swiss-ai/Apertus-70B-Instruct-2509          | 70B   | fp16  | 8× V100 32GB | 190h54m | 82 s |
+| `openbiollm70b` | aaditya/Llama3-OpenBioLLM-70B               | 70B   | fp16  | 8× V100 32GB | 502h55m | 216 s |
 
-> **Note — V100 constraint:** Jean Zay's V100 GPUs do not support bf16. All Jean Zay models run in fp16.
+> **Note — V100 constraint:** Jean Zay's V100 GPUs do not support bf16. All Jean Zay models run in fp16.  
+> Timings are cumulative across all 8400 generated CRs per model (2 datasets × 2 prompts × 3 presets × 700 CRs), summed from per-report `duration_s` fields in the JSONL outputs.
 
 **Experimental grid** — 132 combinations total:  
 11 models × 2 datasets (METABRIC, SEER) × 2 prompts (0-shot, 5-shot) × 3 sampling presets (conservateur/standard/exploratoire) × 700 reports per combination

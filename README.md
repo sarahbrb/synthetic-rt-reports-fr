@@ -2,7 +2,7 @@
 
 Synthetic French breast cancer radiotherapy follow-up reports generated with a Context-Augmented Generation (CAG) pipeline. Seven open-source LLMs are compared across combinations of dataset, prompt strategy, and sampling temperature, producing a reproducibility-oriented evaluation campaign.
 
-> **Data privacy notice.** The preprocessed patient profiles (`data/`, `data_processed/`) are derived from METABRIC and SEER and are **not included in this repository**. Real clinical reports (`data/CR_reels/`) must never be published. Only generated outputs and evaluation results are committed.
+> **Data privacy notice.** The preprocessed patient profiles (`data/`, `data_processed/`) are derived from publicly available datasets (see below) but are **not included in this repository**. Real clinical reports (`data/CR_reels/`) must never be published. Only generated outputs and evaluation results are committed.
 
 ---
 
@@ -86,10 +86,13 @@ pip install transformers torch pandas faker textstat sacrebleu bert-score scikit
 # Python 3.10+, CUDA 11.8+ for GPU inference
 ```
 
-### 1 — Preprocess patient data
+### 1 — Download and preprocess patient data
+
+**METABRIC** — download the clinical data CSV from [cBioPortal](https://www.cbioportal.org/study/clinicalData?id=brca_metabric) and place it in `data/`.
+
+**SEER** — download the breast cancer dataset from [IEEE DataPort](https://ieee-dataport.org/open-access/seer-breast-cancer-data) and place it in `data/`.
 
 ```bash
-# Place raw METABRIC CSV in data/ and SEER txt in data/
 python scripts/preprocess_metabric.py
 python scripts/preprocess_seer.py
 # → data_processed/metabric_preprocessed.csv

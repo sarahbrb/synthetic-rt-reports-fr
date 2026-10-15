@@ -4,10 +4,10 @@
 
 set -e
 
-export HF_HOME=$SCRATCH/hf_cache
-export HUGGINGFACE_HUB_CACHE=$SCRATCH/hf_cache
+export HF_HOME=$SCRATCH/synth-data-generation/hf_cache
+export HUGGINGFACE_HUB_CACHE=$SCRATCH/synth-data-generation/hf_cache
 export TRANSFORMERS_OFFLINE=1
-export PYTHONPATH=$SCRATCH/pyuser:$PYTHONPATH
+export PYTHONPATH=$SCRATCH/synth-data-generation/pyuser:$PYTHONPATH
 
 echo "=== Test chargement config apertus ==="
 python3 -c "

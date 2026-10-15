@@ -1,5 +1,5 @@
 #!/bin/bash
-# Télécharge les 4 modèles CAG dans $SCRATCH/hf_cache.
+# Télécharge les 4 modèles CAG dans $SCRATCH/synth-data-generation/hf_cache.
 # Soumettre avec : bash $SCRATCH/CAG_slurm/download_models.sh
 # Chaque modèle est un job SLURM indépendant (qos_gpu-dev, 2h max).
 #
@@ -37,10 +37,10 @@ for MODEL_KEY in apertus70b medllama8b openbiollm8b openbiollm70b; do
         --wrap="
 module purge
 module load pytorch-gpu/py3/2.7.0
-export PYTHONPATH=\$SCRATCH/pyuser/lib/python3.12/site-packages:\$PYTHONPATH
-export HF_HOME=\$SCRATCH/hf_cache
-export HUGGINGFACE_HUB_CACHE=\$SCRATCH/hf_cache
-export TRANSFORMERS_CACHE=\$SCRATCH/hf_cache
+export PYTHONPATH=\$SCRATCH/synth-data-generation/pyuser/lib/python3.12/site-packages:\$PYTHONPATH
+export HF_HOME=\$SCRATCH/synth-data-generation/hf_cache
+export HUGGINGFACE_HUB_CACHE=\$SCRATCH/synth-data-generation/hf_cache
+export TRANSFORMERS_CACHE=\$SCRATCH/synth-data-generation/hf_cache
 
 echo \"=== \$(date) -- Téléchargement de $MODEL_ID ===\"
 

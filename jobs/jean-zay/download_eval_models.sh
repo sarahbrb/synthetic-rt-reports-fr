@@ -9,8 +9,8 @@ set -e
 PYTHON=/lustre/fshomisc/sup/hpe/pub/miniforge/24.11.3/envs/pytorch-gpu-2.7.0+py3.12.10/bin/python3
 PIP="$PYTHON -m pip"
 
-export HF_HOME=$SCRATCH/hf_cache
-export HUGGINGFACE_HUB_CACHE=$SCRATCH/hf_cache
+export HF_HOME=$SCRATCH/synth-data-generation/hf_cache
+export HUGGINGFACE_HUB_CACHE=$SCRATCH/synth-data-generation/hf_cache
 export HF_HUB_ENABLE_HF_TRANSFER=1
 
 # Utiliser le token HF stocké localement (créé lors de huggingface-cli login)
@@ -27,15 +27,15 @@ fi
 echo ""
 echo "=== Étape 1 : correction des dépendances de transformers 4.57.6 ==="
 # transformers 4.57.6 exige huggingface-hub>=0.34.0,<1.0 ; la version 1.x rompt l'import
-rm -rf $SCRATCH/pyuser/huggingface_hub $SCRATCH/pyuser/huggingface_hub-*.dist-info 2>/dev/null || true
-$PIP install --target=$SCRATCH/pyuser "huggingface_hub>=0.34.0,<1.0" --index-url https://pypi.org/simple
-$PIP install --target=$SCRATCH/pyuser --no-deps "tokenizers==0.22.0"
-rm -rf $SCRATCH/pyuser/tokenizers-0.21*.dist-info 2>/dev/null || true
+rm -rf $SCRATCH/synth-data-generation/pyuser/huggingface_hub $SCRATCH/synth-data-generation/pyuser/huggingface_hub-*.dist-info 2>/dev/null || true
+$PIP install --target=$SCRATCH/synth-data-generation/pyuser "huggingface_hub>=0.34.0,<1.0" --index-url https://pypi.org/simple
+$PIP install --target=$SCRATCH/synth-data-generation/pyuser --no-deps "tokenizers==0.22.0"
+rm -rf $SCRATCH/synth-data-generation/pyuser/tokenizers-0.21*.dist-info 2>/dev/null || true
 echo "OK"
 
 echo ""
 echo "=== Étape 2 : téléchargement des modèles d'évaluation ==="
-PYTHONPATH=$SCRATCH/pyuser $PYTHON - <<'PYEOF'
+PYTHONPATH=$SCRATCH/synth-data-generation/pyuser $PYTHON - <<'PYEOF'
 import os, sys
 
 os.environ['HF_HOME'] = os.environ['SCRATCH'] + '/hf_cache'

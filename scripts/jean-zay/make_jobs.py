@@ -7,8 +7,8 @@ Jean Zay setup:
   - Partitions  : gpu_p13 (V100 16GB, 4 GPU/nœud) pour les 8B
                   gpu_p2  (V100 32GB, 8 GPU/nœud) pour les 70B
   - Module      : pytorch-gpu/py3/2.7.0 (Python 3.12)
-  - Extra pkgs  : $SCRATCH/pyuser/lib/python3.12/site-packages
-  - HF cache    : $SCRATCH/hf_cache
+  - Extra pkgs  : $SCRATCH/synth-data-generation/pyuser/lib/python3.12/site-packages
+  - HF cache    : $SCRATCH/synth-data-generation/hf_cache
   - Outputs     : $SCRATCH/CAG_outputs/
 
 Generation: 4 modèles × 12 combinaisons (2 datasets × 2 prompts × 3 presets) = 48 jobs.
@@ -49,10 +49,10 @@ ENV_BLOCK = f"""\
 module purge
 module load {MODULE_LOAD}
 
-export PYTHONPATH=$SCRATCH/pyuser:$PYTHONPATH
-export HF_HOME=$SCRATCH/hf_cache
-export HUGGINGFACE_HUB_CACHE=$SCRATCH/hf_cache
-export TRANSFORMERS_CACHE=$SCRATCH/hf_cache
+export PYTHONPATH=$SCRATCH/synth-data-generation/pyuser:$PYTHONPATH
+export HF_HOME=$SCRATCH/synth-data-generation/hf_cache
+export HUGGINGFACE_HUB_CACHE=$SCRATCH/synth-data-generation/hf_cache
+export TRANSFORMERS_CACHE=$SCRATCH/synth-data-generation/hf_cache
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 export TRANSFORMERS_OFFLINE=1
 export HF_DATASETS_OFFLINE=1"""

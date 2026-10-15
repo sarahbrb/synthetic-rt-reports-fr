@@ -50,9 +50,9 @@ SLURM_HEADER = """\
 module purge
 module load pytorch-gpu/py3/2.7.0
 
-export PYTHONPATH=$SCRATCH/pyuser:$PYTHONPATH
-export HF_HOME=$SCRATCH/hf_cache
-export HUGGINGFACE_HUB_CACHE=$SCRATCH/hf_cache
+export PYTHONPATH=$SCRATCH/synth-data-generation/pyuser:$PYTHONPATH
+export HF_HOME=$SCRATCH/synth-data-generation/hf_cache
+export HUGGINGFACE_HUB_CACHE=$SCRATCH/synth-data-generation/hf_cache
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 export TRANSFORMERS_OFFLINE=1
 export HF_DATASETS_OFFLINE=1
